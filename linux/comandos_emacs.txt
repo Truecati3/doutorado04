@@ -1,0 +1,18 @@
+Tutorial: https://www.youtube.com/watch?v=bzZ09dAbLEE
+
+item: *
+subitem: **
+trocar itens de ordem: alt + seta acima/abaixo
+definir situação (a fazer, feito): shift + seta esquerda/direita
+expandir para subitens de um item específico: tab em cima do item
+expadir para subitens todos os itens: sifht + tab 
+checkbox: Eat [2/3][66%]
+           - [X] eggs
+           - [X] bacon
+           - [ ] pancakes
+          control + c duas vezes para preencher/despreencher
+definir deadline: control + c + control + d
+adicionar tags (índices aos items): control + c duas vezes sobre o item
+outras opções: alt + x depois digita org-agenda e le as opções
+
+
