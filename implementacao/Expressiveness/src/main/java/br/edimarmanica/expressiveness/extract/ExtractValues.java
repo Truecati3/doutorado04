@@ -30,11 +30,13 @@ import org.apache.commons.csv.CSVRecord;
  */
 public class ExtractValues {
 
-    private QueryNeo4J query = new QueryNeo4J();
+    private QueryNeo4J query;
     private Site site;
 
     public ExtractValues(Site site) {
         this.site = site;
+
+
     }
 
     /**
@@ -42,7 +44,7 @@ public class ExtractValues {
      * @param site
      * @return Map<Attribute,Rule>
      */
-    public Map<String, String> loadRules() {
+    private Map<String, String> loadRules() {
         Map<String, String> rules = new HashMap<>();
 
         try (Reader in = new FileReader(Configuration.PATH_EXPRESSIVENESS + site.getPath() + "/generated_rules.csv")) {
@@ -60,11 +62,13 @@ public class ExtractValues {
     }
 
     public void printExtractedValues() {
+        query = new QueryNeo4J();
         Map<String, String> rules = loadRules();
 
         for (String attr : rules.keySet()) {
             printExtractedValues(site, attr, rules.get(attr));
         }
+        query.shutdown();
     }
 
     private void printExtractedValues(Site site, String attribute, String rule) {
@@ -91,7 +95,7 @@ public class ExtractValues {
     }
 
     public static void main(String[] args) {
-        ExtractValues extract = new ExtractValues(br.edimarmanica.dataset.weir.book.Site.BOOKMOOCH);
+        ExtractValues extract = new ExtractValues(br.edimarmanica.dataset.weir.finance.Site.BIGCHARTS);
         extract.printExtractedValues();
     }
 }

@@ -4,13 +4,15 @@
  */
 package br.edimarmanica.expressiveness.extract;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.neo4j.cypher.ExecutionEngine;
 import org.neo4j.cypher.ExecutionResult;
 import org.neo4j.graphdb.GraphDatabaseService;
-import org.neo4j.graphdb.ResourceIterable;
 import org.neo4j.graphdb.ResourceIterator;
+import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 import org.neo4j.kernel.impl.util.StringLogger;
 
@@ -33,6 +35,18 @@ public class QueryNeo4J {
 
     public ExecutionResult executeCypher(String cypher) {
         return engine.execute(cypher);
+    }
+    
+    public List<String> querySingleColumn(String cypherQuery, String columnName){
+        List<String> results = new ArrayList<>();
+        
+        ExecutionResult result = executeCypher(cypherQuery);
+        ResourceIterator<String> iterator =  result.javaColumnAs(columnName);
+        while(iterator.hasNext()){
+            String st = iterator.next();
+            results.add(st);
+        }
+        return results;
     }
     
     /**
@@ -64,6 +78,15 @@ public class QueryNeo4J {
             }
         });
     }
+    
+     public void shutdown() {
+        graphDb.shutdown();
+    }
+
+    public Transaction beginTx() {
+        return graphDb.beginTx();
+    }
+    
     
     public static void main(String[] args) {
         QueryNeo4J query = new QueryNeo4J();

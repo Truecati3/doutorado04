@@ -4,6 +4,9 @@
  */
 package br.edimarmanica.expressiveness;
 
+import br.edimarmanica.expressiveness.extract.QueryNeo4J;
+
+
 
 /**
  *
@@ -12,6 +15,10 @@ package br.edimarmanica.expressiveness;
 public class Teste {
 
     public static void main(String[] args) {
-       
+        String st = "-0.98\n%";
+        
+        System.out.println(st.matches(".*(\\d|[a-zA-Z]).*"));
+        System.out.println(st.matches(".*\\d.*"));
+
     }
 }

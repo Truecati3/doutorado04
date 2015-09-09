@@ -6,6 +6,7 @@ package br.edimarmanica.dataset.weir;
 
 import br.edimarmanica.dataset.Attribute;
 import br.edimarmanica.dataset.Dataset;
+import br.edimarmanica.dataset.Site;
 import java.io.File;
 
 /**
@@ -58,6 +59,26 @@ public enum Domain implements br.edimarmanica.dataset.Domain {
 
     @Override
     public Attribute[] getAttributes() {
-        return br.edimarmanica.dataset.weir.book.Attribute.values();
+        switch (this) {
+            case BOOK:
+                return br.edimarmanica.dataset.weir.book.Attribute.values();
+            case FINANCE:
+                return br.edimarmanica.dataset.weir.finance.Attribute.values();
+            default:
+                throw new UnsupportedOperationException("Domain not configurated yet!");
+        }
+
+    }
+
+    @Override
+    public Site[] getSites() {
+        switch (this) {
+            case BOOK:
+                return br.edimarmanica.dataset.weir.book.Site.values();
+            case FINANCE:
+                return br.edimarmanica.dataset.weir.finance.Site.values();
+            default:
+                throw new UnsupportedOperationException("Domain not configurated yet!");
+        }
     }
 }

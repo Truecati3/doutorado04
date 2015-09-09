@@ -35,4 +35,6 @@ public interface Domain {
     public Attribute getAttributeIDbyDataset(String attributeIDbyDataset);
     
     public Attribute[] getAttributes();
+    
+    public Site[] getSites();
 }

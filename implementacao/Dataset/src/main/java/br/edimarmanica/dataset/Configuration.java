@@ -9,6 +9,6 @@ package br.edimarmanica.dataset;
  * @author edimar
  */
 public class Configuration {
-    public static final String PATH_BASE = "/media/Dados/doutorado04/bases/";
+    public static final String PATH_BASE = "/media/Dados/bases/";
     public static final String PATH_EXPRESSIVENESS = "/media/Dados/dropbox/linux/Dropbox/doutorado04/expressividade/";
 }

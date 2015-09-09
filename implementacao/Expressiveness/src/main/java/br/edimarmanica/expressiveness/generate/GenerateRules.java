@@ -67,10 +67,10 @@ public class GenerateRules {
             String[] header = {"ATTRIBUTE", "RULE"};
             try (CSVPrinter csvFilePrinter = new CSVPrinter(out, CSVFormat.EXCEL.withHeader(header))) {
                 for (String attr : rules.keySet()) {
-                    List<String> studentDataRecord = new ArrayList<>();
-                    studentDataRecord.add(attr);
-                    studentDataRecord.add(rules.get(attr).replaceAll("\n", " "));
-                    csvFilePrinter.printRecord(studentDataRecord);
+                    List<String> dataRecord = new ArrayList<>();
+                    dataRecord.add(attr);
+                    dataRecord.add(rules.get(attr).replaceAll("\n", " "));
+                    csvFilePrinter.printRecord(dataRecord);
                 }
             }
         } catch (IOException ex) {
@@ -80,6 +80,6 @@ public class GenerateRules {
 
     public static void main(String[] args) {
 
-        printRules(br.edimarmanica.dataset.weir.book.Site.BOOKMOOCH);
+        printRules(br.edimarmanica.dataset.weir.finance.Site.BIGCHARTS);
     }
 }

@@ -171,7 +171,7 @@ public class EvaluateWEIR {
     }
 
     public static void main(String[] args) {
-        EvaluateWEIR eval = new EvaluateWEIR(br.edimarmanica.dataset.weir.book.Site.BOOKMOOCH);
+        EvaluateWEIR eval = new EvaluateWEIR(br.edimarmanica.dataset.weir.finance.Site.BIGCHARTS);
         //eval.printMetrics(br.edimarmanica.dataset.weir.book.Attribute.AUTHOR);
         eval.printMetrics();
     }

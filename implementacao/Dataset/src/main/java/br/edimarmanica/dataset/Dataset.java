@@ -21,4 +21,16 @@ public enum Dataset {
     public String getFolderName() {
         return folderName;
     }
+    
+    /**
+     *
+     * @param dataset
+     * @return
+     */
+    public Domain[] getDomains(){
+        switch(this){
+            case WEIR: return br.edimarmanica.dataset.weir.Domain.values();
+            default: throw new UnsupportedOperationException("Dataset ainda não configurado");
+        }
+    }
 }

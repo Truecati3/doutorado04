@@ -16,7 +16,7 @@ import static br.edimarmanica.expressiveness.generate.GenerateRules.printRules;
 public class Main {
 
     public static void main(String[] args) {
-        Site site = br.edimarmanica.dataset.weir.book.Site.AMAZON;
+        Site site = br.edimarmanica.dataset.weir.book.Site.ECAMPUS;
         //antes de tudo tem que carregar o site no neo4j e gerar os templates (nessa etapa ainda não precisa dos templates pois estou fazendo manualmente)
         /**
          * primeiro chama o generate rules*
@@ -25,12 +25,12 @@ public class Main {
         /**
          * depois o ExtractValues*
          */
-        ExtractValues extract = new ExtractValues(site);
-        extract.printExtractedValues();
+       // ExtractValues extract = new ExtractValues(site);
+       // extract.printExtractedValues();
         /**
          * Depois o Evaluate*
          */
         EvaluateWEIR eval = new EvaluateWEIR(site);
-       // eval.printMetrics();
+        eval.printMetrics();
     }
 }
