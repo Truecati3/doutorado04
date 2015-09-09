@@ -1,4 +1,4 @@
-url,STRING : TITLE,STRING : BINDING,STRING : AUTHOR,STRING : PUBLISHER,DATE : DATE,NUMBER : ISBN13
+url,STRING : TITLE,STRING : BINDING,STRING : AUTHOR,STRING : PUBLISHER,DATE : DATE,ISBN : ISBN13
 book/www.bookdepository.co.uk/0001049307.html,Love and War in the Apennines,Audio cassette,Eric Newby,HarperCollins Audio,23 October 1995,9780001049307
 book/www.bookdepository.co.uk/0001049314.html,A Short Walk in the Hindu Kush,Audio cassette,Eric Newby,HarperCollins Audio,23 October 1995,9780001049314
 book/www.bookdepository.co.uk/0001049321.html,The Poetry of Wordsworth: Unabridged,Audio cassette,William Wordsworth,HarperCollins Audio,21 August 1995,9780001049321
