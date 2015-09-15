@@ -1,4 +1,4 @@
-Url,STRING : club,STRING : position,STRING : national_team,SPACE : height,MASS : weight,DATE : birthdate
+url,STRING : club,STRING : position,STRING : national_team,SPACE : height,MASS : weight,DATE : birthdate
 soccer/uk.eurosport.yahoo.com/aaron-hunt.html,Werder Brême,Striker,Germany,1.83m.,70.00kg.,04/09/1986 in Goslar
 soccer/uk.eurosport.yahoo.com/aaron-lennon.html,Tottenham,Midfielders,,1.65m.,62.00kg.,16/04/1987 in Leeds
 soccer/uk.eurosport.yahoo.com/aaron-mokoena.html,,Defender,South Africa,1.83m.,78.00kg.,25/11/1980 in Johannesburg
