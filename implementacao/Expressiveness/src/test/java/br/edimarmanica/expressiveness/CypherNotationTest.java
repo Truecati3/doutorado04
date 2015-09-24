@@ -39,7 +39,7 @@ public class CypherNotationTest extends TestCase {
                 + "\nAND c0.VALUE='TD' AND c0.POSITION='3' "
                 + "\nAND c1.VALUE='A' AND c1.POSITION='1' "
                 + "\nAND c2.NODE_TYPE='3' AND c2.POSITION='1' "
-                + "\nRETURN c2.VALUE AS VALUE, c2.URL AS URL";
+                + "\nRETURN c2.VALUE AS VALUE, c2.URL AS URL, 'Template' in LABELS(c2) as template";
         String result = CypherNotation.getNotation(label, uniquePathLabel, uniquePathValue);
         assertEquals("Teste 01", expResult.replaceAll("\\s+", ""), result.replaceAll("\\s+", ""));
 
@@ -56,7 +56,7 @@ public class CypherNotationTest extends TestCase {
                 + "\nAND c0.VALUE='TD' AND c0.POSITION='3'  "
                 + "\nAND c1.VALUE='A' AND c1.POSITION='1'  "
                 + "\nAND c2.NODE_TYPE='3' AND c2.POSITION='15' "
-                + "\nRETURN c2.VALUE AS VALUE, c2.URL AS URL";
+                + "\nRETURN c2.VALUE AS VALUE, c2.URL AS URL, 'Template' in LABELS(c2) as template";
 
         result = CypherNotation.getNotation(label, uniquePathLabel, uniquePathValue);
         assertEquals("Teste 02", expResult.replaceAll("\\s+", ""), result.replaceAll("\\s+", ""));
@@ -71,7 +71,7 @@ public class CypherNotationTest extends TestCase {
                 + "\nAND b.VALUE='TD' "
                 + "\nAND c0.VALUE='A' AND c0.POSITION='1'  "
                 + "\nAND c1.NODE_TYPE='3' AND c1.POSITION='1' "
-                + "\nRETURN c1.VALUE AS VALUE, c1.URL AS URL";
+                + "\nRETURN c1.VALUE AS VALUE, c1.URL AS URL, 'Template' in LABELS(c1) as template";
 
         result = CypherNotation.getNotation(label, uniquePathLabel, uniquePathValue);
         System.out.println(result);

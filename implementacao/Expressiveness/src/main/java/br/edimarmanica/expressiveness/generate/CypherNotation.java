@@ -43,7 +43,7 @@ public class CypherNotation {
             cypher += "\nAND c" + j + ".VALUE='" + partesValue[i + j].replaceAll("\\[.*", "") + "' AND c" + j + ".POSITION='" + partesValue[i + j].replaceAll(".*\\[", "").replaceAll("]", "") + "' ";
         }
         cypher += "\nAND c" + (nrElementsVai - 1) + ".NODE_TYPE='3' AND c" + (nrElementsVai - 1) + ".POSITION='"+partesValue[i + j].replaceAll(".*\\[", "").replaceAll("]", "")+"' ";
-        cypher += "\n RETURN c" + (nrElementsVai - 1) + ".VALUE AS VALUE, c" + (nrElementsVai - 1) + ".URL AS URL";
+        cypher += "\n RETURN c" + (nrElementsVai - 1) + ".VALUE AS VALUE, c" + (nrElementsVai - 1) + ".URL AS URL, 'Template' in LABELS(c"+(nrElementsVai - 1)+") as template";
         return cypher;
     }
 }

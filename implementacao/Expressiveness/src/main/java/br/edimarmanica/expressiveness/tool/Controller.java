@@ -8,7 +8,8 @@ import br.edimarmanica.dataset.Attribute;
 import br.edimarmanica.dataset.Configuration;
 import br.edimarmanica.dataset.Site;
 import br.edimarmanica.expressiveness.evaluate.EvaluateWEIR;
-import br.edimarmanica.expressiveness.extract.QueryNeo4J;
+import br.edimarmanica.extractionrules.neo4j.Neo4jHandler;
+import br.edimarmanica.extractionrules.neo4j.Neo4jHandlerType;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -44,7 +45,7 @@ public class Controller {
     private final String LOCAL_SEPARATOR = "!_!";
     private Tela frame;
     private static Set<String> urlsOpened = new HashSet<>();
-    private QueryNeo4J query;
+    private Neo4jHandler neo4j;
 
     public Controller(Tela frame) {
         this.frame = frame;
@@ -96,7 +97,7 @@ public class Controller {
             String[] partes = attrs.get(attr).split(LOCAL_SEPARATOR);//URL - value
             openBrowser(partes[0]);
 
-            List<String> uniquePathsLabel;
+            List<Object> uniquePathsLabel;
             String label;
             do {
                 /**
@@ -122,12 +123,12 @@ public class Controller {
             String uniquePathLabel = selectUniquePath(uniquePathsLabel, "Selecione o Unique Path para o label: " + label);
 
 
-            List<String> uniquePathsValue;
+            List<Object> uniquePathsValue;
 
             /**
              * Encontrando os possíveis Unique Paths do Label *
              */
-            uniquePathsValue = getUniquePaths(partes[1], partes[0]);
+            uniquePathsValue = getUniquePaths(partes[1].replaceAll("'", "\\\\'"), partes[0]);
 
             if (uniquePathsValue.isEmpty()) {
                 JOptionPane.showMessageDialog(frame, "Ops! Confira o value: " + partes[1]);
@@ -150,22 +151,22 @@ public class Controller {
         return attributesInfo;
     }
 
-    private List<String> getUniquePaths(String value, String URL) {
+    private List<Object> getUniquePaths(String value, String URL) {
         String columnName = "UP";
         String cypherQuery = "MATCH n WHERE n.VALUE='" + value + "' and n.URL='" + URL + "' RETURN n.UNIQUE_PATH AS " + columnName;
 
-        return query.querySingleColumn(cypherQuery, columnName);
+        return neo4j.querySingleColumn(cypherQuery, columnName);
     }
 
-    private String selectUniquePath(List<String> options, String msg) {
+    private String selectUniquePath(List<Object> options, String msg) {
         if (options.size() == 1) {
-            return options.get(0);
+            return options.get(0).toString();
         }
 
         String txt = msg;
         txt += "\nSelecione:\n -1 - Para informar outro valor!";
         for (int i = 0; i < options.size(); i++) {
-            txt += "\n " + i + " - " + options.get(i);
+            txt += "\n " + i + " - " + options.get(i).toString();
         }
 
         String result = JOptionPane.showInputDialog(frame, txt);
@@ -173,7 +174,7 @@ public class Controller {
         if (intResult == -1) {
             return JOptionPane.showInputDialog(frame, "Informe manualmente: ").trim();
         } else {
-            return options.get(intResult);
+            return options.get(intResult).toString();
         }
     }
 
@@ -191,14 +192,14 @@ public class Controller {
         }
     }
 
-    public void printAttributeInfo(Site site) throws FileNotFoundException, IOException {
+    public void printAttributeInfo(Site site, Neo4jHandlerType type) throws FileNotFoundException, IOException {
         frame.jtaLog.setText(frame.jtaLog.getText() + "\n**** Criando diretórios");
         File dir = new File(Configuration.PATH_EXPRESSIVENESS + site.getPath());
         if (!dir.exists()) {
             dir.mkdirs();
         }
 
-        query = new QueryNeo4J();
+        neo4j = Neo4jHandler.getInstance(type, site);
         frame.jtaLog.setText(frame.jtaLog.getText() + "\n**** Verificando attribute info");
         Set<String> attrsInfo = getAttributeInfo(site);
         try (Writer out = new FileWriter(dir.getAbsolutePath() + "/attributes_info.csv")) {
@@ -214,7 +215,7 @@ public class Controller {
         }
 
         frame.jtaLog.setText(frame.jtaLog.getText() + "\n**** attributes_info.csv gerado!");
-        query.shutdown();
+        neo4j.shutdown();
     }
 
     public static void csvToJTable(JTable table, File csv) throws FileNotFoundException, IOException {

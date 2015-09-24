@@ -81,14 +81,9 @@ public class EvaluateWEIR {
         return values;
     }
 
-    private void printMetrics(Attribute attribute) {
+    private void printMetrics(Attribute attribute, boolean append) throws SiteWithoutThisAttribute {
 
-        Set<String> groundtruth;
-        try {
-            groundtruth = loadGroundTruth(attribute);
-        } catch (SiteWithoutThisAttribute ex) {
-            return; //site sem esse atributo
-        }
+        Set<String> groundtruth = loadGroundTruth(attribute);
 
         Set<String> results = loadMyResults(attribute);
 
@@ -107,14 +102,15 @@ public class EvaluateWEIR {
          * ********************** results ******************
          */
         String[] header = {"DATASET", "DOMAIN", "SITE", "ATTRIBUTE", "RELEVANTS", "RETRIEVED", "RETRIEVED RELEVANTS", "RECALL", "PRECISION", "DATE"};
-        File file = new File(Configuration.PATH_EXPRESSIVENESS + "/" + site.getDomain().getPath() + "/result.csv");
+        File file = new File(Configuration.PATH_EXPRESSIVENESS + "/" + site.getPath() + "/result.csv");
         CSVFormat format;
-        if (file.exists()) {
+        if (append) {
             format = CSVFormat.EXCEL;
         } else {
             format = CSVFormat.EXCEL.withHeader(header);
         }
-        try (Writer out = new FileWriter(file, true)) {
+
+        try (Writer out = new FileWriter(file, append)) {
             try (CSVPrinter csvFilePrinter = new CSVPrinter(out, format)) {
                 List<String> studentDataRecord = new ArrayList<>();
                 studentDataRecord.add(site.getDomain().getDataset().getFolderName());
@@ -165,8 +161,15 @@ public class EvaluateWEIR {
     }
 
     public void printMetrics() {
+        boolean append = false;
         for (Attribute attr : site.getDomain().getAttributes()) {
-            printMetrics(attr);
+            try {
+                printMetrics(attr, append);
+                append = true;
+            } catch (SiteWithoutThisAttribute ex) {
+                //Logger.getLogger(EvaluateWEIR.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
         }
     }
 

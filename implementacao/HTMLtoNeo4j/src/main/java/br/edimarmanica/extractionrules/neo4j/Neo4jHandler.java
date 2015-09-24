@@ -4,51 +4,42 @@
  */
 package br.edimarmanica.extractionrules.neo4j;
 
-import java.io.IOException;
+import br.edimarmanica.dataset.Site;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.neo4j.cypher.ExecutionEngine;
-import org.neo4j.cypher.ExecutionResult;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.Transaction;
-import org.neo4j.graphdb.factory.GraphDatabaseFactory;
-import org.neo4j.kernel.impl.util.StringLogger;
 
 /**
  *
  * @author edimar
  */
-public class Neo4JHandler {
+public abstract class Neo4jHandler {
 
-    public final static String DB_PATH = "/home/edimar/neo4j-community-2.2.3/data/graph.db"; //cuidar versão neo4j
-    private GraphDatabaseService graphDb;
-    private ExecutionEngine engine;
+    GraphDatabaseService graphDb;
+    Site site;
 
-    public Neo4JHandler() {
-        graphDb = new GraphDatabaseFactory().newEmbeddedDatabase(DB_PATH);
-        engine = new ExecutionEngine(graphDb, StringLogger.SYSTEM_ERR);
-
-        registerShutdownHook(graphDb);
+    public Neo4jHandler(Site site) {
+        this.site = site;
     }
 
-    public void deleteAll() {
-        engine.execute("MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE n,r");
-    }
-
-    public static void deleteDatabase() {
-        try {
-            Runtime.getRuntime().exec("rm -rf " + DB_PATH);
-        } catch (IOException ex) {
-            Logger.getLogger(Neo4JHandler.class.getName()).log(Level.SEVERE, null, ex);
+    public static Neo4jHandler getInstance(Neo4jHandlerType type, Site site) {
+        switch (type) {
+            case REMOTE:
+                return new Neo4jHandlerRemote(site);
+            case LOCAL:
+                return new Neo4jHandlerLocal(site);
+            default:
+                return null;
         }
     }
 
-    public ExecutionResult executeCypher(String cypher) {
-        return engine.execute(cypher);
-    }
+    public abstract Iterator<Map<String, Object>> executeCypher(String cypher);
 
     /**
      *
@@ -58,6 +49,7 @@ public class Neo4JHandler {
     public Node insertNode(Map<String, String> properties) {
 
         Node node = graphDb.createNode();
+        
         for (String key : properties.keySet()) {
             node.setProperty(key, properties.get(key));
         }
@@ -93,7 +85,35 @@ public class Neo4JHandler {
         }
     }
 
-    private static void registerShutdownHook(final GraphDatabaseService graphDb) {
+    public List<Object> querySingleColumn(String cypherQuery, String columnName) {
+        List<Object> results = new ArrayList<>();
+
+        Iterator<Map<String, Object>> iterator = executeCypher(cypherQuery);
+        while (iterator.hasNext()) {
+            Map<String, Object> st = iterator.next();
+            results.add(st.get(columnName));
+        }
+        return results;
+    }
+
+    /**
+     *
+     * @param cypherRule a cypher rule
+     * @return the values extracted by the cypher rule (Map<URL,
+     * ExtractedValue>).
+     */
+    public Map<String, String> extract(String cypherRule, String keyColumn, String valueColumn) {
+        Map<String, String> extractedValues = new HashMap<>();
+
+        Iterator<Map<String, Object>> iterator = executeCypher(cypherRule);
+        while (iterator.hasNext()) {
+            Map<String, Object> map = iterator.next();
+            extractedValues.put(map.get(keyColumn).toString(), map.get(valueColumn).toString());
+        }
+        return extractedValues;
+    }
+
+    public static void registerShutdownHook(final GraphDatabaseService graphDb) {
         // Registers a shutdown hook for the Neo4j instance so that it
         // shuts down nicely when the VM exits (even if you "Ctrl-C" the
         // running application).
@@ -105,11 +125,10 @@ public class Neo4JHandler {
         });
     }
 
-    public void shutdown() {
-        graphDb.shutdown();
-    }
+    public abstract void shutdown();
 
     public Transaction beginTx() {
         return graphDb.beginTx();
     }
+    
 }

@@ -6,6 +6,8 @@ package br.edimarmanica.expressiveness.extract;
 
 import br.edimarmanica.dataset.Configuration;
 import br.edimarmanica.dataset.Site;
+import br.edimarmanica.extractionrules.neo4j.Neo4jHandler;
+import br.edimarmanica.extractionrules.neo4j.Neo4jHandlerType;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -30,13 +32,13 @@ import org.apache.commons.csv.CSVRecord;
  */
 public class ExtractValues {
 
-    private QueryNeo4J query;
+    private Neo4jHandler neo4j;
     private Site site;
+    private Neo4jHandlerType type;
 
-    public ExtractValues(Site site) {
+    public ExtractValues(Site site, Neo4jHandlerType type) {
         this.site = site;
-
-
+        this.type = type;
     }
 
     /**
@@ -62,13 +64,16 @@ public class ExtractValues {
     }
 
     public void printExtractedValues() {
-        query = new QueryNeo4J();
+        neo4j = Neo4jHandler.getInstance(type, site);
         Map<String, String> rules = loadRules();
 
         for (String attr : rules.keySet()) {
             printExtractedValues(site, attr, rules.get(attr));
         }
-        query.shutdown();
+
+        if (type == Neo4jHandlerType.LOCAL) {
+            neo4j.shutdown();
+        }
     }
 
     private void printExtractedValues(Site site, String attribute, String rule) {
@@ -81,7 +86,7 @@ public class ExtractValues {
         try (Writer out = new FileWriter(dir.getAbsolutePath() + "/" + attribute + ".csv")) {
             String[] header = {"URL", "EXTRACTED VALUE"};
             try (CSVPrinter csvFilePrinter = new CSVPrinter(out, CSVFormat.EXCEL.withHeader(header))) {
-                Map<String, String> extractedValues = query.extract(rule);
+                Map<String, String> extractedValues = neo4j.extract(rule, "URL", "VALUE");
                 for (String url : extractedValues.keySet()) {
                     List<String> studentDataRecord = new ArrayList<>();
                     studentDataRecord.add(url);
@@ -95,7 +100,7 @@ public class ExtractValues {
     }
 
     public static void main(String[] args) {
-        ExtractValues extract = new ExtractValues(br.edimarmanica.dataset.weir.finance.Site.BIGCHARTS);
+        ExtractValues extract = new ExtractValues(br.edimarmanica.dataset.weir.finance.Site.BIGCHARTS, Neo4jHandlerType.LOCAL);
         extract.printExtractedValues();
     }
 }

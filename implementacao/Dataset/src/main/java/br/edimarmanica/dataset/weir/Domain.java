@@ -64,6 +64,10 @@ public enum Domain implements br.edimarmanica.dataset.Domain {
                 return br.edimarmanica.dataset.weir.book.Attribute.values();
             case FINANCE:
                 return br.edimarmanica.dataset.weir.finance.Attribute.values();
+            case SOCCER:
+                return br.edimarmanica.dataset.weir.soccer.Attribute.values();
+            case VIDEOGAME:
+                return br.edimarmanica.dataset.weir.videogame.Attribute.values();
             default:
                 throw new UnsupportedOperationException("Domain not configurated yet!");
         }
@@ -77,6 +81,10 @@ public enum Domain implements br.edimarmanica.dataset.Domain {
                 return br.edimarmanica.dataset.weir.book.Site.values();
             case FINANCE:
                 return br.edimarmanica.dataset.weir.finance.Site.values();
+            case SOCCER:
+                return br.edimarmanica.dataset.weir.soccer.Site.values();
+            case VIDEOGAME:
+                return br.edimarmanica.dataset.weir.videogame.Site.values();
             default:
                 throw new UnsupportedOperationException("Domain not configurated yet!");
         }

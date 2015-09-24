@@ -4,7 +4,9 @@
  */
 package br.edimarmanica.extractionrules.load;
 
-import br.edimarmanica.extractionrules.neo4j.Neo4JHandler;
+import br.edimarmanica.dataset.weir.videogame.Site;
+import br.edimarmanica.extractionrules.neo4j.Neo4jHandler;
+import br.edimarmanica.extractionrules.neo4j.Neo4jHandlerLocal;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -27,14 +29,14 @@ import org.cyberneko.html.parsers.DOMParser;
  */
 public class HtmlToNeo4j {
 
-    private Neo4JHandler neo4j;
+    private Neo4jHandler neo4j;
     private String url;
     private FormatUniquePath formatter;
 
-    public HtmlToNeo4j(String url, Neo4JHandler neo4j) {
+    public HtmlToNeo4j(String url, Neo4jHandler neo4j) {
         this.url = url;
         this.neo4j = neo4j;
-        
+
         formatter = new FormatUniquePath(url); //só pode instanciar uma vez por página para funcionar corretamente
     }
 
@@ -47,6 +49,7 @@ public class HtmlToNeo4j {
                 try {
                     newNeo4jNode = insertNeo4j(child, neo4jNode);
                     insertAllChildren((Element) child, newNeo4jNode);
+                    newNeo4jNode = null;
                 } catch (InvalidTextNode ex) {
                     //só ignora o nodo
                     //  Logger.getLogger(HtmlToNeo4j.class.getName()).log(Level.SEVERE, null, ex);
@@ -86,6 +89,7 @@ public class HtmlToNeo4j {
      * @return the neo4j node inserted
      */
     private org.neo4j.graphdb.Node insertNeo4j(Node node, org.neo4j.graphdb.Node parentNodeNeo4j) throws InvalidTextNode {
+       // System.out.println("Inserindo nodo: " + node.getName());
         /**
          * filtros *
          */
@@ -100,7 +104,7 @@ public class HtmlToNeo4j {
         } else {
             return null;
         }
-        
+
         String formattedUniquePath = formatter.format(node.getUniquePath(), node.getNodeType());
 
         properties.put("NODE_TYPE", node.getNodeType() + "");
@@ -113,8 +117,6 @@ public class HtmlToNeo4j {
         org.neo4j.graphdb.Node newNode = neo4j.insertNode(properties, parentNodeNeo4j);
         return newNode;
     }
-    
-    
 
     private Document getDocument() {
         DOMParser parser = new DOMParser();
@@ -131,15 +133,16 @@ public class HtmlToNeo4j {
 
     public static void main(String[] args) {
 
-        Neo4JHandler neo4j = new Neo4JHandler();
-        HtmlToNeo4j hh = new HtmlToNeo4j("file:///media/Dados/bases/WEIR/finance/quote.barchart.com/coms.html", neo4j);
-        //HtmlToNeo4j hh = new HtmlToNeo4j("/media/Dados/doutorado04/bases/WEIR/book/bookmooch.com/0001049305.html", neo4j);
+        Neo4jHandler neo4j = new Neo4jHandlerLocal(Site.CDUNIVERSE);
         
-
-        try (Transaction tx1 = hh.neo4j.beginTx()) {
-            //   hh.neo4j.deleteAll();//excluindo tudo antes
-            hh.insertAllNodes();
+        try (Transaction tx1 = neo4j.beginTx()) {
+            HtmlToNeo4j html = new HtmlToNeo4j("/media/Dados/bases/WEIR/videogame/www.cduniverse.com/7581062-Dragon_Quest_Swords-_The_Masked_Queen_And_The_Tower_Of_Mirrors.html", neo4j);
+            html.insertAllNodes();
             tx1.success();
+            tx1.close();
+            neo4j.shutdown();
         }
+
+
     }
 }

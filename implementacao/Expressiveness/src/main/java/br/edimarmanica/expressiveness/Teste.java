@@ -4,9 +4,15 @@
  */
 package br.edimarmanica.expressiveness;
 
-import br.edimarmanica.expressiveness.extract.QueryNeo4J;
-
-
+import br.edimarmanica.expressiveness.tool.Controller;
+import java.io.File;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.neo4j.graphdb.GraphDatabaseService;
 
 /**
  *
@@ -14,11 +20,15 @@ import br.edimarmanica.expressiveness.extract.QueryNeo4J;
  */
 public class Teste {
 
-    public static void main(String[] args) {
-        String st = "-0.98\n%";
+    public static void main(String[] args) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+        System.out.println(System.getProperty("java.class.path"));
         
-        System.out.println(st.matches(".*(\\d|[a-zA-Z]).*"));
-        System.out.println(st.matches(".*\\d.*"));
-
+        /*try {         
+           // Runtime.getRuntime().exec("google-chrome ");
+        } catch (IOException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }*/
+       
     }
+   
 }

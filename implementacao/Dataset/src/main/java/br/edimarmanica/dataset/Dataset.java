@@ -10,7 +10,7 @@ package br.edimarmanica.dataset;
  */
 public enum Dataset {
 
-    WEIR("WEIR"), SWDE("SDWE");
+    WEIR("WEIR"), SWDE("SWDE");
 
     private String folderName;
 

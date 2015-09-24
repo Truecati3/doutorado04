@@ -1,0 +1,70 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package br.edimarmanica.extractionrules.neo4j;
+
+import br.edimarmanica.dataset.Configuration;
+import br.edimarmanica.dataset.Site;
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.neo4j.cypher.ExecutionEngine;
+import org.neo4j.graphdb.factory.GraphDatabaseFactory;
+import org.neo4j.kernel.impl.util.StringLogger;
+
+/**
+ *
+ * @author edimar
+ */
+public class Neo4jHandlerLocal extends Neo4jHandler {
+
+    //public final static String DB_PATH = "/home/edimar/neo4j-community-2.2.3/data/graph.db"; //cuidar versão neo4j
+    private final static String DB_FILE_NAME = "graph.db";
+    private ExecutionEngine engine;
+
+    public Neo4jHandlerLocal(Site site) {
+        super(site);
+
+        graphDb = new GraphDatabaseFactory().newEmbeddedDatabase(getDBPath());
+        engine = new ExecutionEngine(graphDb, StringLogger.SYSTEM_ERR);
+
+        registerShutdownHook(graphDb);
+    }
+
+    public static void deleteDatabase(Site site) {
+        try {
+            Runtime.getRuntime().exec("rm -rf " + getDBPath(site));
+        } catch (IOException ex) {
+            Logger.getLogger(Neo4jHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private String getDBPath() {
+        return getDBPath(site);
+    }
+
+    private static String getDBPath(Site site) {
+        return Configuration.PARTIAL_DB_PATH + site.getPath() + "/" + DB_FILE_NAME;
+    }
+
+    @Override
+    public Iterator<Map<String, Object>> executeCypher(String cypher) {
+        return (Iterator<Map<String, Object>>) engine.execute(cypher).javaIterator();
+    }
+
+    public static void main(String[] args) {
+        Neo4jHandler neo4j = new Neo4jHandlerLocal(br.edimarmanica.dataset.weir.finance.Site.BARCHART);
+        List<Object> results = neo4j.querySingleColumn("match n return count(n) as total", "total");
+        for (Object result : results) {
+            System.out.println(result.toString());
+        }
+    }
+
+    public void shutdown() {
+        graphDb.shutdown();
+    }
+}
