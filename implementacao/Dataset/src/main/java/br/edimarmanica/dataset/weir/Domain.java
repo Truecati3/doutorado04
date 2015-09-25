@@ -6,6 +6,7 @@ package br.edimarmanica.dataset.weir;
 
 import br.edimarmanica.dataset.Attribute;
 import br.edimarmanica.dataset.Dataset;
+import static br.edimarmanica.dataset.Dataset.values;
 import br.edimarmanica.dataset.Site;
 import java.io.File;
 
@@ -89,4 +90,5 @@ public enum Domain implements br.edimarmanica.dataset.Domain {
                 throw new UnsupportedOperationException("Domain not configurated yet!");
         }
     }
+    
 }

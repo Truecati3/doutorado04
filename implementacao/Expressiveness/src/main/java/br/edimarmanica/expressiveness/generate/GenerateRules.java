@@ -8,6 +8,7 @@ import br.edimarmanica.dataset.Configuration;
 import br.edimarmanica.dataset.Site;
 import br.edimarmanica.expressiveness.Teste;
 import br.edimarmanica.expressiveness.generate.beans.AttributeInfo;
+import br.edimarmanica.expressiveness.generate.beans.CypherRule;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -51,17 +52,18 @@ public class GenerateRules {
      *
      * @return the cypher rules === Map<Attribute,Rule>
      */
-    public static Map<String, String> getRules(Site site) {
-        Map<String, String> rules = new HashMap<>();
+    public static Map<String, CypherRule> getRules(Site site) {
+        Map<String, CypherRule> rules = new HashMap<>();
         List<AttributeInfo> attrsInfo = loadAttributeInfo(site);
         for (AttributeInfo attr : attrsInfo) {
-            rules.put(attr.getAttribute(), CypherNotation.getNotation(attr.getLabel(), attr.getUniquePathLabel(), attr.getUniquePathValue()));
+            CypherNotation cypherNotation = new CypherNotation(attr.getLabel(), attr.getUniquePathLabel(), attr.getUniquePathValue());
+            rules.put(attr.getAttribute(), cypherNotation.getNotation());
         }
         return rules;
     }
 
     public static void printRules(Site site) {
-        Map<String, String> rules = getRules(site);
+        Map<String, CypherRule> rules = getRules(site);
 
         try (Writer out = new FileWriter(Configuration.PATH_EXPRESSIVENESS + site.getPath() + "/generated_rules.csv")) {
             String[] header = {"ATTRIBUTE", "RULE"};
@@ -69,7 +71,7 @@ public class GenerateRules {
                 for (String attr : rules.keySet()) {
                     List<String> dataRecord = new ArrayList<>();
                     dataRecord.add(attr);
-                    dataRecord.add(rules.get(attr).replaceAll("\n", " "));
+                    dataRecord.add(rules.get(attr).getQueryWithoutParameters().replaceAll("\n", " "));
                     csvFilePrinter.printRecord(dataRecord);
                 }
             }

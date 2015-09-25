@@ -48,4 +48,9 @@ public class Neo4jHandlerRemote extends Neo4jHandler {
     public void shutdown() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public Iterator<Map<String, Object>> executeCypher(String cypher, Map<String, Object> params) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

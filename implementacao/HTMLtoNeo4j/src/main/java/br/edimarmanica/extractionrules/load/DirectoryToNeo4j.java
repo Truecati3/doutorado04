@@ -11,9 +11,6 @@ import br.edimarmanica.extractionrules.neo4j.Neo4jHandlerLocal;
 import br.edimarmanica.extractionrules.neo4j.Neo4jHandlerType;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.neo4j.graphdb.Transaction;
@@ -45,47 +42,48 @@ public class DirectoryToNeo4j {
         this.type = type;
     }
 
-    /**
-     * load the pages in the directory (dir) to the neo4j
-     *
-     * @throws FileNotFoundException
-     */
+
     public void loadPages() throws FileNotFoundException {
 
 
         File fDir = new File(Configuration.PATH_BASE + "/" + site.getPath());
-        neo4j = Neo4jHandler.getInstance(type, site);
-        try (Transaction tx1 = neo4j.beginTx()) {
-            int i = 0;
-            for (File f : fDir.listFiles()) {
-                
+
+        int i = 0;
+        for (File f : fDir.listFiles()) {
+
+            if (i % 10 == 0) {//para efeciencia. A cada 10 páginas para, fecha o banco, assim libera um pouco de memória
+                neo4j = Neo4jHandler.getInstance(type, site);
+            }
+            try (Transaction tx1 = neo4j.beginTx()) {
+
                 /*if (i <= 470 || i > 480 ){//400 - 450 deu erro
-                    i++;
-                    continue;
-                }
+                 i++;
+                 continue;
+                 }*/
                 printMemoryInfo();
-                
-                System.out.println("i: " + i + "-" + f.getAbsolutePath()); */
+
+                System.out.println("i: " + i + "-" + f.getAbsolutePath());
                 loadPage(f);
                 i++;
+                tx1.success();
+                tx1.close();
             }
-            tx1.success();
-            tx1.close();
-
-        }
-
-        if (type == Neo4jHandlerType.LOCAL) {
-            neo4j.shutdown();
+            if (i % 10 == 0) { //para efeciencia. A cada 10 páginas para, fecha o banco, assim libera um pouco de memória
+                if (type == Neo4jHandlerType.LOCAL) {
+                    neo4j.shutdown();
+                    neo4j = null;
+                    System.gc();
+                }
+            }
         }
     }
-
 
     private void loadPage(File page) {
         HtmlToNeo4j hh = new HtmlToNeo4j(page.getAbsolutePath(), neo4j);
         hh.insertAllNodes();
+        hh = null;
+        System.gc();
     }
-
-    
 
     private static void printMemoryInfo() {
         double gb = 1024 * 1024 * 1024;
@@ -99,10 +97,10 @@ public class DirectoryToNeo4j {
         System.out.println("Used memory: " + (runtime.totalMemory() - runtime.freeMemory()) / gb);
         System.out.println("Free memory: " + runtime.freeMemory() / gb);
     }
-    
+
     public static void main(String[] args) {
-        Site site = br.edimarmanica.dataset.weir.videogame.Site.CDUNIVERSE;
-        DirectoryToNeo4j load = new DirectoryToNeo4j(site, false, Neo4jHandlerType.LOCAL);
+        Site site = br.edimarmanica.dataset.weir.book.Site.BOOKSANDEBOOKS;
+        DirectoryToNeo4j load = new DirectoryToNeo4j(site, true, Neo4jHandlerType.LOCAL);
         try {
             load.loadPages();
         } catch (FileNotFoundException ex) {

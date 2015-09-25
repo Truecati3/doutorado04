@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edimarmanica.intrasite;
+package br.edimarmanica.intrasite.rules;
 
 import br.edimarmanica.dataset.Site;
 import br.edimarmanica.extractionrules.neo4j.Neo4jHandler;
@@ -20,6 +20,7 @@ public class SetTemplates {
 
     public SetTemplates(Site site, Neo4jHandlerType type) {
         this.site = site;
+        this.type = type;
     }
 
     public void execute() {

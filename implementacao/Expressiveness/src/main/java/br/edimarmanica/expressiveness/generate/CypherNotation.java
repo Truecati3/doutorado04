@@ -4,14 +4,30 @@
  */
 package br.edimarmanica.expressiveness.generate;
 
+import br.edimarmanica.expressiveness.generate.beans.CypherRule;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+
 /**
  *
  * @author edimar
  */
 public class CypherNotation {
-     
-    public static String getNotation(String label, String uniquePathLabel, String uniquePathValue) {
-        
+
+    private String label;
+    private String uniquePathLabel;
+    private String uniquePathValue;
+    private Map<String, Object> params = new HashMap<>();
+
+    public CypherNotation(String label, String uniquePathLabel, String uniquePathValue) {
+        this.label = label;
+        this.uniquePathLabel = uniquePathLabel;
+        this.uniquePathValue = uniquePathValue;
+    }
+
+    public CypherRule getNotation() {
+
         String[] partesLabel = uniquePathLabel.split("/");
         String[] partesValue = uniquePathValue.split("/");
 
@@ -32,18 +48,27 @@ public class CypherNotation {
         for (int j = 0; j < nrElementsVai; j++) {
             cypher += "-->(c" + j + ")";
         }
-        cypher += "\nWHERE a" + (nrElementsVolta - 1) + ".VALUE='" + label + "' AND a" + (nrElementsVolta - 1) + ".PATH='" + uniquePathLabel.replaceAll("\\[\\d+\\]", "") + "' AND a" + (nrElementsVolta - 1)+".POSITION='"+partesLabel[i+nrElementsVolta-1].replaceAll(".*\\[", "").replaceAll("]", "") + "' ";
+        cypher += "\nWHERE a" + (nrElementsVolta - 1) + ".VALUE=" + add(label) + " AND a" + (nrElementsVolta - 1) + ".PATH=" + add(uniquePathLabel.replaceAll("\\[\\d+\\]", "")) + " AND a" + (nrElementsVolta - 1) + ".POSITION=" + add(partesLabel[i + nrElementsVolta - 1].replaceAll(".*\\[", "").replaceAll("]", "")) + " ";
         for (int j = nrElementsVolta - 2; j >= 0; j--) {
-            cypher += "\nAND a" + j + ".VALUE='" + partesLabel[i + j].replaceAll("\\[.*", "") + "' AND a" + j + ".POSITION='" + partesLabel[i + j].replaceAll(".*\\[", "").replaceAll("]", "") + "' ";
+            cypher += "\nAND a" + j + ".VALUE=" + add(partesLabel[i + j].replaceAll("\\[.*", "")) + " AND a" + j + ".POSITION=" + add(partesLabel[i + j].replaceAll(".*\\[", "").replaceAll("]", "")) + " ";
         }
-        cypher += "\nAND b.VALUE='" + partesLabel[i - 1].replaceAll("\\[.*", "") + "' "; // o B não deve ter posição senão perde em generalização AND b.POSITION='" + partesLabel[i - 1].replaceAll(".*\\[", "").replaceAll("]", "") + "' ";
+        cypher += "\nAND b.VALUE=" + add(partesLabel[i - 1].replaceAll("\\[.*", "")) + " "; // o B não deve ter posição senão perde em generalização AND b.POSITION='" + partesLabel[i - 1].replaceAll(".*\\[", "").replaceAll("]", "") + "' ";
 
-        int j=0;
+        int j = 0;
         for (j = 0; j < nrElementsVai - 1; j++) {
-            cypher += "\nAND c" + j + ".VALUE='" + partesValue[i + j].replaceAll("\\[.*", "") + "' AND c" + j + ".POSITION='" + partesValue[i + j].replaceAll(".*\\[", "").replaceAll("]", "") + "' ";
+            cypher += "\nAND c" + j + ".VALUE=" + add(partesValue[i + j].replaceAll("\\[.*", "")) + " AND c" + j + ".POSITION=" + add(partesValue[i + j].replaceAll(".*\\[", "").replaceAll("]", "")) + " ";
         }
-        cypher += "\nAND c" + (nrElementsVai - 1) + ".NODE_TYPE='3' AND c" + (nrElementsVai - 1) + ".POSITION='"+partesValue[i + j].replaceAll(".*\\[", "").replaceAll("]", "")+"' ";
-        cypher += "\n RETURN c" + (nrElementsVai - 1) + ".VALUE AS VALUE, c" + (nrElementsVai - 1) + ".URL AS URL, 'Template' in LABELS(c"+(nrElementsVai - 1)+") as template";
-        return cypher;
+        cypher += "\nAND c" + (nrElementsVai - 1) + ".NODE_TYPE="+add("3") +" AND c" + (nrElementsVai - 1) + ".POSITION=" + add(partesValue[i + j].replaceAll(".*\\[", "").replaceAll("]", "")) + " ";
+        cypher += "\n RETURN c" + (nrElementsVai - 1) + ".VALUE AS VALUE, c" + (nrElementsVai - 1) + ".URL AS URL, 'Template' in LABELS(c" + (nrElementsVai - 1) + ") as template";
+        
+        return new CypherRule(cypher, params, label);
     }
+
+    private String add(String param) {
+        String id = "value" + params.size();
+
+        params.put(id, param);
+
+        return "{"+id+"}";
+    } 
 }

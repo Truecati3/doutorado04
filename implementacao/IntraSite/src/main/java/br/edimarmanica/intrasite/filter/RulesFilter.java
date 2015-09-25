@@ -2,9 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edimarmanica.intrasite;
+package br.edimarmanica.intrasite.filter;
 
 import br.edimarmanica.dataset.Site;
+import br.edimarmanica.expressiveness.generate.beans.CypherRule;
 import br.edimarmanica.extractionrules.neo4j.Neo4jHandler;
 import br.edimarmanica.extractionrules.neo4j.Neo4jHandlerType;
 import java.util.Set;
@@ -26,12 +27,12 @@ public abstract class RulesFilter {
     
     
 
-    public Set<String> filter(Set<String> rules) {
+    public Set<CypherRule> filter(Set<CypherRule> rules) {
         neo4j = Neo4jHandler.getInstance(type, site);
-        Set<String> rulesFiltered = execute(rules);
+        Set<CypherRule> rulesFiltered = execute(rules);
         neo4j.shutdown();
         return rulesFiltered;
     }
 
-    public abstract Set<String> execute(Set<String> rules);
+    public abstract Set<CypherRule> execute(Set<CypherRule> rules);
 }

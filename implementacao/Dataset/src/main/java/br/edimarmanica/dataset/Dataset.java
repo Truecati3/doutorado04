@@ -33,4 +33,5 @@ public enum Dataset {
             default: throw new UnsupportedOperationException("Dataset ainda não configurado");
         }
     }
+    
 }

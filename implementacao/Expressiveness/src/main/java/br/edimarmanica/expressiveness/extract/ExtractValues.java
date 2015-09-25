@@ -6,6 +6,9 @@ package br.edimarmanica.expressiveness.extract;
 
 import br.edimarmanica.dataset.Configuration;
 import br.edimarmanica.dataset.Site;
+import br.edimarmanica.expressiveness.generate.GenerateRules;
+import static br.edimarmanica.expressiveness.generate.GenerateRules.getRules;
+import br.edimarmanica.expressiveness.generate.beans.CypherRule;
 import br.edimarmanica.extractionrules.neo4j.Neo4jHandler;
 import br.edimarmanica.extractionrules.neo4j.Neo4jHandlerType;
 import java.io.File;
@@ -65,7 +68,8 @@ public class ExtractValues {
 
     public void printExtractedValues() {
         neo4j = Neo4jHandler.getInstance(type, site);
-        Map<String, String> rules = loadRules();
+        //Map<String, String> rules = loadRules();
+        Map<String, CypherRule> rules = GenerateRules.getRules(site);
 
         for (String attr : rules.keySet()) {
             printExtractedValues(site, attr, rules.get(attr));
@@ -76,7 +80,7 @@ public class ExtractValues {
         }
     }
 
-    private void printExtractedValues(Site site, String attribute, String rule) {
+    private void printExtractedValues(Site site, String attribute, CypherRule rule) {
 
         File dir = new File(Configuration.PATH_EXPRESSIVENESS + site.getPath() + "/extracted_values/");
         if (!dir.exists()) {
@@ -86,7 +90,7 @@ public class ExtractValues {
         try (Writer out = new FileWriter(dir.getAbsolutePath() + "/" + attribute + ".csv")) {
             String[] header = {"URL", "EXTRACTED VALUE"};
             try (CSVPrinter csvFilePrinter = new CSVPrinter(out, CSVFormat.EXCEL.withHeader(header))) {
-                Map<String, String> extractedValues = neo4j.extract(rule, "URL", "VALUE");
+                Map<String, String> extractedValues = neo4j.extract(rule.getQuery(), rule.getParams(), "URL", "VALUE");
                 for (String url : extractedValues.keySet()) {
                     List<String> studentDataRecord = new ArrayList<>();
                     studentDataRecord.add(url);

@@ -41,6 +41,8 @@ public abstract class Neo4jHandler {
 
     public abstract Iterator<Map<String, Object>> executeCypher(String cypher);
 
+    public abstract Iterator<Map<String, Object>> executeCypher(String cypher, Map<String, Object> params);
+
     /**
      *
      * @param properties
@@ -49,7 +51,7 @@ public abstract class Neo4jHandler {
     public Node insertNode(Map<String, String> properties) {
 
         Node node = graphDb.createNode();
-        
+
         for (String key : properties.keySet()) {
             node.setProperty(key, properties.get(key));
         }
@@ -85,15 +87,25 @@ public abstract class Neo4jHandler {
         }
     }
 
-    public List<Object> querySingleColumn(String cypherQuery, String columnName) {
+    public List<Object> querySingleColumn(String cypherQuery, Map<String, Object> parameters, String columnName) {
         List<Object> results = new ArrayList<>();
 
-        Iterator<Map<String, Object>> iterator = executeCypher(cypherQuery);
+        Iterator<Map<String, Object>> iterator;
+        if (parameters == null) {
+            iterator = executeCypher(cypherQuery);
+        } else {
+            iterator = executeCypher(cypherQuery, parameters);
+        }
+        
         while (iterator.hasNext()) {
             Map<String, Object> st = iterator.next();
             results.add(st.get(columnName));
         }
         return results;
+    }
+
+    public List<Object> querySingleColumn(String cypherQuery, String columnName) {
+        return querySingleColumn(cypherQuery, null, columnName);
     }
 
     /**
@@ -103,9 +115,19 @@ public abstract class Neo4jHandler {
      * ExtractedValue>).
      */
     public Map<String, String> extract(String cypherRule, String keyColumn, String valueColumn) {
+        return extract(cypherRule, null, keyColumn, valueColumn);
+    }
+
+    public Map<String, String> extract(String cypherRule, Map<String, Object> params, String keyColumn, String valueColumn) {
         Map<String, String> extractedValues = new HashMap<>();
 
-        Iterator<Map<String, Object>> iterator = executeCypher(cypherRule);
+        Iterator<Map<String, Object>> iterator;
+        if (params == null) {
+            iterator = executeCypher(cypherRule);
+        } else {
+            iterator = executeCypher(cypherRule, params);
+        }
+
         while (iterator.hasNext()) {
             Map<String, Object> map = iterator.next();
             extractedValues.put(map.get(keyColumn).toString(), map.get(valueColumn).toString());
@@ -130,5 +152,4 @@ public abstract class Neo4jHandler {
     public Transaction beginTx() {
         return graphDb.beginTx();
     }
-    
 }

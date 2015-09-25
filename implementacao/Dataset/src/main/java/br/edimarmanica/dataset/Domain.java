@@ -37,4 +37,5 @@ public interface Domain {
     public Attribute[] getAttributes();
     
     public Site[] getSites();
+    
 }
