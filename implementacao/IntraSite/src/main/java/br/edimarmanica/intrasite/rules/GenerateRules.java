@@ -11,10 +11,13 @@ import br.edimarmanica.expressiveness.generate.beans.CypherRule;
 import br.edimarmanica.extractionrules.neo4j.Neo4jHandler;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 /**
+ * Quando a base é muito grande, divide a consulta. Fazendo uma consulta para
+ * cada Unique_path distinto
  *
  * @author edimar
  */
@@ -37,18 +40,27 @@ public class GenerateRules {
     private void generate() {
         rules = new HashSet<>();
 
-        //selecionar o nodo template mais próximo para cada CandValue
-        // O problema dessa regra é que pega mais de um nodo template para o mesmo nodo valor
-        //String cypherQuery = "MATCH p=shortestpath((l:Template)-[*.." + MAX_LENGHT + "]-(v:CandValue)) RETURN DISTINCT length(p) as lenght, l.VALUE as label, l.UNIQUE_PATH as UP_label, v.UNIQUE_PATH as UP_value LIMIT 3";
+        //Seleciona os CandValue com o mesmo UNIQUE_PATH
+        String cypherQuery = "match (v:CandValue) return v.UNIQUE_PATH as UP_value, collect(id(v)) as ids";
+        Iterator<Map<String, Object>> iteratorUP = neo4j.executeCypher(cypherQuery);
 
-        //O problema dessa regra é que para um unique_path de valor só retorna um label (aquele mais próximo e com mais URLs). Isso pode dar problema na variação de template
-        String cypherQuery = "MATCH p=shortestpath((l:Template)-[*.." + IntrasiteExtraction.MAX_DISTANCE + "]-(v:CandValue)) WITH v.UNIQUE_PATH as UP_value, l.VALUE as label, l.UNIQUE_PATH as UP_label, length(p) as len, count(DISTINCT v.URL) AS qtd ORDER BY len, qtd DESC  RETURN UP_value, head(collect(label)[0..1]) as label, head(collect(UP_label)[0..1]) as UP_label ";
-        Iterator<Map<String, Object>> iterator = neo4j.executeCypher(cypherQuery);
-        while (iterator.hasNext()) {
-            Map<String, Object> map = iterator.next();
-            CypherNotation cypherNotation = new CypherNotation(map.get("label").toString(), map.get("UP_label").toString(), map.get("UP_value").toString());
-            CypherRule notacao = cypherNotation.getNotation();
-            rules.add(notacao);
+        while (iteratorUP.hasNext()) { //para cada CandValue com o mesmo UNIQUE_PATH
+            Map<String, Object> map = iteratorUP.next();
+            List<Long> ids = (List) map.get("ids");
+            String in = "[";
+            for (Long id : ids) {
+                in += id + ",";
+            }
+            in = in.substring(0, in.length() - 1) + "]"; //tirando última virgula e colocando o ]
+
+            //O problema dessa regra é que para um unique_path de valor só retorna um label (aquele mais próximo e com mais URLs). Isso pode dar problema na variação de template
+            cypherQuery = "MATCH p=shortestpath((l:Template)-[*.." + IntrasiteExtraction.MAX_DISTANCE + "]-(v:CandValue)) WHERE id(v) in " + in + " WITH v.UNIQUE_PATH as UP_value, l.VALUE as label, l.UNIQUE_PATH as UP_label, length(p) as len, count(DISTINCT v.URL) AS qtd ORDER BY len, qtd DESC  RETURN UP_value, head(collect(label)[0..1]) as label, head(collect(UP_label)[0..1]) as UP_label ";
+            Iterator<Map<String, Object>> iteratorLABEL = neo4j.executeCypher(cypherQuery);
+            while (iteratorLABEL.hasNext()) {
+                Map<String, Object> mapLabel = iteratorLABEL.next();
+                CypherNotation cypherNotation = new CypherNotation(mapLabel.get("label").toString(), mapLabel.get("UP_label").toString(), mapLabel.get("UP_value").toString());
+                rules.add(cypherNotation.getNotation());
+            }
         }
     }
 
