@@ -4,10 +4,10 @@
  */
 package br.edimarmanica.expressiveness.extract;
 
-import br.edimarmanica.dataset.Configuration;
+import br.edimarmanica.configuration.General;
+import br.edimarmanica.configuration.Paths;
 import br.edimarmanica.dataset.Site;
 import br.edimarmanica.expressiveness.generate.GenerateRules;
-import static br.edimarmanica.expressiveness.generate.GenerateRules.getRules;
 import br.edimarmanica.expressiveness.generate.beans.CypherRule;
 import br.edimarmanica.extractionrules.neo4j.Neo4jHandler;
 import br.edimarmanica.extractionrules.neo4j.Neo4jHandlerType;
@@ -37,11 +37,9 @@ public class ExtractValues {
 
     private Neo4jHandler neo4j;
     private Site site;
-    private Neo4jHandlerType type;
 
-    public ExtractValues(Site site, Neo4jHandlerType type) {
+    public ExtractValues(Site site) {
         this.site = site;
-        this.type = type;
     }
 
     /**
@@ -52,7 +50,7 @@ public class ExtractValues {
     private Map<String, String> loadRules() {
         Map<String, String> rules = new HashMap<>();
 
-        try (Reader in = new FileReader(Configuration.PATH_EXPRESSIVENESS + site.getPath() + "/generated_rules.csv")) {
+        try (Reader in = new FileReader(Paths.PATH_EXPRESSIVENESS + site.getPath() + "/generated_rules.csv")) {
             try (CSVParser parser = new CSVParser(in, CSVFormat.EXCEL.withHeader())) {
                 for (CSVRecord record : parser) {
                     rules.put(record.get("ATTRIBUTE"), record.get("RULE"));
@@ -67,7 +65,7 @@ public class ExtractValues {
     }
 
     public void printExtractedValues() {
-        neo4j = Neo4jHandler.getInstance(type, site);
+        neo4j = Neo4jHandler.getInstance(site);
         //Map<String, String> rules = loadRules();
         Map<String, CypherRule> rules = GenerateRules.getRules(site);
 
@@ -75,14 +73,14 @@ public class ExtractValues {
             printExtractedValues(site, attr, rules.get(attr));
         }
 
-        if (type == Neo4jHandlerType.LOCAL) {
+        if (General.NEO4J_TYPE == Neo4jHandlerType.LOCAL) {
             neo4j.shutdown();
         }
     }
 
     private void printExtractedValues(Site site, String attribute, CypherRule rule) {
 
-        File dir = new File(Configuration.PATH_EXPRESSIVENESS + site.getPath() + "/extracted_values/");
+        File dir = new File(Paths.PATH_EXPRESSIVENESS + site.getPath() + "/extracted_values/");
         if (!dir.exists()) {
             dir.mkdir();
         }
@@ -104,7 +102,7 @@ public class ExtractValues {
     }
 
     public static void main(String[] args) {
-        ExtractValues extract = new ExtractValues(br.edimarmanica.dataset.weir.finance.Site.BIGCHARTS, Neo4jHandlerType.LOCAL);
+        ExtractValues extract = new ExtractValues(br.edimarmanica.dataset.weir.finance.Site.BIGCHARTS);
         extract.printExtractedValues();
     }
 }

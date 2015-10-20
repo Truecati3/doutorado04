@@ -4,8 +4,9 @@
  */
 package br.edimarmanica.expressiveness.evaluate;
 
+import br.edimarmanica.configuration.General;
+import br.edimarmanica.configuration.Paths;
 import br.edimarmanica.dataset.Attribute;
-import br.edimarmanica.dataset.Configuration;
 import br.edimarmanica.dataset.Site;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -35,7 +36,6 @@ import org.apache.commons.csv.CSVRecord;
 public class EvaluateWEIR {
 
     private Site site;
-    private static final String LOCAL_SEPARATOR = "&_&";
 
     public EvaluateWEIR(Site site) {
         this.site = site;
@@ -44,10 +44,10 @@ public class EvaluateWEIR {
     private Set<String> loadMyResults(Attribute attribute) {
         Set<String> values = new HashSet<>();
 
-        try (Reader in = new FileReader(Configuration.PATH_EXPRESSIVENESS + site.getPath() + "/extracted_values/" + attribute.getAttributeID() + ".csv")) {
+        try (Reader in = new FileReader(Paths.PATH_EXPRESSIVENESS + site.getPath() + "/extracted_values/" + attribute.getAttributeID() + ".csv")) {
             try (CSVParser parser = new CSVParser(in, CSVFormat.EXCEL.withHeader())) {
                 for (CSVRecord record : parser) {
-                    values.add(record.get("URL") + LOCAL_SEPARATOR + record.get("EXTRACTED VALUE"));
+                    values.add(record.get("URL") + General.SEPARADOR + record.get("EXTRACTED VALUE"));
                 }
             }
         } catch (FileNotFoundException ex) {
@@ -61,14 +61,14 @@ public class EvaluateWEIR {
     private Set<String> loadGroundTruth(Attribute attribute) throws SiteWithoutThisAttribute {
         Set<String> values = new HashSet<>();
 
-        try (Reader in = new FileReader(Configuration.PATH_BASE + site.getGroundTruthPath())) {
+        try (Reader in = new FileReader(Paths.PATH_BASE + site.getGroundTruthPath())) {
             try (CSVParser parser = new CSVParser(in, CSVFormat.EXCEL.withHeader())) {
                 for (CSVRecord record : parser) {
                     if (!record.isMapped(attribute.getAttributeIDbyDataset())) {
                         throw new SiteWithoutThisAttribute(attribute.getAttributeID(), site.getFolderName());
                     }
                     if (!record.get(attribute.getAttributeIDbyDataset()).trim().isEmpty()) {
-                        values.add(Configuration.PATH_BASE + site.getDomain().getDataset().getFolderName() + "/" + record.get("url") + LOCAL_SEPARATOR + record.get(attribute.getAttributeIDbyDataset()));
+                        values.add(Paths.PATH_BASE + site.getDomain().getDataset().getFolderName() + "/" + record.get("url") + General.SEPARADOR + record.get(attribute.getAttributeIDbyDataset()));
                     }
                 }
             }
@@ -102,7 +102,7 @@ public class EvaluateWEIR {
          * ********************** results ******************
          */
         String[] header = {"DATASET", "DOMAIN", "SITE", "ATTRIBUTE", "RELEVANTS", "RETRIEVED", "RETRIEVED RELEVANTS", "RECALL", "PRECISION", "DATE"};
-        File file = new File(Configuration.PATH_EXPRESSIVENESS + "/" + site.getPath() + "/result.csv");
+        File file = new File(Paths.PATH_EXPRESSIVENESS + "/" + site.getPath() + "/result.csv");
         CSVFormat format;
         if (append) {
             format = CSVFormat.EXCEL;
@@ -132,7 +132,7 @@ public class EvaluateWEIR {
         /**
          * ********************** log ******************
          */
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(Configuration.PATH_EXPRESSIVENESS + "/" + site.getPath() + "/log.txt", true))) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(Paths.PATH_EXPRESSIVENESS + "/" + site.getPath() + "/log.txt", true))) {
             bw.write("\n\n*************" + formattedDate + " - " + attribute.getAttributeID() + "********************************\n");
             bw.write("dataset;" + site.getDomain().getDataset().getFolderName() + ";domain;" + site.getDomain().getFolderName()
                     + ";site;" + site.getFolderName() + ";attribute;" + attribute.getAttributeID() + ";relevantes;" + groundtruth.size() + ";recuperados;" + results.size() + ";relevantes recuperados; " + intersection.size() + ";recall;" + recall + ";precision;" + precision + ";date;" + formattedDate);
@@ -141,7 +141,7 @@ public class EvaluateWEIR {
             bw.write("Relevantes não recuperados (Problema de recall):\n");
             for (String rel : groundtruth) {
                 if (!results.contains(rel)) {
-                    String[] partes = rel.split(LOCAL_SEPARATOR);
+                    String[] partes = rel.split(General.SEPARADOR);
                     bw.write("Faltando: [" + partes[1] + "] na página: " + partes[0]);
                     bw.newLine();
                 }
@@ -150,7 +150,7 @@ public class EvaluateWEIR {
             bw.write("Irrelevantes recuperados (Problema de precision):\n");
             for (String rel : results) {
                 if (!groundtruth.contains(rel)) {
-                    String[] partes = rel.split(LOCAL_SEPARATOR);
+                    String[] partes = rel.split(General.SEPARADOR);
                     bw.write("Faltando: [" + partes[1] + "] na página: " + partes[0]);
                     bw.newLine();
                 }

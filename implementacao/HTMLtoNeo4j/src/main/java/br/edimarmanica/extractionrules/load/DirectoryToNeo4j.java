@@ -4,7 +4,8 @@
  */
 package br.edimarmanica.extractionrules.load;
 
-import br.edimarmanica.dataset.Configuration;
+import br.edimarmanica.configuration.General;
+import br.edimarmanica.configuration.Paths;
 import br.edimarmanica.dataset.Site;
 import br.edimarmanica.extractionrules.neo4j.Neo4jHandler;
 import br.edimarmanica.extractionrules.neo4j.Neo4jHandlerLocal;
@@ -25,34 +26,31 @@ public class DirectoryToNeo4j {
 
     private Neo4jHandler neo4j;
     private Site site;
-    private Neo4jHandlerType type;
 
     /**
      *
      * @param dir directory with pages to be loaded
      * @param deleteCurrentDatabase if we should delete current database
      */
-    public DirectoryToNeo4j(Site site, boolean deleteCurrentDatabase, Neo4jHandlerType type) {
+    public DirectoryToNeo4j(Site site, boolean deleteCurrentDatabase) {
 
-        if (deleteCurrentDatabase && type == Neo4jHandlerType.LOCAL) {
+        if (deleteCurrentDatabase && General.NEO4J_TYPE == Neo4jHandlerType.LOCAL) {
             Neo4jHandlerLocal.deleteDatabase(site);
         }
 
         this.site = site;
-        this.type = type;
     }
-
 
     public void loadPages() throws FileNotFoundException {
 
 
-        File fDir = new File(Configuration.PATH_BASE + "/" + site.getPath());
+        File fDir = new File(Paths.PATH_BASE + "/" + site.getPath());
 
         int i = 0;
         for (File f : fDir.listFiles()) {
 
             if (i % 10 == 0) {//para efeciencia. A cada 10 páginas para, fecha o banco, assim libera um pouco de memória
-                neo4j = Neo4jHandler.getInstance(type, site);
+                neo4j = Neo4jHandler.getInstance(site);
             }
             try (Transaction tx1 = neo4j.beginTx()) {
 
@@ -60,16 +58,18 @@ public class DirectoryToNeo4j {
                  i++;
                  continue;
                  }*/
-                printMemoryInfo();
 
-                System.out.println("i: " + i + "-" + f.getAbsolutePath());
+                if (General.DEBUG) {
+                    printMemoryInfo();
+                    System.out.println("i: " + i + "-" + f.getAbsolutePath());
+                }
                 loadPage(f);
                 i++;
                 tx1.success();
                 tx1.close();
             }
             if (i % 10 == 0) { //para efeciencia. A cada 10 páginas para, fecha o banco, assim libera um pouco de memória
-                if (type == Neo4jHandlerType.LOCAL) {
+                if (General.NEO4J_TYPE == Neo4jHandlerType.LOCAL) {
                     neo4j.shutdown();
                     neo4j = null;
                     System.gc();
@@ -100,16 +100,11 @@ public class DirectoryToNeo4j {
 
     public static void main(String[] args) {
         Site site = br.edimarmanica.dataset.weir.book.Site.BOOKSANDEBOOKS;
-        DirectoryToNeo4j load = new DirectoryToNeo4j(site, true, Neo4jHandlerType.LOCAL);
+        DirectoryToNeo4j load = new DirectoryToNeo4j(site, true);
         try {
             load.loadPages();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(DirectoryToNeo4j.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        /**
-         * fechar ResourceIterator:
-         * http://neo4j.com/docs/stable/tutorials-java-embedded-resource-iteration.html
-         */
     }
 }

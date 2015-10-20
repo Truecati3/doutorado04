@@ -4,8 +4,8 @@
  */
 package br.edimarmanica.expressiveness.tool;
 
-import br.edimarmanica.dataset.Configuration;
-import br.edimarmanica.expressiveness.tool.Controller;
+import br.edimarmanica.configuration.General;
+import br.edimarmanica.configuration.Paths;
 import br.edimarmanica.dataset.Dataset;
 import br.edimarmanica.dataset.Domain;
 import br.edimarmanica.dataset.Site;
@@ -23,8 +23,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 
 /**
  *
@@ -39,7 +37,6 @@ public class Tela extends javax.swing.JFrame {
         initComponents();
 
         jCBDataset.setModel(new DefaultComboBoxModel(Dataset.values()));
-        jcbNeo4j.setModel(new DefaultComboBoxModel(Neo4jHandlerType.values()));
     }
 
     /**
@@ -75,8 +72,6 @@ public class Tela extends javax.swing.JFrame {
         jbtEvaluate = new javax.swing.JButton();
         jbtDelete = new javax.swing.JButton();
         jbtLoad = new javax.swing.JButton();
-        jLabel7 = new javax.swing.JLabel();
-        jcbNeo4j = new javax.swing.JComboBox();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -130,7 +125,7 @@ public class Tela extends javax.swing.JFrame {
 
         jLabel6.setText("View:");
 
-        jcbView.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Nada", "Attribute Info", "Generated Rules", "Results", "Extraction Log", "Gabarito" }));
+        jcbView.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Nada", "Attribute Info", "Generated Rules", "Results", "Extraction Log", "Gabarito", "Nr Loaded Pages" }));
         jcbView.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcbViewActionPerformed(evt);
@@ -192,8 +187,6 @@ public class Tela extends javax.swing.JFrame {
             }
         });
 
-        jLabel7.setText("NEO4J:");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -223,11 +216,7 @@ public class Tela extends javax.swing.JFrame {
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(jLabel4)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jCBSite, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(20, 20, 20)
-                                                .addComponent(jLabel7)
-                                                .addGap(2, 2, 2)
-                                                .addComponent(jcbNeo4j, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(jCBSite, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addGroup(layout.createSequentialGroup()
                                                 .addComponent(jbtDelete)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -263,9 +252,7 @@ public class Tela extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(jCBDomain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
-                    .addComponent(jCBSite, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7)
-                    .addComponent(jcbNeo4j, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jCBSite, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(4, 4, 4)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtDelete)
@@ -312,7 +299,7 @@ public class Tela extends javax.swing.JFrame {
         // TODO add your handling code here:
         Controller controller = new Controller(this);
         try {
-            controller.printAttributeInfo((Site) jCBSite.getSelectedItem(), (Neo4jHandlerType) jcbNeo4j.getSelectedItem());
+            controller.printAttributeInfo((Site) jCBSite.getSelectedItem());
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Tela.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -340,7 +327,7 @@ public class Tela extends javax.swing.JFrame {
                 break;
             case "Attribute Info":
                 try {
-                    Controller.csvToJTable(jtbView, new File(Configuration.PATH_EXPRESSIVENESS + "/" + site.getPath() + "/attributes_info.csv"));
+                    Controller.csvToJTable(jtbView, new File(Paths.PATH_EXPRESSIVENESS + "/" + site.getPath() + "/attributes_info.csv"));
                 } catch (FileNotFoundException ex) {
                     JOptionPane.showMessageDialog(this, "Problemas!");
                     Logger.getLogger(Tela.class.getName()).log(Level.SEVERE, null, ex);
@@ -351,7 +338,7 @@ public class Tela extends javax.swing.JFrame {
                 break;
             case "Generated Rules":
                 try {
-                    Controller.csvToJTable(jtbView, new File(Configuration.PATH_EXPRESSIVENESS + "/" + site.getPath() + "/generated_rules.csv"));
+                    Controller.csvToJTable(jtbView, new File(Paths.PATH_EXPRESSIVENESS + "/" + site.getPath() + "/generated_rules.csv"));
                 } catch (FileNotFoundException ex) {
                     Logger.getLogger(Tela.class.getName()).log(Level.SEVERE, null, ex);
                     JOptionPane.showMessageDialog(this, "Problemas!");
@@ -362,7 +349,7 @@ public class Tela extends javax.swing.JFrame {
                 break;
             case "Results":
                 try {
-                    Controller.csvToJTable(jtbView, new File(Configuration.PATH_EXPRESSIVENESS + "/" + site.getPath() + "/result.csv"));
+                    Controller.csvToJTable(jtbView, new File(Paths.PATH_EXPRESSIVENESS + "/" + site.getPath() + "/result.csv"));
                 } catch (FileNotFoundException ex) {
                     Logger.getLogger(Tela.class.getName()).log(Level.SEVERE, null, ex);
                     JOptionPane.showMessageDialog(this, "Problemas!");
@@ -373,7 +360,7 @@ public class Tela extends javax.swing.JFrame {
                 break;
             case "Extraction Log":
                 try {
-                    Controller.txtToJTextArea(jtaLog, new File(Configuration.PATH_EXPRESSIVENESS + "/" + site.getPath() + "/log.txt"));
+                    Controller.txtToJTextArea(jtaLog, new File(Paths.PATH_EXPRESSIVENESS + "/" + site.getPath() + "/log.txt"));
                 } catch (FileNotFoundException ex) {
                     JOptionPane.showMessageDialog(this, "Problemas!");
                     Logger.getLogger(Tela.class.getName()).log(Level.SEVERE, null, ex);
@@ -384,10 +371,18 @@ public class Tela extends javax.swing.JFrame {
                 break;
             case "Gabarito":
                 try {
-                    Runtime.getRuntime().exec("soffice --calc " + Configuration.PATH_BASE + "/" + site.getGroundTruthPath());
+                    Runtime.getRuntime().exec("soffice --calc " + Paths.PATH_BASE + "/" + site.getGroundTruthPath());
                 } catch (IOException ex) {
                     Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                break;
+            case "Nr Loaded Pages":
+                Neo4jHandler neo4j = new Neo4jHandlerLocal(site);
+                 String columnName = "NR_URLS_LOADED";
+                String cypherQuery = "MATCH n RETURN COUNT(DISTINCT n.URL) AS " + columnName;
+                jtaLog.setText("***********************");
+                jtaLog.setText("Number of loaded pages for "+site.getFolderName()+": "+neo4j.querySingleColumn(cypherQuery, columnName).get(0).toString());
+                neo4j.shutdown();
                 break;
             default:
                 break;
@@ -414,9 +409,7 @@ public class Tela extends javax.swing.JFrame {
             return;
         }
         
-        Neo4jHandlerType type = (Neo4jHandlerType) jcbNeo4j.getSelectedItem();
-        
-        ExtractValues extract = new ExtractValues(site, type);
+        ExtractValues extract = new ExtractValues(site);
         extract.printExtractedValues();
         extract = null;
         System.gc();
@@ -445,8 +438,7 @@ public class Tela extends javax.swing.JFrame {
             return;
         }
 
-        Neo4jHandlerType type = (Neo4jHandlerType) jcbNeo4j.getSelectedItem();
-        if (type == Neo4jHandlerType.LOCAL) {
+        if (General.NEO4J_TYPE == Neo4jHandlerType.LOCAL) {
             Neo4jHandlerLocal.deleteDatabase(site);
             jtaLog.append("\n**** Current database deleted!");
         }else{
@@ -462,9 +454,7 @@ public class Tela extends javax.swing.JFrame {
             return;
         }
         
-        Neo4jHandlerType type = (Neo4jHandlerType) jcbNeo4j.getSelectedItem();
-        
-        DirectoryToNeo4j load = new DirectoryToNeo4j(site, false, type);
+        DirectoryToNeo4j load = new DirectoryToNeo4j(site, false);
         try {
             load.loadPages();
             jtaLog.append("\n**** HTML pages loaded to Neo4J!");
@@ -522,7 +512,6 @@ public class Tela extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -533,7 +522,6 @@ public class Tela extends javax.swing.JFrame {
     private javax.swing.JButton jbtGenerateRules;
     private javax.swing.JButton jbtLoad;
     private javax.swing.JButton jbtView;
-    private javax.swing.JComboBox jcbNeo4j;
     private javax.swing.JComboBox jcbView;
     protected javax.swing.JTextArea jtaLog;
     private javax.swing.JTable jtbView;

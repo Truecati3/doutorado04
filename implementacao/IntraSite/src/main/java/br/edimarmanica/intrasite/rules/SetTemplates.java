@@ -16,15 +16,13 @@ public class SetTemplates {
 
     private Neo4jHandler neo4j;
     private Site site;
-    private Neo4jHandlerType type;
 
-    public SetTemplates(Site site, Neo4jHandlerType type) {
+    public SetTemplates(Site site) {
         this.site = site;
-        this.type = type;
     }
 
     public void execute() {
-        neo4j = Neo4jHandler.getInstance(type, site);
+        neo4j = Neo4jHandler.getInstance(site);
         findTemplates();
         findCandidateValues();
         neo4j.shutdown();

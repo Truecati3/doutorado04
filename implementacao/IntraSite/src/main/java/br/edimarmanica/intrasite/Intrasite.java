@@ -4,10 +4,10 @@
  */
 package br.edimarmanica.intrasite;
 
+import br.edimarmanica.configuration.General;
 import br.edimarmanica.intrasite.rules.SetTemplates;
 import br.edimarmanica.dataset.Site;
 import br.edimarmanica.expressiveness.generate.beans.CypherRule;
-import br.edimarmanica.extractionrules.neo4j.Neo4jHandlerType;
 import br.edimarmanica.intrasite.extract.ExtractValues;
 import br.edimarmanica.intrasite.filter.NullValuesFilter;
 import br.edimarmanica.intrasite.filter.TemplateNodesFilter;
@@ -19,34 +19,52 @@ import java.util.Set;
  * @author edimar
  */
 public class Intrasite {
-    public static void main(String[] args) {
-        Site site = br.edimarmanica.dataset.weir.book.Site.BOOKSANDEBOOKS;
-        Neo4jHandlerType type = Neo4jHandlerType.LOCAL;
-       
+
+    public void execute(Site site) {
+
+        if (General.DEBUG) {
+            System.out.println("Start INTRASITE");
+            System.out.println(">> SetTemplates");
+        }
         //Define template nodes and candidate value nodes
-//        System.out.println("Set templates");
-//        SetTemplates st = new SetTemplates(site, type);
-//        st.execute(); 
-        
-        /** Generate candidate rules **/
-        System.out.println("Generate rules");
-        GenerateRules gr = new GenerateRules(site, type);
+        SetTemplates st = new SetTemplates(site);
+        st.execute();
+
+        if (General.DEBUG) {
+            System.out.println(">> GenerateRules");
+        }
+        //Generate candidate rules
+        GenerateRules gr = new GenerateRules(site);
         gr.execute();
         Set<CypherRule> rules = gr.getRules();
-        
-        /** NullValuesFilter **/
-        System.out.println("Nullvalues filter");
-        NullValuesFilter nvfilter = new NullValuesFilter(site, type);
+
+        if (General.DEBUG) {
+            System.out.println(">>>> Generated rules: " + rules.size());
+            System.out.println(">> NullValuesFilter");
+        }
+        //NullValuesFilter
+        NullValuesFilter nvfilter = new NullValuesFilter(site);
         rules = nvfilter.filter(rules);
-        
-        /** TEmplateNodesFilter **/
-        System.out.println("Templatenodes filter");
-        TemplateNodesFilter tnfilter = new TemplateNodesFilter(site, type);
+
+        if (General.DEBUG) {
+            System.out.println(">>>> Remaining rules: " + rules.size());
+            System.out.println(">> TemplateNodesFilter");
+        }
+
+        //TEmplateNodesFilter
+        TemplateNodesFilter tnfilter = new TemplateNodesFilter(site);
         rules = tnfilter.filter(rules);
-        
-        /*** ExtractValues **/
-        System.out.println("Extract Values");
-        ExtractValues extractor = new ExtractValues(site, type, rules);
+
+        if (General.DEBUG) {
+            System.out.println(">>>> Remaining rules: " + rules.size());
+            System.out.println(">> ExtractValues");
+        }
+        // ExtractValues 
+        ExtractValues extractor = new ExtractValues(site, rules);
         extractor.printExtractedValues();
+
+        if (General.DEBUG) {
+            System.out.println("End INTRASITE");
+        }
     }
 }

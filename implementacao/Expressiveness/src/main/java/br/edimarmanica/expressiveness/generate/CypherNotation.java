@@ -7,7 +7,6 @@ package br.edimarmanica.expressiveness.generate;
 import br.edimarmanica.expressiveness.generate.beans.CypherRule;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  *

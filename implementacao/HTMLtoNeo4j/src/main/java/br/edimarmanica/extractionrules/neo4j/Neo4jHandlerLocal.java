@@ -4,7 +4,7 @@
  */
 package br.edimarmanica.extractionrules.neo4j;
 
-import br.edimarmanica.dataset.Configuration;
+import br.edimarmanica.configuration.Paths;
 import br.edimarmanica.dataset.Site;
 import java.io.IOException;
 import java.util.HashMap;
@@ -23,7 +23,6 @@ import org.neo4j.kernel.impl.util.StringLogger;
  */
 public class Neo4jHandlerLocal extends Neo4jHandler {
 
-    //public final static String DB_PATH = "/home/edimar/neo4j-community-2.2.3/data/graph.db"; //cuidar versão neo4j
     private final static String DB_FILE_NAME = "graph.db";
     private ExecutionEngine engine;
 
@@ -49,7 +48,7 @@ public class Neo4jHandlerLocal extends Neo4jHandler {
     }
 
     private static String getDBPath(Site site) {
-        return Configuration.PARTIAL_DB_PATH + site.getPath() + "/" + DB_FILE_NAME;
+        return Paths.PARTIAL_DB_PATH + site.getPath() + "/" + DB_FILE_NAME;
     }
 
     @Override

@@ -4,13 +4,12 @@
  */
 package br.edimarmanica.intrasite.filter;
 
+import br.edimarmanica.configuration.IntrasiteExtraction;
 import br.edimarmanica.dataset.Site;
 import br.edimarmanica.expressiveness.generate.beans.CypherRule;
-import br.edimarmanica.extractionrules.neo4j.Neo4jHandlerType;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 
 /**
  *
@@ -18,11 +17,8 @@ import java.util.Set;
  */
 public class NullValuesFilter extends RulesFilter {
 
-    private static final double PR_NULL_VALUES = 80; //percentual máximo de null values admitido para uma regra
-    private boolean DEBUG = false;
-
-    public NullValuesFilter(Site site, Neo4jHandlerType type) {
-        super(site, type);
+    public NullValuesFilter(Site site) {
+        super(site);
     }
 
     private long getNrPages() {
@@ -44,12 +40,8 @@ public class NullValuesFilter extends RulesFilter {
 
         int i = 0;
         for (CypherRule rule : rules) {
-            
-            if (DEBUG) {
-                System.out.println("Filtrando regra[" + i + "]: " + rule.getQueryWithoutParameters());
-            }
 
-            if (((nrPages - findNrNotNullPages(rule)) * 100 / nrPages) <= PR_NULL_VALUES) {
+            if (((nrPages - findNrNotNullPages(rule)) * 100 / nrPages) <= IntrasiteExtraction.PR_NULL_VALUES) {
                 rulesFiltered.add(rule);
             }
             i++;

@@ -4,11 +4,14 @@
  */
 package br.edimarmanica.extractionrules.load;
 
+import br.edimarmanica.configuration.Html2Neo4j;
 import br.edimarmanica.dataset.weir.videogame.Site;
 import br.edimarmanica.extractionrules.neo4j.Neo4jHandler;
 import br.edimarmanica.extractionrules.neo4j.Neo4jHandlerLocal;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.logging.Level;
@@ -20,8 +23,6 @@ import org.dom4j.io.DOMReader;
 import org.neo4j.graphdb.Transaction;
 import org.xml.sax.SAXException;
 import org.cyberneko.html.parsers.DOMParser;
-import org.xml.sax.SAXNotRecognizedException;
-import org.xml.sax.SAXNotSupportedException;
 
 /**
  *
@@ -47,12 +48,14 @@ public class HtmlToNeo4j {
             Node child = (Node) i.next();
 
             if (child.getNodeType() == Node.ELEMENT_NODE) {
-                
-                /** blacklist **/
-                if (child.getName().toLowerCase().equals("script") || child.getName().toLowerCase().equals("head")){
+
+                /**
+                 * blacklist *
+                 */
+                if (new HashSet<>(Arrays.asList(Html2Neo4j.BLACK_TAGS)).contains(child.getName().toLowerCase())) {
                     continue;
                 }
-                
+
                 org.neo4j.graphdb.Node newNeo4jNode;
                 try {
                     newNeo4jNode = insertNeo4j(child, neo4jNode);
@@ -97,12 +100,8 @@ public class HtmlToNeo4j {
      * @return the neo4j node inserted
      */
     private org.neo4j.graphdb.Node insertNeo4j(Node node, org.neo4j.graphdb.Node parentNodeNeo4j) throws InvalidTextNode {
-       // System.out.println("Inserindo nodo: " + node.getName());
-        /**
-         * filtros *
-         */
-        //if (!t.getText().replaceAll("(\\s)+", "").trim().isEmpty()) {
-        //if (t.getParent().getName().toLowerCase().equals("script")) {
+        // System.out.println("Inserindo nodo: " + node.getName());
+
         Map<String, String> properties = new HashMap<>();
 
         if (node.getNodeType() == Node.ELEMENT_NODE) {
@@ -128,11 +127,7 @@ public class HtmlToNeo4j {
 
     private Document getDocument() {
         DOMParser parser = new DOMParser();
-        try {
-            parser.setFeature("http://xml.org/sax/features/namespaces", false);
-        } catch (SAXNotRecognizedException | SAXNotSupportedException ex) {
-            Logger.getLogger(HtmlToNeo4j.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
         try {
             // parser.parse(new org.xml.sax.InputSource(new InputStreamReader(new FileInputStream(url), "ISO-8859-15")));
             parser.parse(url);
@@ -147,7 +142,7 @@ public class HtmlToNeo4j {
     public static void main(String[] args) {
 
         Neo4jHandler neo4j = new Neo4jHandlerLocal(Site.CDUNIVERSE);
-        
+
         try (Transaction tx1 = neo4j.beginTx()) {
             HtmlToNeo4j html = new HtmlToNeo4j("/media/Dados/bases/0001049305.html", neo4j);
             html.insertAllNodes();
@@ -155,7 +150,5 @@ public class HtmlToNeo4j {
             tx1.close();
             neo4j.shutdown();
         }
-
-
     }
 }

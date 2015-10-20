@@ -4,7 +4,8 @@
  */
 package br.edimarmanica.extractionrules.load;
 
-import br.edimarmanica.extractionrules.Config;
+import br.edimarmanica.configuration.Html2Neo4j;
+
 
 /**
  *
@@ -32,7 +33,7 @@ public class FormatTextNode {
         }
         
         //muito grande
-        if (value.length() > Config.TEXT_NODE_MAX_LENGHT){
+        if (value.length() > Html2Neo4j.TEXT_NODE_MAX_LENGHT){
             throw new InvalidTextNode(value);
         }
         

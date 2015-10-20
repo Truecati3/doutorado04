@@ -17,10 +17,8 @@ import java.util.Set;
  */
 public class TemplateNodesFilter extends RulesFilter {
 
-    public static boolean DEBUG = false;
-
-    public TemplateNodesFilter(Site site, Neo4jHandlerType type) {
-        super(site, type);
+    public TemplateNodesFilter(Site site) {
+        super(site);
     }
 
     /**
@@ -35,10 +33,7 @@ public class TemplateNodesFilter extends RulesFilter {
 
         int i = 0;
         for (CypherRule rule : rules) {
-            if (DEBUG) {
-                System.out.println("Filtrando regra[" + i + "]: " + rule.getQueryWithoutParameters());
-            }
-
+           
             if (!containsTemplate(rule)) {
                 rulesFiltered.add(rule);
             }
@@ -69,7 +64,7 @@ public class TemplateNodesFilter extends RulesFilter {
         }
 
 
-        TemplateNodesFilter filter = new TemplateNodesFilter(br.edimarmanica.dataset.weir.book.Site.AMAZON, Neo4jHandlerType.LOCAL);
+        TemplateNodesFilter filter = new TemplateNodesFilter(br.edimarmanica.dataset.weir.book.Site.AMAZON);
         Set<CypherRule> rulesFiltered = filter.filter(rules);
         for (CypherRule rule : rulesFiltered) {
             System.out.println(rule);

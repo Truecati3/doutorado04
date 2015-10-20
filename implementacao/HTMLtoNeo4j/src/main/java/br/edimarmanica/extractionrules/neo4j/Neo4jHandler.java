@@ -4,6 +4,7 @@
  */
 package br.edimarmanica.extractionrules.neo4j;
 
+import br.edimarmanica.configuration.General;
 import br.edimarmanica.dataset.Site;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,10 +29,8 @@ public abstract class Neo4jHandler {
         this.site = site;
     }
 
-    public static Neo4jHandler getInstance(Neo4jHandlerType type, Site site) {
-        switch (type) {
-            case REMOTE:
-                return new Neo4jHandlerRemote(site);
+    public static Neo4jHandler getInstance(Site site) {
+        switch (General.NEO4J_TYPE) {
             case LOCAL:
                 return new Neo4jHandlerLocal(site);
             default:

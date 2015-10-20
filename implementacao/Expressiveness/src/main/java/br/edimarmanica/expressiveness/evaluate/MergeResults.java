@@ -4,7 +4,7 @@
  */
 package br.edimarmanica.expressiveness.evaluate;
 
-import br.edimarmanica.dataset.Configuration;
+import br.edimarmanica.configuration.Paths;
 import br.edimarmanica.dataset.Domain;
 import br.edimarmanica.dataset.Site;
 import java.io.File;
@@ -34,7 +34,7 @@ public class MergeResults {
     
     private void addMetricsSite(Site site) {
         
-        try (Reader in = new FileReader(Configuration.PATH_EXPRESSIVENESS + site.getPath() + "/result.csv")) {
+        try (Reader in = new FileReader(Paths.PATH_EXPRESSIVENESS + site.getPath() + "/result.csv")) {
             try (CSVParser parser = new CSVParser(in, CSVFormat.EXCEL.withHeader())) {
                 
                 for (CSVRecord record : parser) {
@@ -54,7 +54,7 @@ public class MergeResults {
     }
 
     private void add(Site site, List<String> dataRecord) {
-        File file = new File(Configuration.PATH_EXPRESSIVENESS + "/" + site.getDomain().getPath() + "/result.csv");
+        File file = new File(Paths.PATH_EXPRESSIVENESS + "/" + site.getDomain().getPath() + "/result.csv");
         CSVFormat format;
         if (append) {
             format = CSVFormat.EXCEL;

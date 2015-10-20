@@ -4,7 +4,8 @@
  */
 package br.edimarmanica.intrasite.extract;
 
-import br.edimarmanica.dataset.Configuration;
+import br.edimarmanica.configuration.General;
+import br.edimarmanica.configuration.Paths;
 import br.edimarmanica.dataset.Site;
 import br.edimarmanica.expressiveness.generate.beans.CypherRule;
 import br.edimarmanica.extractionrules.neo4j.Neo4jHandler;
@@ -30,12 +31,10 @@ public class ExtractValues {
 
     private Neo4jHandler neo4j;
     private Site site;
-    private Neo4jHandlerType type;
     private Set<CypherRule> rules;
 
-    public ExtractValues(Site site, Neo4jHandlerType type, Set<CypherRule> rules) {
+    public ExtractValues(Site site, Set<CypherRule> rules) {
         this.site = site;
-        this.type = type;
         this.rules = rules;
     }
 
@@ -43,7 +42,7 @@ public class ExtractValues {
         
         deleteCurrentRules();
         
-        neo4j = Neo4jHandler.getInstance(type, site);
+        neo4j = Neo4jHandler.getInstance(site);
 
         boolean append = false;
         int i = 0;
@@ -56,13 +55,13 @@ public class ExtractValues {
             i++;
         }
 
-        if (type == Neo4jHandlerType.LOCAL) {
+        if (General.NEO4J_TYPE == Neo4jHandlerType.LOCAL) {
             neo4j.shutdown();
         }
     }
 
     private void printRuleInfo(CypherRule rule, int ruleID, boolean append) {
-        File dir = new File(Configuration.PATH_INTRASITE + "/" + site.getPath());
+        File dir = new File(Paths.PATH_INTRASITE + "/" + site.getPath());
         if (!dir.exists()) {
             dir.mkdirs();
         }
@@ -94,7 +93,7 @@ public class ExtractValues {
 
     private void printExtractedValues(CypherRule rule, int i) {
 
-        File dir = new File(Configuration.PATH_INTRASITE + "/" + site.getPath() + "/extracted_values/");
+        File dir = new File(Paths.PATH_INTRASITE + "/" + site.getPath() + "/extracted_values/");
         if (!dir.exists()) {
             dir.mkdirs();
         }
@@ -118,7 +117,7 @@ public class ExtractValues {
     }
     
     private void deleteCurrentRules(){
-        File dir = new File(Configuration.PATH_INTRASITE + "/" + site.getPath() + "/extracted_values/");
+        File dir = new File(Paths.PATH_INTRASITE + "/" + site.getPath() + "/extracted_values/");
         if (dir.exists()) {
             for(File f: dir.listFiles()){
                 f.delete();

@@ -4,8 +4,9 @@
  */
 package br.edimarmanica.expressiveness.tool;
 
+import br.edimarmanica.configuration.General;
+import br.edimarmanica.configuration.Paths;
 import br.edimarmanica.dataset.Attribute;
-import br.edimarmanica.dataset.Configuration;
 import br.edimarmanica.dataset.Site;
 import br.edimarmanica.expressiveness.evaluate.EvaluateWEIR;
 import br.edimarmanica.extractionrules.neo4j.Neo4jHandler;
@@ -42,7 +43,6 @@ import org.apache.commons.csv.CSVRecord;
  */
 public class Controller {
 
-    private final String LOCAL_SEPARATOR = "!_!";
     private Tela frame;
     private static Set<String> urlsOpened = new HashSet<>();
     private Neo4jHandler neo4j;
@@ -56,7 +56,7 @@ public class Controller {
 
     private Map<Attribute, String> loadAttributes(Site site) {
         Map<Attribute, String> attrs = new HashMap<>(); //<Attribute,pair(URL$_$Value) of first page>
-        try (Reader in = new FileReader(Configuration.PATH_BASE + site.getGroundTruthPath())) {
+        try (Reader in = new FileReader(Paths.PATH_BASE + site.getGroundTruthPath())) {
             try (CSVParser parser = new CSVParser(in, CSVFormat.EXCEL.withHeader())) {
                 for (CSVRecord record : parser) {
                     for (Attribute attr : site.getDomain().getAttributes()) {
@@ -70,7 +70,7 @@ public class Controller {
                         }
 
                         if (!record.get(attr.getAttributeIDbyDataset()).trim().isEmpty()) {
-                            attrs.put(attr, Configuration.PATH_BASE + site.getDomain().getDataset().getFolderName() + "/" + record.get("url") + LOCAL_SEPARATOR + record.get(attr.getAttributeIDbyDataset()).trim());
+                            attrs.put(attr, Paths.PATH_BASE + site.getDomain().getDataset().getFolderName() + "/" + record.get("url") + General.SEPARADOR + record.get(attr.getAttributeIDbyDataset()).trim());
                         }
                     }
                 }
@@ -94,7 +94,7 @@ public class Controller {
 
 
         for (Attribute attr : attrs.keySet()) {
-            String[] partes = attrs.get(attr).split(LOCAL_SEPARATOR);//URL - value
+            String[] partes = attrs.get(attr).split(General.SEPARADOR);//URL - value
             openBrowser(partes[0]);
 
             List<Object> uniquePathsLabel;
@@ -104,8 +104,6 @@ public class Controller {
                  * Encontrando o label
                  */
                 label = JOptionPane.showInputDialog(frame, "Informe o label para o Atributo: '" + attr.getAttributeID() + "' com valor: '" + partes[1] + "'").trim();
-                label = label.replaceAll("'", "\\\\'");
-
 
                 /**
                  * Encontrando os possíveis Unique Paths do Label *
@@ -128,7 +126,7 @@ public class Controller {
             /**
              * Encontrando os possíveis Unique Paths do Label *
              */
-            uniquePathsValue = getUniquePaths(partes[1].replaceAll("'", "\\\\'"), partes[0]);
+            uniquePathsValue = getUniquePaths(partes[1], partes[0]);
 
             if (uniquePathsValue.isEmpty()) {
                 JOptionPane.showMessageDialog(frame, "Ops! Confira o value: " + partes[1]);
@@ -144,7 +142,7 @@ public class Controller {
             /**
              * adicionando na resposta *
              */
-            attributesInfo.add(attr.getAttributeID() + LOCAL_SEPARATOR + label + LOCAL_SEPARATOR + uniquePathLabel + LOCAL_SEPARATOR + uniquePathValue);
+            attributesInfo.add(attr.getAttributeID() + General.SEPARADOR + label + General.SEPARADOR + uniquePathLabel + General.SEPARADOR + uniquePathValue);
 
         }
 
@@ -192,14 +190,14 @@ public class Controller {
         }
     }
 
-    public void printAttributeInfo(Site site, Neo4jHandlerType type) throws FileNotFoundException, IOException {
+    public void printAttributeInfo(Site site) throws FileNotFoundException, IOException {
         frame.jtaLog.setText(frame.jtaLog.getText() + "\n**** Criando diretórios");
-        File dir = new File(Configuration.PATH_EXPRESSIVENESS + site.getPath());
+        File dir = new File(Paths.PATH_EXPRESSIVENESS + site.getPath());
         if (!dir.exists()) {
             dir.mkdirs();
         }
 
-        neo4j = Neo4jHandler.getInstance(type, site);
+        neo4j = Neo4jHandler.getInstance(site);
         frame.jtaLog.setText(frame.jtaLog.getText() + "\n**** Verificando attribute info");
         Set<String> attrsInfo = getAttributeInfo(site);
         try (Writer out = new FileWriter(dir.getAbsolutePath() + "/attributes_info.csv")) {
@@ -207,7 +205,7 @@ public class Controller {
             try (CSVPrinter csvFilePrinter = new CSVPrinter(out, CSVFormat.EXCEL.withHeader(header))) {
                 for (String attrInfo : attrsInfo) {
                     List<String> dataRecord = new ArrayList<>();
-                    String[] partes = attrInfo.split(LOCAL_SEPARATOR);
+                    String[] partes = attrInfo.split(General.SEPARADOR);
                     dataRecord.addAll(Arrays.asList(partes));
                     csvFilePrinter.printRecord(dataRecord);
                 }

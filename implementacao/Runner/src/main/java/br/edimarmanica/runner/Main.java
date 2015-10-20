@@ -4,6 +4,7 @@
  */
 package br.edimarmanica.runner;
 
+import br.edimarmanica.configuration.General;
 import br.edimarmanica.dataset.Dataset;
 import br.edimarmanica.dataset.Domain;
 import br.edimarmanica.dataset.Site;
@@ -73,14 +74,16 @@ public class Main {
         
         if (options.hasArg("debug")) {
             System.out.println("Running debuging mode simplified");
-            Configuration.debug = true;
+            General.DEBUG = true;
         }
 
-
-        try {
-            execute(R, localHTMLDir, entityPage, executionID, localResultsDir, relevantPagesPattern, totalRelevantPages, dataBase, user, password);
-        } catch (IOException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, "Problemas para salvar o arquivo de resultados.", ex);
+        if (option.equals("load")){
+            HtmlToNeo4j h2n = new HtmlToNeo4j();
+            h2n.execute(site);
+        }else if (option.equals("intrasite")){
+            Intrasite intrasite = new Intrasite();
+            intrasite.execute(site);
         }
+      
     }
 }
