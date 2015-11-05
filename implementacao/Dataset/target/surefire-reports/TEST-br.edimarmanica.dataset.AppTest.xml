@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="0.011" errors="0" skipped="0" tests="1" name="br.edimarmanica.dataset.AppTest">
+<testsuite failures="0" time="0.012" errors="0" skipped="0" tests="1" name="br.edimarmanica.dataset.AppTest">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/local/jdk1.7.0_25/jre/lib/i386"/>

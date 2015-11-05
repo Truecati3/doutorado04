@@ -38,22 +38,22 @@ public class Intrasite {
         gr.execute();
         Set<CypherRule> rules = gr.getRules();
 
-        if (General.DEBUG) {
-            System.out.println(">>>> Generated rules: " + rules.size());
-            System.out.println(">> NullValuesFilter");
-        }
-        //NullValuesFilter
-        NullValuesFilter nvfilter = new NullValuesFilter(site);
-        rules = nvfilter.filter(rules);
-
-        if (General.DEBUG) {
-            System.out.println(">>>> Remaining rules: " + rules.size());
-            System.out.println(">> TemplateNodesFilter");
-        }
-
-        //TEmplateNodesFilter
-        TemplateNodesFilter tnfilter = new TemplateNodesFilter(site);
-        rules = tnfilter.filter(rules);
+//        if (General.DEBUG) {
+//            System.out.println(">>>> Generated rules: " + rules.size());
+//            System.out.println(">> NullValuesFilter");
+//        }
+//        //NullValuesFilter
+//        NullValuesFilter nvfilter = new NullValuesFilter(site);
+//        rules = nvfilter.filter(rules);
+//
+//        if (General.DEBUG) {
+//            System.out.println(">>>> Remaining rules: " + rules.size());
+//            System.out.println(">> TemplateNodesFilter");
+//        }
+//
+//        //TEmplateNodesFilter
+//        TemplateNodesFilter tnfilter = new TemplateNodesFilter(site);
+//        rules = tnfilter.filter(rules);
 
         if (General.DEBUG) {
             System.out.println(">>>> Remaining rules: " + rules.size());

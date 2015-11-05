@@ -9,6 +9,7 @@ import br.edimarmanica.dataset.Site;
 import br.edimarmanica.expressiveness.generate.CypherNotation;
 import br.edimarmanica.expressiveness.generate.beans.CypherRule;
 import br.edimarmanica.extractionrules.neo4j.Neo4jHandler;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -47,15 +48,15 @@ public class GenerateRules {
         while (iteratorUP.hasNext()) { //para cada CandValue com o mesmo UNIQUE_PATH
             Map<String, Object> map = iteratorUP.next();
             List<Long> ids = (List) map.get("ids");
-            String in = "[";
-            for (Long id : ids) {
-                in += id + ",";
-            }
-            in = in.substring(0, in.length() - 1) + "]"; //tirando última virgula e colocando o ]
-
+            
             //O problema dessa regra é que para um unique_path de valor só retorna um label (aquele mais próximo e com mais URLs). Isso pode dar problema na variação de template
-            cypherQuery = "MATCH p=shortestpath((l:Template)-[*.." + IntrasiteExtraction.MAX_DISTANCE + "]-(v:CandValue)) WHERE id(v) in " + in + " WITH v.UNIQUE_PATH as UP_value, l.VALUE as label, l.UNIQUE_PATH as UP_label, length(p) as len, count(DISTINCT v.URL) AS qtd ORDER BY len, qtd DESC  RETURN UP_value, head(collect(label)[0..1]) as label, head(collect(UP_label)[0..1]) as UP_label ";
-            Iterator<Map<String, Object>> iteratorLABEL = neo4j.executeCypher(cypherQuery);
+            //Melhorando o desempenho da consulta. Utilizar profile na frente da consulta para mostrar informações de desempenho
+            //01 -- adicionar condição v.URL = l.URL para podar no produto cartesiano
+            //02 -- colocar essa condição no match é um pouquinho mais eficiente que no where. Ver: http://pt.slideshare.net/neo4j/optimizing-cypher-32550605
+            cypherQuery = "MATCH (v:CandValue) WHERE id(v) in {ids} WITH v MATCH p=shortestpath((l:Template{url:v.URL})-[*.." + IntrasiteExtraction.MAX_DISTANCE + "]-(v)) WITH v.UNIQUE_PATH as UP_value, l.VALUE as label, l.UNIQUE_PATH as UP_label, length(p) as len, count(DISTINCT v.URL) AS qtd ORDER BY len, qtd DESC  RETURN UP_value, head(collect(label)[0..1]) as label, head(collect(UP_label)[0..1]) as UP_label ";
+            Map<String, Object> params = new HashMap<>();
+            params.put("ids", ids);
+            Iterator<Map<String, Object>> iteratorLABEL = neo4j.executeCypher(cypherQuery, params);
             while (iteratorLABEL.hasNext()) {
                 Map<String, Object> mapLabel = iteratorLABEL.next();
                 CypherNotation cypherNotation = new CypherNotation(mapLabel.get("label").toString(), mapLabel.get("UP_label").toString(), mapLabel.get("UP_value").toString());

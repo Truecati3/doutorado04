@@ -21,4 +21,10 @@ public interface Site {
     public String getPath();
 
     public String getGroundTruthPath();
+    
+    /**
+     * 
+     * @return the path with the file that contains the entity described by each page
+     */
+    public String getEntityPath();
 }

@@ -10,7 +10,6 @@ import br.edimarmanica.dataset.Attribute;
 import br.edimarmanica.dataset.Site;
 import br.edimarmanica.expressiveness.evaluate.EvaluateWEIR;
 import br.edimarmanica.extractionrules.neo4j.Neo4jHandler;
-import br.edimarmanica.extractionrules.neo4j.Neo4jHandlerType;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -41,7 +40,7 @@ import org.apache.commons.csv.CSVRecord;
  *
  * @author edimar
  */
-public class Controller {
+public abstract class Controller {
 
     private Tela frame;
     private static Set<String> urlsOpened = new HashSet<>();
@@ -54,35 +53,7 @@ public class Controller {
     public Controller() {
     }
 
-    private Map<Attribute, String> loadAttributes(Site site) {
-        Map<Attribute, String> attrs = new HashMap<>(); //<Attribute,pair(URL$_$Value) of first page>
-        try (Reader in = new FileReader(Paths.PATH_BASE + site.getGroundTruthPath())) {
-            try (CSVParser parser = new CSVParser(in, CSVFormat.EXCEL.withHeader())) {
-                for (CSVRecord record : parser) {
-                    for (Attribute attr : site.getDomain().getAttributes()) {
-                        if (attrs.containsKey(attr)) {
-                            continue; //já achou valor para esse atributo
-                        }
-
-                        if (!record.isMapped(attr.getAttributeIDbyDataset())) {
-                            //Não tem esse atributo no gabarito
-                            continue;
-                        }
-
-                        if (!record.get(attr.getAttributeIDbyDataset()).trim().isEmpty()) {
-                            attrs.put(attr, Paths.PATH_BASE + site.getDomain().getDataset().getFolderName() + "/" + record.get("url") + General.SEPARADOR + record.get(attr.getAttributeIDbyDataset()).trim());
-                        }
-                    }
-                }
-            }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(EvaluateWEIR.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(EvaluateWEIR.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return attrs;
-    }
+     protected abstract Map<Attribute, String> loadAttributes(Site site);
 
     private Set<String> getAttributeInfo(Site site) {
         Set<String> attributesInfo = new HashSet<>();

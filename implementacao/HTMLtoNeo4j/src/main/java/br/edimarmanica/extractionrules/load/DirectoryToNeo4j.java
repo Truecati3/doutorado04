@@ -49,32 +49,33 @@ public class DirectoryToNeo4j {
         int i = 0;
         for (File f : fDir.listFiles()) {
 
+            if (i < 0 || i >= 50) {//400 - 450 deu erro
+                i++;
+                continue;
+            }
+
+            if (General.DEBUG) {
+                printMemoryInfo();
+                System.out.println("i: " + i + "-" + f.getAbsolutePath());
+            }
+
             if (i % 10 == 0) {//para efeciencia. A cada 10 páginas para, fecha o banco, assim libera um pouco de memória
                 neo4j = Neo4jHandler.getInstance(site);
             }
             try (Transaction tx1 = neo4j.beginTx()) {
 
-                /*if (i <= 470 || i > 480 ){//400 - 450 deu erro
-                 i++;
-                 continue;
-                 }*/
-
-                if (General.DEBUG) {
-                    printMemoryInfo();
-                    System.out.println("i: " + i + "-" + f.getAbsolutePath());
-                }
                 loadPage(f);
-                i++;
                 tx1.success();
                 tx1.close();
             }
-            if (i % 10 == 0) { //para efeciencia. A cada 10 páginas para, fecha o banco, assim libera um pouco de memória
+            if ((i+1) % 10 == 0) { //para efeciencia. A cada 10 páginas para, fecha o banco, assim libera um pouco de memória
                 if (General.NEO4J_TYPE == Neo4jHandlerType.LOCAL) {
                     neo4j.shutdown();
                     neo4j = null;
                     System.gc();
                 }
             }
+            i++;
         }
     }
 
@@ -99,7 +100,8 @@ public class DirectoryToNeo4j {
     }
 
     public static void main(String[] args) {
-        Site site = br.edimarmanica.dataset.weir.book.Site.BOOKSANDEBOOKS;
+        General.DEBUG = true;
+        Site site = br.edimarmanica.dataset.swde.auto.Site.MSN;
         DirectoryToNeo4j load = new DirectoryToNeo4j(site, true);
         try {
             load.loadPages();

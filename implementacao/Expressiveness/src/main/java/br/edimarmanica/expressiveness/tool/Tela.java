@@ -292,12 +292,21 @@ public class Tela extends javax.swing.JFrame {
     }//GEN-LAST:event_jCBDomainFocusLost
 
     private void jBTLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBTLoadActionPerformed
-        /*        jCBDataset.setEnabled(false);
-         jCBDomain.setEnabled(false);
-         jCBSite.setEnabled(false);*/
+        Dataset dataset = (Dataset) jCBDataset.getSelectedItem();
 
         // TODO add your handling code here:
-        Controller controller = new Controller(this);
+        Controller controller;
+        switch (dataset) {
+            case WEIR:
+                controller = new ControllerWEIR(this);
+                break;
+            case SWDE:
+                controller = new ControllerSWDE(this);
+                break;
+            default:
+                controller = null;
+        }
+
         try {
             controller.printAttributeInfo((Site) jCBSite.getSelectedItem());
         } catch (FileNotFoundException ex) {
@@ -378,10 +387,10 @@ public class Tela extends javax.swing.JFrame {
                 break;
             case "Nr Loaded Pages":
                 Neo4jHandler neo4j = new Neo4jHandlerLocal(site);
-                 String columnName = "NR_URLS_LOADED";
+                String columnName = "NR_URLS_LOADED";
                 String cypherQuery = "MATCH n RETURN COUNT(DISTINCT n.URL) AS " + columnName;
                 jtaLog.setText("***********************");
-                jtaLog.setText("Number of loaded pages for "+site.getFolderName()+": "+neo4j.querySingleColumn(cypherQuery, columnName).get(0).toString());
+                jtaLog.setText("Number of loaded pages for " + site.getFolderName() + ": " + neo4j.querySingleColumn(cypherQuery, columnName).get(0).toString());
                 neo4j.shutdown();
                 break;
             default:
@@ -408,7 +417,7 @@ public class Tela extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Por favor selecione um site!");
             return;
         }
-        
+
         ExtractValues extract = new ExtractValues(site);
         extract.printExtractedValues();
         extract = null;
@@ -441,7 +450,7 @@ public class Tela extends javax.swing.JFrame {
         if (General.NEO4J_TYPE == Neo4jHandlerType.LOCAL) {
             Neo4jHandlerLocal.deleteDatabase(site);
             jtaLog.append("\n**** Current database deleted!");
-        }else{
+        } else {
             jtaLog.append("\n**** Não é possível excluir database remoto!");
         }
     }//GEN-LAST:event_jbtDeleteActionPerformed
@@ -453,7 +462,7 @@ public class Tela extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Por favor selecione um site!");
             return;
         }
-        
+
         DirectoryToNeo4j load = new DirectoryToNeo4j(site, false);
         try {
             load.loadPages();

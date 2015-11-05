@@ -42,4 +42,9 @@ public enum Site implements br.edimarmanica.dataset.Site {
     public String getGroundTruthPath() {
         return getDomain().getDataset().getFolderName() + File.separator + "groundtruth/" + getDomain().getFolderName() + File.separator + getFolderName() + ".csv";
     }
+
+    @Override
+    public String getEntityPath() {
+        return getDomain().getDataset().getFolderName() + File.separator + "entity/" + getDomain().getFolderName() + File.separator + getFolderName() + ".csv";
+    }
 }

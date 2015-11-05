@@ -5,7 +5,7 @@
 package br.edimarmanica.extractionrules.load;
 
 import br.edimarmanica.configuration.Html2Neo4j;
-import br.edimarmanica.dataset.weir.videogame.Site;
+import br.edimarmanica.dataset.swde.auto.Site;
 import br.edimarmanica.extractionrules.neo4j.Neo4jHandler;
 import br.edimarmanica.extractionrules.neo4j.Neo4jHandlerLocal;
 import java.io.IOException;
@@ -141,10 +141,10 @@ public class HtmlToNeo4j {
 
     public static void main(String[] args) {
 
-        Neo4jHandler neo4j = new Neo4jHandlerLocal(Site.CDUNIVERSE);
+        Neo4jHandler neo4j = new Neo4jHandlerLocal(Site.AOL);
 
         try (Transaction tx1 = neo4j.beginTx()) {
-            HtmlToNeo4j html = new HtmlToNeo4j("/media/Dados/bases/0001049305.html", neo4j);
+            HtmlToNeo4j html = new HtmlToNeo4j("/media/Dados/bases/SWDE/auto/auto-aol/0000.htm", neo4j);
             html.insertAllNodes();
             tx1.success();
             tx1.close();

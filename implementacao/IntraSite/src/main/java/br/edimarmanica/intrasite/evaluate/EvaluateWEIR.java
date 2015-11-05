@@ -7,6 +7,7 @@ package br.edimarmanica.intrasite.evaluate;
 import br.edimarmanica.configuration.General;
 import br.edimarmanica.configuration.Paths;
 import br.edimarmanica.dataset.Attribute;
+import br.edimarmanica.dataset.Domain;
 import br.edimarmanica.dataset.Site;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -49,7 +50,7 @@ public class EvaluateWEIR {
 
         File dir = new File(Paths.PATH_INTRASITE + "/" + site.getPath() + "/extracted_values");
         for (File rule : dir.listFiles()) {
-            
+
             Set<String> values = new HashSet<>();
             try (Reader in = new FileReader(rule.getAbsolutePath())) {
                 try (CSVParser parser = new CSVParser(in, CSVFormat.EXCEL.withHeader())) {
@@ -70,7 +71,7 @@ public class EvaluateWEIR {
         try (Reader in = new FileReader(Paths.PATH_INTRASITE + "/" + site.getPath() + "/rule_info.csv")) {
             try (CSVParser parser = new CSVParser(in, CSVFormat.EXCEL.withHeader())) {
                 for (CSVRecord record : parser) {
-                    labels.put("rule_"+record.get("ID")+".csv", record.get("LABEL"));
+                    labels.put("rule_" + record.get("ID") + ".csv", record.get("LABEL"));
                 }
             }
         } catch (FileNotFoundException ex) {
@@ -113,16 +114,16 @@ public class EvaluateWEIR {
         int maxRelevantsRetrieved = 0;
         String maxRule = null;
         Set<String> maxExtractValues = new HashSet<>();
-        
+
         for (String rule : myResults.keySet()) {
-            
+
             Set<String> intersection = new HashSet<>();
             intersection.addAll(myResults.get(rule));
             intersection.retainAll(groundtruth);
 
             double recall = (double) intersection.size() / groundtruth.size();
             double precision = (double) intersection.size() / myResults.get(rule).size();
-            
+
             if (recall == 0 || precision == 0) {
                 continue;
             }
@@ -139,8 +140,8 @@ public class EvaluateWEIR {
                 maxExtractValues = myResults.get(rule);
             }
         }
-        
-        if (maxRecall == 0){
+
+        if (maxRecall == 0) {
             maxRule = "Attribute not found";
         }
 
@@ -217,7 +218,7 @@ public class EvaluateWEIR {
     public void printMetrics() {
         loadMyResults();
         loadLabels();
-        
+
         boolean append = false;
         for (Attribute attr : site.getDomain().getAttributes()) {
             try {
@@ -232,7 +233,10 @@ public class EvaluateWEIR {
 
     public static void main(String[] args) {
         //edition não pega pq identifica como label (template)
-        EvaluateWEIR eval = new EvaluateWEIR(br.edimarmanica.dataset.weir.book.Site.GOODREADS);
-        eval.printMetrics();
+        Domain domain = br.edimarmanica.dataset.weir.Domain.VIDEOGAME;
+        for (Site site : domain.getSites()) {
+            EvaluateWEIR eval = new EvaluateWEIR(site);
+            eval.printMetrics();
+        }
     }
 }

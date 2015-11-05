@@ -81,7 +81,7 @@ public class MergeResults {
     
     public static void main(String[] args) {
         MergeResults merge = new MergeResults();
-        merge.merge(br.edimarmanica.dataset.weir.Domain.BOOK);
+        merge.merge(br.edimarmanica.dataset.weir.Domain.VIDEOGAME);
     }
 }
 

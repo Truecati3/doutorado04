@@ -4,13 +4,15 @@
  */
 package br.edimarmanica.intrasite;
 
+import java.io.File;
+
 /**
  *
  * @author edimar
  */
 public class Teste {
     public static void main(String[] args) {
-        String st = "[12, 13,";
-        System.out.println(st.substring(0, st.length()-1));
+        String st = "1/01/2015";
+        System.out.println(st.matches("\\d{1,2}/\\d{1,2}/\\d{4}"));
     }
 }
