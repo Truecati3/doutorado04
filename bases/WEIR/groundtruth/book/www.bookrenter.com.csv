@@ -1,6 +1,6 @@
 url,STRING : TITLE,STRING : AUTHOR,STRING : BINDING,STRING : PUBLISHER,ISBN : ISBN13
 book/www.bookrenter.com/0001052136.html,Swann's Way (HarperCollinsAudioBooks),Marcel Proust,Audio Cassette Textbook,HarperCollins UK,9780001052130 / 0001052136
-book/www.bookrenter.com/0002199963.html,Wild Flowers of Britain and Europe,"D. Podlech, Wolfgang Lippert",Paperback Textbook,"HarperCollins Canada, Limited",9780002199964 / 0002199963
+book/www.bookrenter.com/0002199963.html,Wild Flowers of Britain and Europe,D. Podlech,Paperback Textbook,"HarperCollins Canada, Limited",9780002199964 / 0002199963
 book/www.bookrenter.com/0002200031.html,Collins Wild Guide: Birds,Peter Holden,Paperback Textbook,Zondervan,9780002200035 / 0002200031
 book/www.bookrenter.com/0002200074.html,Mushrooms and Toadstools,Brian Spooner,Paperback Textbook,"HarperCollins Canada, Limited",9780002200073 / 0002200074
 book/www.bookrenter.com/0002200082.html,Collins Wild Guide: Wild Animals,Stephen Harris,Paperback Textbook,"HarperCollins Canada, Limited",9780002200080 / 0002200082
@@ -9,26 +9,26 @@ book/www.bookrenter.com/0002200104.html,Collins Wild Guide: Butterflies and Moth
 book/www.bookrenter.com/0002200112.html,Collins Wildlife Trust Guide: Birds of Britain and Europe,J. Gooders,Paperback Textbook,"HarperCollins Canada, Limited",9780002200110 / 0002200112
 book/www.bookrenter.com/0002200120.html,Mushrooms of Britain and Europe,Regis Courtecuisse,Paperback Textbook,Zondervan,9780002200127 / 0002200120
 book/www.bookrenter.com/0002200139.html,Trees of Britain and Europe,Keith Rushforth,Paperback Textbook,"HarperCollins Canada, Limited",9780002200134 / 0002200139
-book/www.bookrenter.com/0002200147.html,Collins Wildlife Trust Guide: Night Sky (Collins Wildlife Trusts Guide),"Storm Dunlop, M. Chartrand, Mark R. Chartrand",Paperback Textbook,HarperCollins (UK),9780002200141 / 0002200147
-book/www.bookrenter.com/0002200171.html,Collins Pocket Guide: Alpine Flowers,"Christopher Grey-Wilson, M. Blamey",Paperback Textbook,"HarperCollins Canada, Limited",9780002200172 / 0002200171
-book/www.bookrenter.com/0002200252.html,Collins Field Guide: Mushrooms and Toadstools,"R. Courtecuisse, B. Duhem",Hardcover Textbook,"HarperCollins Canada, Limited",9780002200257 / 0002200252
+book/www.bookrenter.com/0002200147.html,Collins Wildlife Trust Guide: Night Sky (Collins Wildlife Trusts Guide),Storm Dunlop,Paperback Textbook,HarperCollins (UK),9780002200141 / 0002200147
+book/www.bookrenter.com/0002200171.html,Collins Pocket Guide: Alpine Flowers,Christopher Grey-Wilson,Paperback Textbook,"HarperCollins Canada, Limited",9780002200172 / 0002200171
+book/www.bookrenter.com/0002200252.html,Collins Field Guide: Mushrooms and Toadstools,R. Courtecuisse,Hardcover Textbook,"HarperCollins Canada, Limited",9780002200257 / 0002200252
 book/www.bookrenter.com/0002200287.html,Skywatching,Jack S. Levy,Hardcover Textbook,"HarperCollins Canada, Limited",9780002200288 / 0002200287
-book/www.bookrenter.com/0002200295.html,Butterflies and Moths of Britain and Europe,"H. Hofmann, T. Marktanner",Paperback Textbook,"HarperCollins Canada, Limited",9780002200295 / 0002200295
-book/www.bookrenter.com/0002200341.html,Collins Safari Guide: Common Birds of East Africa,"David Hoskings, Martin B. White",Hardcover Textbook,"HarperCollins Canada, Limited",9780002200349 / 0002200341
-book/www.bookrenter.com/0002200368.html,Collins Safari Guide: Larger Animals of Eastern Africa,"David Hosking, Martin B. Withers",Paperback Textbook,Zondervan,9780002200363 / 0002200368
+book/www.bookrenter.com/0002200295.html,Butterflies and Moths of Britain and Europe,H. Hofmann,Paperback Textbook,"HarperCollins Canada, Limited",9780002200295 / 0002200295
+book/www.bookrenter.com/0002200341.html,Collins Safari Guide: Common Birds of East Africa,David Hoskings,Hardcover Textbook,"HarperCollins Canada, Limited",9780002200349 / 0002200341
+book/www.bookrenter.com/0002200368.html,Collins Safari Guide: Larger Animals of Eastern Africa,David Hosking,Paperback Textbook,Zondervan,9780002200363 / 0002200368
 book/www.bookrenter.com/0002200376.html,Bird Songs & Calls of Britain and Northern Europe (Collins Field Guide),Geoff Sample,Hardcover Textbook,HarperCollins UK,9780002200370 / 0002200376
 book/www.bookrenter.com/0002200430.html,Way to Freedom,Dalai Lama XIV,Paperback Textbook,"HarperCollins Canada, Limited",9780002200431 / 0002200430
 book/www.bookrenter.com/0002200562.html,Garden Birds of Britain and Europe,Detlef Singer,Paperback Textbook,"HarperCollins Canada, Limited",9780002200561 / 0002200562
 book/www.bookrenter.com/0002200597.html,Collins Wildlife Trust Guide: Butterflies of Britain and Europe,Michael Chinery,Hardcover Textbook,"HarperCollins Canada, Limited",9780002200592 / 0002200597
-book/www.bookrenter.com/0002200627.html,Wild Flowers of Britain and Northern Europe,"Alistair Fitter, M. Blamey, Richard Fitter",Paperback Textbook,"HarperCollins Canada, Limited",9780002200622 / 0002200627
-book/www.bookrenter.com/0002200635.html,"Collins Photoguide Pests, Diseases and Disorders of Garden Plants","Stefan Buczacki, Keith Harris, Brian Hargreaves",Hardcover Textbook,HarperCollins Publishers Limited,9780002200639 / 0002200635
-book/www.bookrenter.com/0002200678.html,Collins How to ID Trees of Britain and Europe,"Patrick Harding, G. Tomblin",Paperback Textbook,Zondervan,9780002200677 / 0002200678
+book/www.bookrenter.com/0002200627.html,Wild Flowers of Britain and Northern Europe,Alistair Fitter,Paperback Textbook,"HarperCollins Canada, Limited",9780002200622 / 0002200627
+book/www.bookrenter.com/0002200635.html,"Collins Photoguide Pests, Diseases and Disorders of Garden Plants",Stefan Buczacki,Hardcover Textbook,HarperCollins Publishers Limited,9780002200639 / 0002200635
+book/www.bookrenter.com/0002200678.html,Collins How to ID Trees of Britain and Europe,Patrick Harding,Paperback Textbook,Zondervan,9780002200677 / 0002200678
 book/www.bookrenter.com/0002200694.html,Wings Guide to British Birds (Collins),Dominic Couzens,Paperback Textbook,HarperCollins Publishers,9780002200691 / 0002200694
 book/www.bookrenter.com/0002200708.html,Rocks and Fossils - Collins,David Roots,Hardcover Textbook,"HarperCollins Canada, Limited",9780002200707 / 0002200708
 book/www.bookrenter.com/0002200716.html,Complete British Wildlife (Collins Complete Photo Guides),Paul Sterry,Paperback Textbook,HarperCollins UK,9780002200714 / 0002200716
 book/www.bookrenter.com/0002200724.html,Collins Nature Guide: Garden Wildlife,Michael Chinery,Paperback Textbook,"HarperCollins Canada, Limited",9780002200721 / 0002200724
 book/www.bookrenter.com/0002200759.html,"Plant Disease, a Natural History",David Ingram,Paperback Textbook,"HarperCollins Canada, Limited",9780002200752 / 0002200759
-book/www.bookrenter.com/0002200775.html,Collins Illustrated Checklist: Birds of Southern South America and Antarctica,"Martin De la Penn, M. Rumboli, Colin Sharp",Hardcover Textbook,"HarperCollins Canada, Limited",9780002200776 / 0002200775
+book/www.bookrenter.com/0002200775.html,Collins Illustrated Checklist: Birds of Southern South America and Antarctica,Martin De la Penn,Hardcover Textbook,"HarperCollins Canada, Limited",9780002200776 / 0002200775
 book/www.bookrenter.com/0002200783.html,NRSV Cross Reference Bibles,,Hardcover Textbook,"HarperCollins Canada, Limited",9780002200783 / 0002200783
 book/www.bookrenter.com/0002200805.html,Ireland: The New Naturalist,David Cabot,Paperback Textbook,Zondervan,9780002200806 / 0002200805
 book/www.bookrenter.com/0002200821.html,New Naturalist Lichens,Oliver L. Gilbert,Paperback Textbook,"HarperCollins Canada, Limited",9780002200820 / 0002200821
@@ -40,7 +40,7 @@ book/www.bookrenter.com/0002200937.html,Birdwatching,Arthur Busbey,Hardcover Tex
 book/www.bookrenter.com/0002201003.html,Collins Watch Guide: Birds in Winter,Marc Duquet,Paperback Textbook,Zondervan,9780002201001 / 0002201003
 book/www.bookrenter.com/0002201011.html,Collins Watch Guide: Trees of the Countryside,Elisabeth Trotignon,Paperback Textbook,Zondervan,9780002201018 / 0002201011
 book/www.bookrenter.com/0002201062.html,Savage Earth,A. Scarth,Hardcover Textbook,Zondervan,9780002201063 / 0002201062
-book/www.bookrenter.com/0002201070.html,How to Identify Wild Flowers,"Christopher Grey-Wilson, L. Alderson",Paperback Textbook,"HarperCollins Canada, Limited",9780002201070 / 0002201070
+book/www.bookrenter.com/0002201070.html,How to Identify Wild Flowers,Christopher Grey-Wilson,Paperback Textbook,"HarperCollins Canada, Limited",9780002201070 / 0002201070
 book/www.bookrenter.com/0002201097.html,Pocket Guide Birds of North America,Jack Griggs,Hardcover Textbook,"HarperCollins Canada, Limited",9780002201094 / 0002201097
 book/www.bookrenter.com/0002201100.html,Wildfowl of the World,Peter Scott,Hardcover Textbook,Zondervan,9780002201100 / 0002201100
 book/www.bookrenter.com/0002201119.html,Good News Bible,,Hardcover Textbook,"HarperCollins Canada, Limited",9780002201117 / 0002201119
@@ -63,12 +63,12 @@ book/www.bookrenter.com/0002201585.html,Word,"HarperCollins Canada, Limited",Pap
 book/www.bookrenter.com/0002201607.html,Newcomer Good News Bible,United Bible Societies Staff,Hardcover Textbook,"HarperCollins Canada, Limited",9780002201605 / 0002201607
 book/www.bookrenter.com/0002201615.html,Complete Mediterranean Wildlife: Photoguide,Paul Sterry,Paperback Textbook,Collins,9780002201612 / 0002201615
 book/www.bookrenter.com/0002201666.html,Ramblers Guide Dartmoor,Richard Sale,Paperback Textbook,"HarperCollins Canada, Limited",9780002201667 / 0002201666
-book/www.bookrenter.com/0002201682.html,Gardening for Birds: How to Help Birds Make the Most of Your Garden,"Stephen Moss, Gill Tomblin",Hardcover Textbook,Trafalgar Square Publishing,9780002201681 / 0002201682
+book/www.bookrenter.com/0002201682.html,Gardening for Birds: How to Help Birds Make the Most of Your Garden,Stephen Moss,Hardcover Textbook,Trafalgar Square Publishing,9780002201681 / 0002201682
 book/www.bookrenter.com/0002201690.html,Millennium Experience,Jim Parton,Hardcover Textbook,"HarperCollins Canada, Limited",9780002201698 / 0002201690
 book/www.bookrenter.com/0002201704.html,Millennium Dome,Elizabeth Wilhide,Hardcover Textbook,"HarperCollins Canada, Limited",9780002201704 / 0002201704
 book/www.bookrenter.com/0002201720.html,GMT 2000: A Portrait of Britain in a Week,Magnum Photo Agency Staff,Paperback Textbook,HarperCollins Publishers Limited,9780002201728 / 0002201720
 book/www.bookrenter.com/0002201747.html,Eclipse,Peter Macdonald,Hardcover Textbook,"HarperCollins Canada, Limited",9780002201742 / 0002201747
-book/www.bookrenter.com/0002201771.html,Rocks and Minerals: Collin Wild Guide,"HarperCollins Publishers Ltd. Staff, Nick Jones",Paperback Textbook,HarperCollins Publishers Limited,9780002201773 / 0002201771
+book/www.bookrenter.com/0002201771.html,Rocks and Minerals: Collin Wild Guide,HarperCollins Publishers Ltd. Staff,Paperback Textbook,HarperCollins Publishers Limited,9780002201773 / 0002201771
 book/www.bookrenter.com/0002201887.html,Bible: Contemporary English Version,,Hardcover Textbook,"HarperCollins Canada, Limited",9780002201889 / 0002201887
 book/www.bookrenter.com/0002201895.html,King James Version Confirmation Bible,,Hardcover Textbook,"HarperCollins Canada, Limited",9780002201896 / 0002201895
 book/www.bookrenter.com/0002201909.html,Newcomer Good News Bible,,Paperback Textbook,"HarperCollins Canada, Limited",9780002201902 / 0002201909
@@ -78,16 +78,16 @@ book/www.bookrenter.com/0002201941.html,Good News Bible,Good News Bible,Hardcove
 book/www.bookrenter.com/0002201976.html,Bible: Contemporary English Version,,Hardcover Textbook,"HarperCollins Canada, Limited",9780002201971 / 0002201976
 book/www.bookrenter.com/0004140265.html,Take Three Cooks,Nanette Newman,Paperback Textbook,"HarperCollins Canada, Limited",9780004140261 / 0004140265
 book/www.bookrenter.com/0004140338.html,Vegetarian Barbecues and Grills: Over 150 Quick and Easy Vegetarian Recipes,Rose Elliot,Hardcover Textbook,HarperCollins Publishers Limited,9780004140339 / 0004140338
-book/www.bookrenter.com/0004140354.html,Collins Care and Repair of Period Houses,"Albert Jackson, David Day",Hardcover Textbook,"HarperCollins Canada, Limited",9780004140353 / 0004140354
+book/www.bookrenter.com/0004140354.html,Collins Care and Repair of Period Houses,Albert Jackson,Hardcover Textbook,"HarperCollins Canada, Limited",9780004140353 / 0004140354
 book/www.bookrenter.com/0004140370.html,How to Transform a Room in a Weekend: The Book of the Hit TV Series,Granada Television Staff,Hardcover Textbook,"HarperCollins Canada, Limited",9780004140377 / 0004140370
 book/www.bookrenter.com/0004140400.html,Simply Antony,Worrall Antony,Paperback Textbook,"HarperCollins Canada, Limited",9780004140407 / 0004140400
-book/www.bookrenter.com/0004140419.html,Winter Nosh,"Mick Nosh, Nick Nosh, Carlton Television Staff",Paperback Textbook,"HarperCollins Canada, Limited",9780004140414 / 0004140419
-book/www.bookrenter.com/0004140451.html,Collins Outdoor Day Projects in a Weekend,"Albert Jackson, David Day",Hardcover Textbook,"HarperCollins Canada, Limited",9780004140452 / 0004140451
+book/www.bookrenter.com/0004140419.html,Winter Nosh,Mick Nosh,Paperback Textbook,"HarperCollins Canada, Limited",9780004140414 / 0004140419
+book/www.bookrenter.com/0004140451.html,Collins Outdoor Day Projects in a Weekend,Albert Jackson,Hardcover Textbook,"HarperCollins Canada, Limited",9780004140452 / 0004140451
 book/www.bookrenter.com/0004140478.html,Inside the House of Lords,Clive Aslet,Hardcover Textbook,"HarperCollins Canada, Limited",9780004140476 / 0004140478
-book/www.bookrenter.com/0004140494.html,Collins Complete Book of Soft Furnishings,"Hilary More, Helen Barnett, Jane Churchill",Paperback Textbook,HarperCollins Publishers,9780004140490 / 0004140494
+book/www.bookrenter.com/0004140494.html,Collins Complete Book of Soft Furnishings,Hilary More,Paperback Textbook,HarperCollins Publishers,9780004140490 / 0004140494
 book/www.bookrenter.com/0004140508.html,Simply the Best,Gardner Merchant Firm Staff,Hardcover Textbook,"HarperCollins Canada, Limited",9780004140506 / 0004140508
 book/www.bookrenter.com/0004140516.html,Susan Brookes' Real Home Cooking,Brookes Susan,Hardcover Textbook,"HarperCollins Canada, Limited",9780004140513 / 0004140516
-book/www.bookrenter.com/0004140524.html,Woodworking for Beginners: What Every First-Time Woodworker Needs to Know,"Albert Jackson, David Day",Paperback Textbook,HarperCollins Publishers Limited,9780004140520 / 0004140524
+book/www.bookrenter.com/0004140524.html,Woodworking for Beginners: What Every First-Time Woodworker Needs to Know,Albert Jackson,Paperback Textbook,HarperCollins Publishers Limited,9780004140520 / 0004140524
 book/www.bookrenter.com/0004140532.html,National Childbirth Trust Complete,National Childbirth Staff,Hardcover Textbook,"HarperCollins Canada, Limited",9780004140537 / 0004140532
 book/www.bookrenter.com/0004140540.html,East India Company,Anthony Wild,Hardcover Textbook,HarperCollins Publishers,9780004140544 / 0004140540
 book/www.bookrenter.com/0004140559.html,Catherine Walker: An Autobiography,Catherine Walker,Hardcover Textbook,"HarperCollins Canada, Limited",9780004140551 / 0004140559
