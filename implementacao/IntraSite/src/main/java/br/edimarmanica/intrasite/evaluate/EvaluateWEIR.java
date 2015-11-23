@@ -233,7 +233,7 @@ public class EvaluateWEIR {
 
     public static void main(String[] args) {
         //edition não pega pq identifica como label (template)
-        Domain domain = br.edimarmanica.dataset.weir.Domain.FINANCE;
+        Domain domain = br.edimarmanica.dataset.weir.Domain.VIDEOGAME;
         for (Site site : domain.getSites()) {
             EvaluateWEIR eval = new EvaluateWEIR(site);
             eval.printMetrics();

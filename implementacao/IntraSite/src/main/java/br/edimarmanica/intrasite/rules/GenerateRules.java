@@ -44,23 +44,24 @@ public class GenerateRules {
         //Seleciona os CandValue com o mesmo UNIQUE_PATH
         String cypherQuery = "match (v:CandValue) return v.UNIQUE_PATH as UP_value, collect(id(v)) as ids";
         Iterator<Map<String, Object>> iteratorUP = neo4j.executeCypher(cypherQuery);
-
+        int i = 0;
         while (iteratorUP.hasNext()) { //para cada CandValue com o mesmo UNIQUE_PATH
+            System.out.println("AKi: " + i);
+            i++;
             Map<String, Object> map = iteratorUP.next();
             List<Long> ids = (List) map.get("ids");
-            
-            //O problema dessa regra é que para um unique_path de valor só retorna um label (aquele mais próximo e com mais URLs). Isso pode dar problema na variação de template
-            //Melhorando o desempenho da consulta. Utilizar profile na frente da consulta para mostrar informações de desempenho
-            //01 -- adicionar condição v.URL = l.URL para podar no produto cartesiano
-            //02 -- colocar essa condição no match é um pouquinho mais eficiente que no where. Ver: http://pt.slideshare.net/neo4j/optimizing-cypher-32550605
-            cypherQuery = "MATCH (v:CandValue) WHERE id(v) in {ids} WITH v MATCH p=shortestpath((l:Template{url:v.URL})-[*.." + IntrasiteExtraction.MAX_DISTANCE + "]-(v)) WITH v.UNIQUE_PATH as UP_value, l.VALUE as label, l.UNIQUE_PATH as UP_label, length(p) as len, count(DISTINCT v.URL) AS qtd ORDER BY len, qtd DESC  RETURN UP_value, head(collect(label)[0..1]) as label, head(collect(UP_label)[0..1]) as UP_label ";
-            Map<String, Object> params = new HashMap<>();
-            params.put("ids", ids);
-            Iterator<Map<String, Object>> iteratorLABEL = neo4j.executeCypher(cypherQuery, params);
-            while (iteratorLABEL.hasNext()) {
-                Map<String, Object> mapLabel = iteratorLABEL.next();
-                CypherNotation cypherNotation = new CypherNotation(mapLabel.get("label").toString(), mapLabel.get("UP_label").toString(), mapLabel.get("UP_value").toString());
-                rules.add(cypherNotation.getNotation());
+
+            for (Long id : ids) {//pq rodar com ids juntos pegava labels errados e ficava com aqueles
+                cypherQuery = "MATCH (v:CandValue) WHERE id(v) = {id} WITH v MATCH p=shortestpath((l:Template{URL:v.URL})-[*.." + IntrasiteExtraction.MAX_DISTANCE + "]-(v)) WITH v.UNIQUE_PATH as UP_value, l.VALUE as label, l.UNIQUE_PATH as UP_label, length(p) as len, count(DISTINCT v.URL) AS qtd ORDER BY len, qtd DESC  RETURN UP_value, head(collect(label)[0..1]) as label, head(collect(UP_label)[0..1]) as UP_label ";
+                Map<String, Object> params = new HashMap<>();
+                params.put("id", id);
+                Iterator<Map<String, Object>> iteratorLABEL = neo4j.executeCypher(cypherQuery, params);
+                while (iteratorLABEL.hasNext()) {
+                    Map<String, Object> mapLabel = iteratorLABEL.next();
+                    CypherNotation cypherNotation = new CypherNotation(mapLabel.get("label").toString(), mapLabel.get("UP_label").toString(), mapLabel.get("UP_value").toString());
+                    rules.add(cypherNotation.getNotation());
+                    System.out.println("Testando: " + cypherNotation.getNotation().getQueryWithoutParameters());
+                }
             }
         }
     }
