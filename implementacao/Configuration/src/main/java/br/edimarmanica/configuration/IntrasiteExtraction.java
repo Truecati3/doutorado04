@@ -18,5 +18,7 @@ public class IntrasiteExtraction {
     /**
      * MAX_DISTANCE: max distance between the value and the label
      */
-    public static final int MAX_DISTANCE = 7;//according to WEIR
+    public static final int MAX_DISTANCE = 9;//a base finance.freerealtime precisa de 9
+    
+    public static final int PR_TEMPLATE = 40; //percentual de ocorrência do mesmo valor no mesmo path (sem índice) para ser considerado template
 }

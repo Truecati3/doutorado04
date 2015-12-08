@@ -6,7 +6,6 @@ package br.edimarmanica.intrasite.filter;
 
 import br.edimarmanica.dataset.Site;
 import br.edimarmanica.expressiveness.generate.beans.CypherRule;
-import br.edimarmanica.extractionrules.neo4j.Neo4jHandlerType;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;

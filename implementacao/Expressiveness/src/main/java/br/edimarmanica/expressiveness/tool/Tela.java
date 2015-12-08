@@ -12,10 +12,7 @@ import br.edimarmanica.dataset.Site;
 import br.edimarmanica.expressiveness.evaluate.EvaluateWEIR;
 import br.edimarmanica.expressiveness.extract.ExtractValues;
 import static br.edimarmanica.expressiveness.generate.GenerateRules.printRules;
-import br.edimarmanica.extractionrules.load.DirectoryToNeo4j;
-import br.edimarmanica.extractionrules.neo4j.Neo4jHandler;
-import br.edimarmanica.extractionrules.neo4j.Neo4jHandlerLocal;
-import br.edimarmanica.extractionrules.neo4j.Neo4jHandlerType;
+import br.edimarmanica.htmltocsvtoneo4j.neo4j.Neo4jHandler;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -386,7 +383,7 @@ public class Tela extends javax.swing.JFrame {
                 }
                 break;
             case "Nr Loaded Pages":
-                Neo4jHandler neo4j = new Neo4jHandlerLocal(site);
+                Neo4jHandler neo4j = new Neo4jHandler(site);
                 String columnName = "NR_URLS_LOADED";
                 String cypherQuery = "MATCH n RETURN COUNT(DISTINCT n.URL) AS " + columnName;
                 jtaLog.setText("***********************");
@@ -447,17 +444,14 @@ public class Tela extends javax.swing.JFrame {
             return;
         }
 
-        if (General.NEO4J_TYPE == Neo4jHandlerType.LOCAL) {
-            Neo4jHandlerLocal.deleteDatabase(site);
-            jtaLog.append("\n**** Current database deleted!");
-        } else {
-            jtaLog.append("\n**** Não é possível excluir database remoto!");
-        }
+        Neo4jHandler.deleteDatabase(site);
+        jtaLog.append("\n**** Current database deleted!");
     }//GEN-LAST:event_jbtDeleteActionPerformed
 
     private void jbtLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtLoadActionPerformed
         // TODO add your handling code here:
-        Site site = (Site) jCBSite.getSelectedItem();;
+        JOptionPane.showMessageDialog(this, "Essa opção não está mais disponível. Por questões de eficiência tem que gerar o CSV e depois o Neo4j!");
+       /* Site site = (Site) jCBSite.getSelectedItem();;
         if (site == null) {
             JOptionPane.showMessageDialog(this, "Por favor selecione um site!");
             return;
@@ -472,7 +466,7 @@ public class Tela extends javax.swing.JFrame {
             jtaLog.append("\n**** Problemas ao carregar as páginas HTML para o Neo4J!");
         }
         load = null;
-        System.gc();
+        System.gc();*/
     }//GEN-LAST:event_jbtLoadActionPerformed
 
     /**

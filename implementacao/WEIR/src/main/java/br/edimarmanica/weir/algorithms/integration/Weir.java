@@ -72,11 +72,11 @@ public class Weir {
             }
 
             //Minha tentativa: não está no artigo: se as duas regras são do mesmo site e ainda pertencem a mapeamentos únicos, então ignora, pq possivelmente uma delas é uma regra fraca. Ver caso no Goodreadings as regras 79 e 467 não entram nos filtros pq tem alguns valores um pouco diferente para título, mas extraem a mesma coisa
-//            if (sp.getR1().getSite() == sp.getS1().getSite()){
-//                if (getMapping(sp.getR1(), mappings).getRules().size() == 1 && getMapping(sp.getS1(), mappings).getRules().size() == 1){
-//                    continue;
-//                }
-//            }
+            if (sp.getR1().getSite() == sp.getS1().getSite()){
+                if (getMapping(sp.getR1(), mappings).getRules().size() == 1 && getMapping(sp.getS1(), mappings).getRules().size() == 1){
+                    continue;
+                }
+            }
 
             if (isComplete(sp.getR1(), mappings) || isComplete(sp.getS1(), mappings) || isLC(sp.getR1(), sp.getS1(), mappings)) {
                 getMapping(sp.getR1(), mappings).setComplete(true);
@@ -193,12 +193,17 @@ public class Weir {
 
     private void persistResults() {
         String[] header = {"MAP_ID", "SITE", "RULE"};
-        File file = new File(Paths.PATH_WEIR + "/mappings/" + domain.getPath() + "/mappings.csv");
-
-        try (Writer out = new FileWriter(file)) {
+        File file = new File(Paths.PATH_WEIR + "/mappings/" + domain.getPath() );
+        file.mkdirs();
+        
+        try (Writer out = new FileWriter(file.getAbsolutePath()+ "/mappings.csv")) {
             try (CSVPrinter csvFilePrinter = new CSVPrinter(out, CSVFormat.EXCEL.withHeader(header))) {
                 int i=0;
                 for (Mapping map : mappings) {
+                    if (map.getRules().size() < 2){
+                        continue;
+                    }
+                    
                     for (Rule rule : map.getRules()) {
                         List<String> dataRecord = new ArrayList<>();
                         dataRecord.add(i+"");

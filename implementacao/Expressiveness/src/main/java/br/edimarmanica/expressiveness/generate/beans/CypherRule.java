@@ -35,7 +35,7 @@ public class CypherRule {
 
         for (String key : params.keySet()) {
             //tem que ser replace senão dá problemas com valores como "$19.4" devido ao $ ser expressão regular
-            result = result.replace("\\{" + key + "\\}", "'" + params.get(key).toString().replaceAll("'", "\\\\'") + "'");
+            result = result.replace("{" + key + "}", "'" + params.get(key).toString().replaceAll("'", "\\\\'") + "'");
         }
         return result;
     }

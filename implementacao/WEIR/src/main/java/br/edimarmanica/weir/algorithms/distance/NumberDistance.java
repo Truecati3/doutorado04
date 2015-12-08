@@ -10,6 +10,7 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,15 +34,17 @@ public class NumberDistance extends TypeAwareDistance {
         try {
             numericValueR1 = normalize(vR1);
         } catch (ParseException ex) {
+            //System.out.println(ex.getMessage());
             return 1; //é um lixo que a regra pegou. Por ex: London
         }
         double numericValueS1;
         try {
             numericValueS1 = normalize(vS1);
         } catch (ParseException ex) {
+            //System.out.println(ex.getMessage());
             return 1; //é um lixo que a regra pegou. Por ex: London
         }
-
+        
         if (Math.abs(numericValueR1 - numericValueS1) > p) {
             return 1;
         } else {
@@ -99,7 +102,7 @@ public class NumberDistance extends TypeAwareDistance {
         }
 
         double avgS1 = getAverageAbsoluteValues(numericValuesS1);
-
+        
         p = Math.min(avgR1, avgS1) * TETA;
 
     }
@@ -109,7 +112,7 @@ public class NumberDistance extends TypeAwareDistance {
         aux = aux.replaceAll("R\\$", "").replaceAll("\\$", "").replaceAll("€", ""); //retirando o simbolo de moeda pq currencyXnumber=numberXnumber, ou seja, se uma das regras e number, compara tudo com number
         aux = aux.replaceAll("[a-zA-Z]", ""); //retirando cm, m, etc. mesmo motivo acima
 
-        NumberFormat form01 = NumberFormat.getNumberInstance();
-        return form01.parse(aux).doubleValue();
+        NumberFormat form01 = NumberFormat.getNumberInstance(new Locale("en", "US"));
+        return form01.parse(aux.trim()).doubleValue();
     }
 }

@@ -28,8 +28,8 @@ import java.util.Set;
  */
 public class Main {
     public static void main(String[] args) {
-        General.DEBUG = false;
-        Domain domain = br.edimarmanica.dataset.weir.Domain.BOOK;
+        General.DEBUG = true;
+        Domain domain = br.edimarmanica.dataset.weir.Domain.FINANCE;
         List<Rule> rules = new ArrayList<>();
         
         for (Site site : domain.getSites()) {

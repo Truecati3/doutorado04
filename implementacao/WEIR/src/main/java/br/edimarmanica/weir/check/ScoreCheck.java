@@ -5,7 +5,7 @@
 package br.edimarmanica.weir.check;
 
 import br.edimarmanica.dataset.weir.Domain;
-import br.edimarmanica.dataset.weir.book.Site;
+import br.edimarmanica.dataset.weir.finance.Site;
 import br.edimarmanica.weir.algorithms.distance.TypeAwareDistance;
 import br.edimarmanica.weir.algorithms.filter.NullValuesFilter;
 import br.edimarmanica.weir.algorithms.filter.RulesFilter;
@@ -27,12 +27,12 @@ public class ScoreCheck {
     public static void main(String[] args) {
 
         List<Rule> rules = new ArrayList<>();
-        rules.add(loadRules(Site.BOOKMOOCH, 118));
+        rules.add(loadRules(Site.BIGCHARTS, 13));
         //rules.add(loadRules(Site.BLACKWELL, 18));
-        rules.add(loadRules(Site.AMAZON, 123)); //128
+        rules.add(loadRules(Site.NASDAQ, 51)); //128
         //rules.add(loadRules(Site.BARNESANDNOBLE, 56));
         //rules.add(loadRules(Site.BOOKDEPOSITORY, 16));
-        rules.add(loadRules(Site.BOOKRENTER, 2));
+        //rules.add(loadRules(Site.BOOKRENTER, 2));
        // rules.add(loadRules(Site.BOOKSANDEBOOKS, 1)); //1       
         //rules.add(loadRules(Site.ECAMPUS, 9));
         //rules.add(loadRules(Site.GOODREADS, 271));

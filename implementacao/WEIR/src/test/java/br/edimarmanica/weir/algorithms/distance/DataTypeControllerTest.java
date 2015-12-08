@@ -34,6 +34,7 @@ public class DataTypeControllerTest extends TestCase {
         r4 = new Rule(4, s1);
         r4.addValue(new Value("Dan", "1", "e1"));
         r4.addValue(new Value("46 m", "2", "e2"));
+        r4.addValue(new Value("Pan", "3", "e3"));
 
         r5 = new Rule(5, s1);
         r5.addValue(new Value("38 m", "1", "e1"));

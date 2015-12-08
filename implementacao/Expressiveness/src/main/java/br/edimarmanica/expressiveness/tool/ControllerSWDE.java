@@ -9,8 +9,6 @@ import br.edimarmanica.configuration.Paths;
 import br.edimarmanica.dataset.Attribute;
 import br.edimarmanica.dataset.Site;
 import br.edimarmanica.expressiveness.evaluate.EvaluateWEIR;
-import br.edimarmanica.extractionrules.load.FormatTextNode;
-import br.edimarmanica.extractionrules.load.InvalidTextNode;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;

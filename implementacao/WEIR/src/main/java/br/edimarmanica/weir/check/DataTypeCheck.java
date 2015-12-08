@@ -31,7 +31,7 @@ import org.apache.commons.csv.CSVPrinter;
  */
 public class DataTypeCheck {
     public static void main(String[] args) {
-        Domain domain = br.edimarmanica.dataset.weir.Domain.BOOK;
+        Domain domain = br.edimarmanica.dataset.weir.Domain.FINANCE;
         Set<Rule> rules = new HashSet<>();
         
         

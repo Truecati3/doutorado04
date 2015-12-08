@@ -50,12 +50,18 @@
     </dependency>
     <dependency>
       <groupId>br.edimarmanica</groupId>
-      <artifactId>HTMLtoNeo4j</artifactId>
+      <artifactId>Configuration</artifactId>
       <version>1.0-SNAPSHOT</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>HTMLtoNeo4j</artifactId>
+          <groupId>br.edimarmanica</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>br.edimarmanica</groupId>
-      <artifactId>Configuration</artifactId>
+      <artifactId>HtmltoCSVtoNeo4j</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>
   </dependencies>

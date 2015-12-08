@@ -6,7 +6,7 @@ package br.edimarmanica.intrasite.filter;
 
 import br.edimarmanica.dataset.Site;
 import br.edimarmanica.expressiveness.generate.beans.CypherRule;
-import br.edimarmanica.extractionrules.neo4j.Neo4jHandler;
+import br.edimarmanica.htmltocsvtoneo4j.neo4j.Neo4jHandler;
 import java.util.Set;
 
 /**
@@ -25,7 +25,7 @@ public abstract class RulesFilter {
     
 
     public Set<CypherRule> filter(Set<CypherRule> rules) {
-        neo4j = Neo4jHandler.getInstance(site);
+        neo4j = new Neo4jHandler(site);
         Set<CypherRule> rulesFiltered = execute(rules);
         neo4j.shutdown();
         return rulesFiltered;

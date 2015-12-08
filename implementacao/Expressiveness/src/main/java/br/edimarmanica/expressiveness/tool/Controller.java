@@ -8,8 +8,7 @@ import br.edimarmanica.configuration.General;
 import br.edimarmanica.configuration.Paths;
 import br.edimarmanica.dataset.Attribute;
 import br.edimarmanica.dataset.Site;
-import br.edimarmanica.expressiveness.evaluate.EvaluateWEIR;
-import br.edimarmanica.extractionrules.neo4j.Neo4jHandler;
+import br.edimarmanica.htmltocsvtoneo4j.neo4j.Neo4jHandler;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -20,7 +19,6 @@ import java.io.Reader;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -168,7 +166,7 @@ public abstract class Controller {
             dir.mkdirs();
         }
 
-        neo4j = Neo4jHandler.getInstance(site);
+        neo4j = new Neo4jHandler(site);
         frame.jtaLog.setText(frame.jtaLog.getText() + "\n**** Verificando attribute info");
         Set<String> attrsInfo = getAttributeInfo(site);
         try (Writer out = new FileWriter(dir.getAbsolutePath() + "/attributes_info.csv")) {

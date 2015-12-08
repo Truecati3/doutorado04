@@ -4,9 +4,9 @@
  */
 package br.edimarmanica.intrasite.rules;
 
+import br.edimarmanica.configuration.IntrasiteExtraction;
 import br.edimarmanica.dataset.Site;
-import br.edimarmanica.extractionrules.neo4j.Neo4jHandler;
-import br.edimarmanica.extractionrules.neo4j.Neo4jHandlerType;
+import br.edimarmanica.htmltocsvtoneo4j.neo4j.Neo4jHandler;
 
 /**
  *
@@ -22,14 +22,14 @@ public class SetTemplates {
     }
 
     public void execute() {
-        neo4j = Neo4jHandler.getInstance(site);
+        neo4j = new Neo4jHandler(site);
         findTemplates();
         findCandidateValues();
         neo4j.shutdown();
     }
 
     private void findTemplates() {
-        String cypherTemplate = "MATCH m WITH count(DISTINCT m.URL) as nrpages MATCH (n {NODE_TYPE:'3'}) WITH n.VALUE as VALUE, n.PATH as PATH, COUNT(DISTINCT n.URL) as qtde, nrpages as nrpages WHERE qtde>=(nrpages*40/100)  MATCH o WHERE o.VALUE=VALUE AND o.PATH=PATH AND o.NODE_TYPE='3' SET o:Template RETURN count(o)";
+        String cypherTemplate = "MATCH m WITH count(DISTINCT m.URL) as nrpages MATCH (n {NODE_TYPE:'3'}) WITH n.VALUE as VALUE, n.PATH as PATH, COUNT(DISTINCT n.URL) as qtde, nrpages as nrpages WHERE qtde>=(nrpages*"+ IntrasiteExtraction.PR_TEMPLATE+"/100)  MATCH o WHERE o.VALUE=VALUE AND o.PATH=PATH AND o.NODE_TYPE='3' SET o:Template RETURN count(o)";
         neo4j.executeCypher(cypherTemplate);
     }
 

@@ -8,8 +8,7 @@ import br.edimarmanica.configuration.General;
 import br.edimarmanica.configuration.Paths;
 import br.edimarmanica.dataset.Site;
 import br.edimarmanica.expressiveness.generate.beans.CypherRule;
-import br.edimarmanica.extractionrules.neo4j.Neo4jHandler;
-import br.edimarmanica.extractionrules.neo4j.Neo4jHandlerType;
+import br.edimarmanica.htmltocsvtoneo4j.neo4j.Neo4jHandler;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -39,10 +38,10 @@ public class ExtractValues {
     }
 
     public void printExtractedValues() {
-        
+
         deleteCurrentRules();
-        
-        neo4j = Neo4jHandler.getInstance(site);
+
+        neo4j = new Neo4jHandler(site);
 
         boolean append = false;
         int i = 0;
@@ -54,10 +53,7 @@ public class ExtractValues {
             append = true;
             i++;
         }
-
-        if (General.NEO4J_TYPE == Neo4jHandlerType.LOCAL) {
-            neo4j.shutdown();
-        }
+        neo4j.shutdown();
     }
 
     private void printRuleInfo(CypherRule rule, int ruleID, boolean append) {
@@ -88,8 +84,6 @@ public class ExtractValues {
         }
 
     }
-    
-    
 
     private void printExtractedValues(CypherRule rule, int i) {
 
@@ -115,11 +109,11 @@ public class ExtractValues {
             Logger.getLogger(ExtractValues.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    private void deleteCurrentRules(){
+
+    private void deleteCurrentRules() {
         File dir = new File(Paths.PATH_INTRASITE + "/" + site.getPath() + "/extracted_values/");
         if (dir.exists()) {
-            for(File f: dir.listFiles()){
+            for (File f : dir.listFiles()) {
                 f.delete();
             }
         }

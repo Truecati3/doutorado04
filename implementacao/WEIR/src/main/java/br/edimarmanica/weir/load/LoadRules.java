@@ -9,6 +9,7 @@ import br.edimarmanica.configuration.Paths;
 import br.edimarmanica.dataset.Site;
 import br.edimarmanica.weir.bean.Rule;
 import br.edimarmanica.weir.bean.Value;
+import br.edimarmanica.weir.util.ValueNormalizer;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -61,7 +62,7 @@ public class LoadRules {
                     for (CSVRecord record : parser) { //para cada value
                         String url = record.get("URL").replaceAll(".*/bases/"+site.getDomain().getDataset().getFolderName()+"/", "");
                         //o replace abaixo foi adicionado pq os filtros eliminam se os valores são iguais para diferentes regras do mesmo site, mas as vezes os valores de uma regra tinham um símbolo como >>
-                        newRule.addValue(record.get("EXTRACTED VALUE").replaceAll("[^((a-zA-Z)|\\s|\\d)]+", "").trim(), url, idsCopy.get(url));
+                        newRule.addValue(ValueNormalizer.normalize(record.get("EXTRACTED VALUE")), url, idsCopy.get(url));
                         idsCopy.remove(url);
                     }
                 }
@@ -101,7 +102,7 @@ public class LoadRules {
     }
     
     public static void main(String[] args) {
-        Site site = br.edimarmanica.dataset.weir.book.Site.BOOKSANDEBOOKS;
+        Site site = br.edimarmanica.dataset.weir.book.Site.BLACKWELL;
         
         LoadRules load = new LoadRules(site);
         Set<Rule> rules = load.getRules();

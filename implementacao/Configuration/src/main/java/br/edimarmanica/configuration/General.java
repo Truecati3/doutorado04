@@ -19,5 +19,4 @@ public class General {
      */
     public static final String SEPARADOR = "_@_";
     
-    public static final Neo4jHandlerType NEO4J_TYPE = Neo4jHandlerType.LOCAL;
 }

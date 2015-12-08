@@ -5,12 +5,11 @@
 package br.edimarmanica.intrasite;
 
 import br.edimarmanica.configuration.General;
+import br.edimarmanica.configuration.Paths;
 import br.edimarmanica.intrasite.rules.SetTemplates;
 import br.edimarmanica.dataset.Site;
 import br.edimarmanica.expressiveness.generate.beans.CypherRule;
 import br.edimarmanica.intrasite.extract.ExtractValues;
-import br.edimarmanica.intrasite.filter.NullValuesFilter;
-import br.edimarmanica.intrasite.filter.TemplateNodesFilter;
 import br.edimarmanica.intrasite.rules.GenerateRules;
 import java.util.Set;
 
@@ -66,5 +65,12 @@ public class Intrasite {
         if (General.DEBUG) {
             System.out.println("End INTRASITE");
         }
+    }
+    
+    public static void main(String[] args) {
+        
+        General.DEBUG=true;
+        Intrasite intra = new Intrasite();
+        intra.execute(br.edimarmanica.dataset.swde.auto.Site.AUTOBYTEL);
     }
 }

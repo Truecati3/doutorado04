@@ -81,7 +81,7 @@ public class EvaluateWEIR {
         }
     }
 
-    private Set<String> loadGroundTruth(Attribute attribute) throws SiteWithoutThisAttribute {
+    public static Set<String> loadGroundTruth(Site site, Attribute attribute) throws SiteWithoutThisAttribute {
         Set<String> values = new HashSet<>();
 
         try (Reader in = new FileReader(Paths.PATH_BASE + site.getGroundTruthPath())) {
@@ -91,7 +91,7 @@ public class EvaluateWEIR {
                         throw new SiteWithoutThisAttribute(attribute.getAttributeID(), site.getFolderName());
                     }
                     if (!record.get(attribute.getAttributeIDbyDataset()).trim().isEmpty()) {
-                        values.add(Paths.PATH_BASE + site.getDomain().getDataset().getFolderName() + "/" + record.get("url") + General.SEPARADOR + record.get(attribute.getAttributeIDbyDataset()));
+                        values.add(Paths.PATH_BASE + site.getDomain().getDataset().getFolderName() + "/" + record.get("url") + General.SEPARADOR + record.get(attribute.getAttributeIDbyDataset()).trim());
                     }
                 }
             }
@@ -105,7 +105,7 @@ public class EvaluateWEIR {
     }
 
     private void printMetrics(Attribute attribute, boolean append) throws SiteWithoutThisAttribute {
-        Set<String> groundtruth = loadGroundTruth(attribute);
+        Set<String> groundtruth = loadGroundTruth(site, attribute);
 
         double maxRecall = 0;
         double maxPrecision = 0;
@@ -233,7 +233,7 @@ public class EvaluateWEIR {
 
     public static void main(String[] args) {
         //edition não pega pq identifica como label (template)
-        Domain domain = br.edimarmanica.dataset.weir.Domain.VIDEOGAME;
+        Domain domain = br.edimarmanica.dataset.weir.Domain.SOCCER;
         for (Site site : domain.getSites()) {
             EvaluateWEIR eval = new EvaluateWEIR(site);
             eval.printMetrics();

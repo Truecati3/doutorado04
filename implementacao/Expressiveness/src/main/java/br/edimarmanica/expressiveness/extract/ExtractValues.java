@@ -9,8 +9,7 @@ import br.edimarmanica.configuration.Paths;
 import br.edimarmanica.dataset.Site;
 import br.edimarmanica.expressiveness.generate.GenerateRules;
 import br.edimarmanica.expressiveness.generate.beans.CypherRule;
-import br.edimarmanica.extractionrules.neo4j.Neo4jHandler;
-import br.edimarmanica.extractionrules.neo4j.Neo4jHandlerType;
+import br.edimarmanica.htmltocsvtoneo4j.neo4j.Neo4jHandler;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -65,17 +64,14 @@ public class ExtractValues {
     }
 
     public void printExtractedValues() {
-        neo4j = Neo4jHandler.getInstance(site);
+        neo4j = new Neo4jHandler(site);
         //Map<String, String> rules = loadRules();
         Map<String, CypherRule> rules = GenerateRules.getRules(site);
 
         for (String attr : rules.keySet()) {
             printExtractedValues(site, attr, rules.get(attr));
         }
-
-        if (General.NEO4J_TYPE == Neo4jHandlerType.LOCAL) {
-            neo4j.shutdown();
-        }
+        neo4j.shutdown();
     }
 
     private void printExtractedValues(Site site, String attribute, CypherRule rule) {

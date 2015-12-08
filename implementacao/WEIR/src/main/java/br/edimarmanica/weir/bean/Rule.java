@@ -48,6 +48,16 @@ public class Rule {
     public Set<Value> getValues() {
         return values;
     }
+    
+    public Set<Value> getNotNullValues() {
+        Set<Value> notNullValues = new HashSet<>();
+        for(Value v: values){
+            if (v.getValue() != null){
+                notNullValues.add(v);
+            }
+        }
+        return notNullValues;
+    }
 
     public void setValues(Set<Value> values) {
         this.values = values;

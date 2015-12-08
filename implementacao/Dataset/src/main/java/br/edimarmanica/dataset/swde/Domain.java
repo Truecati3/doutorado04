@@ -15,7 +15,7 @@ import java.io.File;
  */
 public enum Domain implements br.edimarmanica.dataset.Domain {
 
-    AUTO("auto"), BOOK("book"), CAMERA("camera"), JOB("job"), MOVIE("movie"), 
+    AUTO("auto"), BOOK("book"), CAMERA("camera"), JOB("job"), MOVIE("movie"),
     NBA_PLAYER("nbaplayer"), RESTAURANT("restaurant"), UNIVERSITY("university");
     private String folderName;
 
@@ -63,6 +63,20 @@ public enum Domain implements br.edimarmanica.dataset.Domain {
         switch (this) {
             case AUTO:
                 return br.edimarmanica.dataset.swde.auto.Attribute.values();
+            case BOOK:
+                return br.edimarmanica.dataset.swde.book.Attribute.values();
+            case CAMERA:
+                return br.edimarmanica.dataset.swde.camera.Attribute.values();
+            case JOB:
+                return br.edimarmanica.dataset.swde.job.Attribute.values();
+            case MOVIE:
+                return br.edimarmanica.dataset.swde.movie.Attribute.values();
+            case NBA_PLAYER:
+                return br.edimarmanica.dataset.swde.nba.Attribute.values();
+            case RESTAURANT:
+                return br.edimarmanica.dataset.swde.restaurant.Attribute.values();
+            case UNIVERSITY:
+                return br.edimarmanica.dataset.swde.university.Attribute.values();
             default:
                 throw new UnsupportedOperationException("Domain not configurated yet!");
         }
@@ -74,6 +88,20 @@ public enum Domain implements br.edimarmanica.dataset.Domain {
         switch (this) {
             case AUTO:
                 return br.edimarmanica.dataset.swde.auto.Site.values();
+            case BOOK:
+                return br.edimarmanica.dataset.swde.book.Site.values();
+            case CAMERA:
+                return br.edimarmanica.dataset.swde.camera.Site.values();
+            case JOB:
+                return br.edimarmanica.dataset.swde.job.Site.values();
+            case MOVIE:
+                return br.edimarmanica.dataset.swde.movie.Site.values();
+            case NBA_PLAYER:
+                return br.edimarmanica.dataset.swde.nba.Site.values();
+            case RESTAURANT:
+                return br.edimarmanica.dataset.swde.restaurant.Site.values();
+            case UNIVERSITY:
+                return br.edimarmanica.dataset.swde.university.Site.values();
             default:
                 throw new UnsupportedOperationException("Domain not configurated yet!");
         }
