@@ -29,12 +29,17 @@ public class SetTemplates {
     }
 
     private void findTemplates() {
-        String cypherTemplate = "MATCH m WITH count(DISTINCT m.URL) as nrpages MATCH (n {NODE_TYPE:'3'}) WITH n.VALUE as VALUE, n.PATH as PATH, COUNT(DISTINCT n.URL) as qtde, nrpages as nrpages WHERE qtde>=(nrpages*"+ IntrasiteExtraction.PR_TEMPLATE+"/100)  MATCH o WHERE o.VALUE=VALUE AND o.PATH=PATH AND o.NODE_TYPE='3' SET o:Template RETURN count(o)";
+        String cypherTemplate = "MATCH m WITH count(DISTINCT m.URL) as nrpages MATCH (n {NODE_TYPE:'3'}) WITH n.VALUE as VALUE, n.PATH as PATH, COUNT(DISTINCT n.URL) as qtde, nrpages as nrpages WHERE qtde>=(nrpages*"+ IntrasiteExtraction.PR_TEMPLATE+"/100)  MATCH o WHERE o.VALUE=VALUE AND o.PATH=PATH AND o.NODE_TYPE='3' SET o:"+Label.Template+" RETURN count(o)";
         neo4j.executeCypher(cypherTemplate);
     }
 
     private void findCandidateValues() {
-        String cypherValue = "MATCH (n) WHERE n.NODE_TYPE='3' AND NOT('Template' in LABELS(n)) SET n:CandValue RETURN count(n)";
+        String cypherValue = "MATCH (n) WHERE n.NODE_TYPE='3' AND NOT('"+Label.Template+"' in LABELS(n)) SET n:"+Label.CandValue+" RETURN count(n)";
         neo4j.executeCypher(cypherValue);
+    }
+    
+    public static void main(String[] args) {
+        SetTemplates st = new SetTemplates(br.edimarmanica.dataset.swde.auto.Site.AOL);
+        st.execute();
     }
 }

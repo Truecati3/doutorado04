@@ -15,7 +15,7 @@ public class FormatTextNode {
     public static String format(String value) throws InvalidTextNode {
 
         //remove extra spaces
-        String ret = value.replace((char) 160, ' ').replaceAll("\n", " ").replaceAll("\\s\\s+", " ").trim();  //esse 160 é um espaço que surge a partir do "&nbsp;"
+        String ret = value.replace((char) 160, ' ').replaceAll("\n", " ").replaceAll("\\s\\s+", " ").replaceAll("\"", "").replaceAll("\\\\", "").trim();  //esse 160 é um espaço que surge a partir do "&nbsp;"
 
         check(ret);
 

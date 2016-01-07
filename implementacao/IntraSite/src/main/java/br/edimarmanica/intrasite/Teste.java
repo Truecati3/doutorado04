@@ -4,17 +4,23 @@
  */
 package br.edimarmanica.intrasite;
 
+import br.edimarmanica.dataset.swde.auto.Site;
 import br.edimarmanica.expressiveness.generate.CypherNotation;
+import br.edimarmanica.htmltocsvtoneo4j.neo4j.Neo4jHandler;
 import java.io.File;
+import java.util.List;
 
 /**
  *
  * @author edimar
  */
 public class Teste {
+
     public static void main(String[] args) {
-        CypherNotation cypherNotation = new CypherNotation("# of Trades", "/HTML[1]/BODY[1]/TABLE[1]/TBODY[1]/TR[1]/TD[1]/TABLE[5]/TBODY[1]/TR[1]/TD[4]/TABLE[4]/TBODY[1]/TR[2]/TD[2]/TABLE[1]/TBODY[1]/TR[11]/TD[1]/FONT[1]/text()[1]", "/HTML[1]/BODY[1]/TABLE[1]/TBODY[1]/TR[1]/TD[1]/TABLE[5]/TBODY[1]/TR[1]/TD[4]/TABLE[4]/TBODY[1]/TR[2]/TD[2]/TABLE[1]/TBODY[1]/TR[10]/TD[1]/FONT[1]/text()[1]");
-        
-        System.out.println("Testando: "+cypherNotation.getNotation().getQueryWithoutParameters());
+        Neo4jHandler neo = new Neo4jHandler(Site.AOL);
+        List<Object> results = neo.querySingleColumn("MATCH (a2)<--(a1)<--(a0)<--(b)-->(c0)-->(c1) WHERE a2.VALUE='MSRP:' AND a2.PATH='/HTML/BODY/DIV/DIV/DIV/DIV/DIV/DIV/DIV/DIV/SPAN/SPAN/text()' AND a2.POSITION='1' AND a1.VALUE='SPAN' AND a1.POSITION='1' AND a0.VALUE='SPAN' AND a0.POSITION='1' AND b.VALUE='DIV' AND c0.VALUE='SPAN' AND c0.POSITION='2' AND c1.NODE_TYPE='3' AND c1.POSITION='1'  RETURN c1.VALUE AS VALUE, c1.URL AS URL, 'Template' in LABELS(c1) as template", "VALUE");
+        for (Object obj : results) {
+            System.out.println(obj.toString());
+        }
     }
 }

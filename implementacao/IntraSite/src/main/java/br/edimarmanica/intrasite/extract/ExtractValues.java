@@ -4,7 +4,6 @@
  */
 package br.edimarmanica.intrasite.extract;
 
-import br.edimarmanica.configuration.General;
 import br.edimarmanica.configuration.Paths;
 import br.edimarmanica.dataset.Site;
 import br.edimarmanica.expressiveness.generate.beans.CypherRule;
@@ -36,6 +35,12 @@ public class ExtractValues {
         this.site = site;
         this.rules = rules;
     }
+    
+    public ExtractValues(Site site, String ruleInfoPaths) {
+        this.site = site;
+        this.rules = rules;
+    }
+    
 
     public void printExtractedValues() {
 
@@ -43,46 +48,12 @@ public class ExtractValues {
 
         neo4j = new Neo4jHandler(site);
 
-        boolean append = false;
         int i = 0;
         for (CypherRule rule : rules) {
-
-            printRuleInfo(rule, i, append);
             printExtractedValues(rule, i);
-
-            append = true;
             i++;
         }
         neo4j.shutdown();
-    }
-
-    private void printRuleInfo(CypherRule rule, int ruleID, boolean append) {
-        File dir = new File(Paths.PATH_INTRASITE + "/" + site.getPath());
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
-
-        CSVFormat format;
-        if (append) {
-            format = CSVFormat.EXCEL;
-        } else {
-            String[] header = {"ID", "LABEL", "RULE"};
-            format = CSVFormat.EXCEL.withHeader(header);
-        }
-
-        try (Writer out = new FileWriter(dir.getAbsolutePath() + "/rule_info.csv", append)) {
-
-            try (CSVPrinter csvFilePrinter = new CSVPrinter(out, format)) {
-                List<String> dataRecord = new ArrayList<>();
-                dataRecord.add(ruleID + "");
-                dataRecord.add(rule.getLabel());
-                dataRecord.add(rule.getQueryWithoutParameters());
-                csvFilePrinter.printRecord(dataRecord);
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(ExtractValues.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
     }
 
     private void printExtractedValues(CypherRule rule, int i) {

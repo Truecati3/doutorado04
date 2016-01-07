@@ -15,7 +15,7 @@ import br.edimarmanica.dataset.Site;
 public class Csv2Neo4j {
 
     public static void main(String[] args) {
-        Domain domain = br.edimarmanica.dataset.swde.Domain.MOVIE;
+        Domain domain = br.edimarmanica.dataset.swde.Domain.JOB;
         for (Site site : domain.getSites()) {
             System.out.println("echo \""+site.getFolderName()+"\";");
             System.out.println("./import.sh " + Paths.PARTIAL_DB_PATH + "/" + site.getPath() + " " + Paths.PARTIAL_CSV_PATH + "/" + site.getPath()+";");

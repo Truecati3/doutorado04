@@ -38,9 +38,10 @@ public class DirectoryToCSV {
         File fDir = new File(Paths.PATH_BASE + "/" + site.getPath());
         for (File f : fDir.listFiles()) {
             Integer nr = Integer.valueOf(f.getName().replaceAll(".htm", ""));
-            if (nr<450 || nr > 550){
+            
+            /*if (nr<0 || nr > 460){
                 continue;
-            }
+            }*/
             if (General.DEBUG) {
                 System.out.println("Page:" + f.getAbsolutePath());
             }
@@ -57,17 +58,17 @@ public class DirectoryToCSV {
     public static void main(String[] args) {
         General.DEBUG = true;
 
-     //   Domain domain = br.edimarmanica.dataset.swde.Domain.UNIVERSITY;
+     //   Domain domain = br.edimarmanica.dataset.swde.Domain.JOB;
      //   for (Site site : domain.getSites()) {
      //       System.out.println("Site: " + site.getFolderName());
-          //  DirectoryToCSV load = new DirectoryToCSV(site);
-          DirectoryToCSV load = new DirectoryToCSV(br.edimarmanica.dataset.swde.movie.Site.ALLMOVIE);
+       //     DirectoryToCSV load = new DirectoryToCSV(site);
+          DirectoryToCSV load = new DirectoryToCSV(br.edimarmanica.dataset.swde.job.Site.MONSTER);
 
             try {
                 load.loadPages();
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(DirectoryToCSV.class.getName()).log(Level.SEVERE, null, ex);
             }
-    //    }
+        //}
     }
 }

@@ -178,4 +178,10 @@ public class Neo4jHandler {
     private static String getDBPath(Site site) {
         return Paths.PARTIAL_DB_PATH + site.getPath() + "/" + DB_FILE_NAME;
     }
+
+    public GraphDatabaseService getGraphDb() {
+        return graphDb;
+    }
+    
+    
 }
