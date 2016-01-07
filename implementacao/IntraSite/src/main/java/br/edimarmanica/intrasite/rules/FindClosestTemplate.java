@@ -7,18 +7,11 @@ package br.edimarmanica.intrasite.rules;
 import br.edimarmanica.configuration.General;
 import br.edimarmanica.configuration.Paths;
 import br.edimarmanica.dataset.Site;
-import br.edimarmanica.expressiveness.generate.CypherNotation;
-import br.edimarmanica.expressiveness.generate.beans.CypherRule;
-import br.edimarmanica.htmltocsvtoneo4j.html2csv.CsvController;
 import br.edimarmanica.htmltocsvtoneo4j.neo4j.Neo4jHandler;
-import br.edimarmanica.intrasite.evaluate.EvaluateWEIR;
 import br.edimarmanica.intrasite.extract.ExtractValues;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Reader;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -31,9 +24,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;
-import org.apache.commons.csv.CSVRecord;
 import org.neo4j.graphdb.DynamicLabel;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
@@ -43,18 +34,20 @@ import org.neo4j.graphdb.Transaction;
  *
  * @author edimar
  */
-public class GenerateRulesVs2 {
+public class FindClosestTemplate {
 
     private Neo4jHandler neo4j;
     private Site site;
     private org.neo4j.graphdb.Label labelTemplate = DynamicLabel.label(Label.Template.name());
     private boolean append = false;
-    private Set<String> tmp = new HashSet<>();
 
-    public GenerateRulesVs2(Site site) {
+    public FindClosestTemplate(Site site) {
         this.site = site;
     }
 
+    /**
+     * Find the closest template to each candidate value
+     */
     public void execute() {
         neo4j = new Neo4jHandler(site);
         try (Transaction transaction = neo4j.beginTx()) {
@@ -66,12 +59,23 @@ public class GenerateRulesVs2 {
 
     private void generate() {
 
+        Long count = new Long(0);
+        if(General.DEBUG){
+            String query = "MATCH (v:CandValue) RETURN count(v) as count";
+            count = (Long) neo4j.querySingleColumn(query, "count").get(0);
+            System.out.println("Total CandValue: "+count);
+        }
+        
         //seleciona os candValues
-        String cypherQuery = "match (v:CandValue) return v as candValue";
+        String cypherQuery = "MATCH (v:CandValue) RETURN v as candValue";
         Iterator<Map<String, Object>> iterator = neo4j.executeCypher(cypherQuery);
-        int i = 0;
-        while (iterator.hasNext()) { //para cada CandValue com o mesmo UNIQUE_PATH
-            System.out.println("CandValue: " + i);
+        int i = 1;
+        while (iterator.hasNext()) { //para cada CandValue
+
+            if (General.DEBUG) {
+                System.out.println("Faltam: " + (count-i));
+            }
+
             i++;
             Map<String, Object> map = iterator.next();
             Node candNode = (Node) map.get("candValue");
@@ -80,16 +84,7 @@ public class GenerateRulesVs2 {
             Node closestNode = closestTemplateNode(getNodeById(candNode.getId()));
 
             //imprime label, UP_label, UP_value
-            tmp.add(closestNode.getProperty("VALUE").toString() + General.SEPARADOR + closestNode.getProperty("UNIQUE_PATH").toString() + General.SEPARADOR + candNode.getProperty("UNIQUE_PATH").toString());
-        }
-
-        System.out.println("Tmp: " + tmp.size());
-        i = 0;
-        for (String t : tmp) {
-            String partes[] = t.split(General.SEPARADOR);
-            CypherNotation cypherNotation = new CypherNotation(partes[0], partes[1], partes[2]);
-            printRuleInfo(cypherNotation.getNotation(), i);
-            i++;
+            printRuleInfo(closestNode.getProperty("VALUE").toString(), closestNode.getProperty("UNIQUE_PATH").toString(), candNode.getProperty("UNIQUE_PATH").toString());
         }
     }
 
@@ -131,7 +126,7 @@ public class GenerateRulesVs2 {
         return null;
     }
 
-    private void printRuleInfo(CypherRule rule, int ruleID) {
+    private void printRuleInfo(String label, String upLabel, String upValue) {
         File dir = new File(Paths.PATH_INTRASITE + "/" + site.getPath());
         if (!dir.exists()) {
             dir.mkdirs();
@@ -141,17 +136,17 @@ public class GenerateRulesVs2 {
         if (append) {
             format = CSVFormat.EXCEL;
         } else {
-            String[] header = {"ID", "LABEL", "RULE"};
+            String[] header = {"LABEL", "UP_LABEL", "UP_VALUE"};
             format = CSVFormat.EXCEL.withHeader(header);
         }
 
-        try (Writer out = new FileWriter(dir.getAbsolutePath() + "/rule_info.csv", append)) {
+        try (Writer out = new FileWriter(dir.getAbsolutePath() + "/closest_template.csv", append)) {
 
             try (CSVPrinter csvFilePrinter = new CSVPrinter(out, format)) {
                 List<String> dataRecord = new ArrayList<>();
-                dataRecord.add(ruleID + "");
-                dataRecord.add(rule.getLabel());
-                dataRecord.add(rule.getQueryWithoutParameters());
+                dataRecord.add(label);
+                dataRecord.add(upLabel);
+                dataRecord.add(upValue);
                 csvFilePrinter.printRecord(dataRecord);
             }
         } catch (IOException ex) {
@@ -160,31 +155,9 @@ public class GenerateRulesVs2 {
 
         append = true;
     }
-    
-  /*  public static Set<CypherRule> readRules(Site site, String ruleInfoPath){
-        Set<CypherRule> rules = new HashSet<>();
-         File dir = new File(Paths.PATH_INTRASITE + "/" + site.getPath()+"/rule_info.csv");
-        for (File rule : dir.listFiles()) {
-
-            Set<String> values = new HashSet<>();
-            try (Reader in = new FileReader(rule.getAbsolutePath())) {
-                try (CSVParser parser = new CSVParser(in, CSVFormat.EXCEL.withHeader())) {
-                    for (CSVRecord record : parser) {
-                        rules.add(new CypherRule);
-                        values.add(record.get("URL").replaceAll("/sdd/edimar/Desktop/doutorado/doutorado04/bases/", "/media/Dados/bases/") + General.SEPARADOR + record.get("EXTRACTED VALUE"));
-                    }
-                }
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(EvaluateWEIR.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(EvaluateWEIR.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            myResults.put(rule.getName(), values);
-        }
-    }*/
 
     public static void main(String[] args) {
-        GenerateRulesVs2 g = new GenerateRulesVs2(br.edimarmanica.dataset.swde.auto.Site.AOL);
+        FindClosestTemplate g = new FindClosestTemplate(br.edimarmanica.dataset.swde.book.Site.ADEBOOKS);
         g.execute();
     }
 }

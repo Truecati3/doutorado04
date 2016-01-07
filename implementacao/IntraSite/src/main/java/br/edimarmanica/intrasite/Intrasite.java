@@ -5,12 +5,12 @@
 package br.edimarmanica.intrasite;
 
 import br.edimarmanica.configuration.General;
-import br.edimarmanica.configuration.Paths;
-import br.edimarmanica.intrasite.rules.SetTemplates;
 import br.edimarmanica.dataset.Site;
 import br.edimarmanica.expressiveness.generate.beans.CypherRule;
 import br.edimarmanica.intrasite.extract.ExtractValues;
+import br.edimarmanica.intrasite.rules.FindClosestTemplate;
 import br.edimarmanica.intrasite.rules.GenerateRules;
+import br.edimarmanica.intrasite.rules.SetTemplates;
 import java.util.Set;
 
 /**
@@ -26,16 +26,20 @@ public class Intrasite {
             System.out.println(">> SetTemplates");
         }
         //Define template nodes and candidate value nodes
-        SetTemplates st = new SetTemplates(site);
-        st.execute();
+   //     SetTemplates st = new SetTemplates(site);
+   //     st.execute();
 
         if (General.DEBUG) {
             System.out.println(">> GenerateRules");
         }
+        
+        //Find closest template node to each candidate value node
+ //       FindClosestTemplate fct = new FindClosestTemplate(site);
+ //       fct.execute();
+        
         //Generate candidate rules
         GenerateRules gr = new GenerateRules(site);
-        gr.execute();
-        Set<CypherRule> rules = gr.getRules();
+        Set<CypherRule> rules = gr.readRules();
 
 //        if (General.DEBUG) {
 //            System.out.println(">>>> Generated rules: " + rules.size());
@@ -71,6 +75,6 @@ public class Intrasite {
         
         General.DEBUG=true;
         Intrasite intra = new Intrasite();
-        intra.execute(br.edimarmanica.dataset.swde.auto.Site.AUTOBYTEL);
+        intra.execute(br.edimarmanica.dataset.swde.book.Site.ADEBOOKS);
     }
 }
