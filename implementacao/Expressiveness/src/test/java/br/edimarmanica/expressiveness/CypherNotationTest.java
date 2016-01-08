@@ -32,7 +32,7 @@ public class CypherNotationTest extends TestCase {
         String uniquePathLabel = "/HTML[1]/BODY[1]/FONT[1]/TABLE[2]/TR[2]/TD[2]/TABLE[2]/TR[1]/TD[1]/TABLE[1]/TR[1]/TD[1]/TABLE[1]/TR[1]/TD[1]/p[2]/text()[1]";
         String label = "Author:";
 
-        String expResult = "MATCH (a2)<--(a1)<--(a0)<--(b)-->(c0)-->(c1)-->(c2) "
+        String expResult = "MATCH (a2:Template)<--(a1)<--(a0)<--(b)-->(c0)-->(c1)-->(c2) "
                 + "\nWHERE a2.VALUE={value0} AND a2.PATH={value1} AND a2.POSITION={value2} "
                 + "\nAND a1.VALUE={value3} AND a1.POSITION={value4} "
                 + "\nAND a0.VALUE={value5} AND a0.POSITION={value6} "
@@ -51,7 +51,7 @@ public class CypherNotationTest extends TestCase {
         uniquePathValue = "/HTML[1]/BODY[1]/FONT[1]/TABLE[2]/TR[2]/TD[2]/TABLE[2]/TR[1]/TD[1]/TABLE[1]/TR[1]/TD[1]/TABLE[1]/TR[1]/TD[3]/A[1]/text()[15]";
         uniquePathLabel = "/HTML[1]/BODY[1]/FONT[1]/TABLE[2]/TR[2]/TD[2]/TABLE[2]/TR[1]/TD[1]/TABLE[1]/TR[1]/TD[1]/TABLE[1]/TR[1]/TD[1]/text()[13]";
 
-        expResult = "MATCH (a1)<--(a0)<--(b)-->(c0)-->(c1)-->(c2) "
+        expResult = "MATCH (a1:Template)<--(a0)<--(b)-->(c0)-->(c1)-->(c2) "
                 + "\nWHERE a1.VALUE={value0} AND a1.PATH={value1} AND a1.POSITION={value2}  "
                 + "\nAND a0.VALUE={value3} AND a0.POSITION={value4}  "
                 + "\nAND b.VALUE={value5} "
@@ -69,7 +69,7 @@ public class CypherNotationTest extends TestCase {
          */
         uniquePathValue = "/HTML[1]/BODY[1]/FONT[1]/TABLE[2]/TR[2]/TD[2]/TABLE[2]/TR[1]/TD[1]/TABLE[1]/TR[1]/TD[1]/TABLE[1]/TR[1]/TD[1]/A[1]/text()[1]";
         uniquePathLabel = "/HTML[1]/BODY[1]/FONT[1]/TABLE[2]/TR[2]/TD[2]/TABLE[2]/TR[1]/TD[1]/TABLE[1]/TR[1]/TD[1]/TABLE[1]/TR[1]/TD[1]/text()[1]";
-        expResult = "MATCH (a0)<--(b)-->(c0)-->(c1) "
+        expResult = "MATCH (a0:Template)<--(b)-->(c0)-->(c1) "
                 + "\nWHERE a0.VALUE={value0} AND a0.PATH={value1} AND a0.POSITION={value2} "
                 + "\nAND b.VALUE={value3} "
                 + "\nAND c0.VALUE={value4} AND c0.POSITION={value5}  "

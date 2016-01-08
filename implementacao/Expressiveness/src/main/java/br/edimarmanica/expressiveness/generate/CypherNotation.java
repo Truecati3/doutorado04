@@ -41,7 +41,11 @@ public class CypherNotation {
         int nrElementsVai = partesValue.length - i;
         String cypher = "MATCH ";
         for (int j = nrElementsVolta - 1; j >= 0; j--) {
-            cypher += "(a" + j + ")<--";
+            if (j == nrElementsVolta - 1) {
+                cypher += "(a" + j + ":Template)<--";//adicionando o label, a consulta fica muito mais rápida
+            } else {
+                cypher += "(a" + j + ")<--";
+            }
         }
         cypher += "(b)";
         for (int j = 0; j < nrElementsVai; j++) {
@@ -57,9 +61,9 @@ public class CypherNotation {
         for (j = 0; j < nrElementsVai - 1; j++) {
             cypher += "\nAND c" + j + ".VALUE=" + add(partesValue[i + j].replaceAll("\\[.*", "")) + " AND c" + j + ".POSITION=" + add(partesValue[i + j].replaceAll(".*\\[", "").replaceAll("]", "")) + " ";
         }
-        cypher += "\nAND c" + (nrElementsVai - 1) + ".NODE_TYPE="+add("3") +" AND c" + (nrElementsVai - 1) + ".POSITION=" + add(partesValue[i + j].replaceAll(".*\\[", "").replaceAll("]", "")) + " ";
+        cypher += "\nAND c" + (nrElementsVai - 1) + ".NODE_TYPE=" + add("3") + " AND c" + (nrElementsVai - 1) + ".POSITION=" + add(partesValue[i + j].replaceAll(".*\\[", "").replaceAll("]", "")) + " ";
         cypher += "\n RETURN c" + (nrElementsVai - 1) + ".VALUE AS VALUE, c" + (nrElementsVai - 1) + ".URL AS URL, 'Template' in LABELS(c" + (nrElementsVai - 1) + ") as template";
-        
+
         return new CypherRule(cypher, params, label);
     }
 
@@ -68,6 +72,6 @@ public class CypherNotation {
 
         params.put(id, param);
 
-        return "{"+id+"}";
-    } 
+        return "{" + id + "}";
+    }
 }
