@@ -6,6 +6,12 @@ git commit -m "testando git"
 
 #atualizar o git remoto
 git push doutorado04 master
+git push origin master
 
 #atualizar o git local
 git fetch doutorado04
+
+#criar um repositório a partir de um repositório existente
+git clone URL_do_repositorio
+
+depois git init
