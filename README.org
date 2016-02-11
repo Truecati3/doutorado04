@@ -3,6 +3,6 @@
 *** WEIR dataset 
 **** available on http://www.dia.uniroma3.it/db/weir/
 *** SDWE dataset
-**** availabel on http://swde.codeplex.com/
+**** available on http://swde.codeplex.com/
 ** linux
 *** contains useful linux commands
