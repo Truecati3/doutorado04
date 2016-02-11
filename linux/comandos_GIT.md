@@ -11,6 +11,9 @@ git push origin master
 #atualizar o git local
 git fetch doutorado04
 
+#Incorporates changes from a remote repository into the current branch
+git pull URL_repositirio
+
 #criar um repositório a partir de um repositório existente
 git clone URL_do_repositorio
 
