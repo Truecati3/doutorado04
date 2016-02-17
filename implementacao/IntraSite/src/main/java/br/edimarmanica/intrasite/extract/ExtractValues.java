@@ -47,7 +47,7 @@ public class ExtractValues {
         int i = 0;
         for (CypherRule rule : rules) {
             if (General.DEBUG){
-                System.out.println("Extracting values for rule: "+i);
+                System.out.println("Faltam: "+(rules.size()-i));
             }
             
             printRuleInfo(rule, i, append);

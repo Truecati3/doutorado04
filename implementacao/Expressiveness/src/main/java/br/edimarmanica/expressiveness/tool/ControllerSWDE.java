@@ -36,7 +36,7 @@ public class ControllerSWDE extends Controller {
         Map<Attribute, String> attrs = new HashMap<>(); //<Attribute,pair(URL$_$Value) of first page>
         for (Attribute attr : site.getDomain().getAttributes()) {
 
-            try (Reader in = new FileReader(Paths.PATH_BASE + site.getGroundTruthPath().replaceAll("!attrName!", attr.getAttributeID()))) {
+            try (Reader in = new FileReader(Paths.PATH_BASE + site.getGroundTruthPath(attr))) {
                 try (CSVParser parser = new CSVParser(in, CSVFormat.MYSQL.withHeader())) {
                     int i = 0;
                     for (CSVRecord record : parser) {

@@ -71,7 +71,7 @@ public class SetTemplates {
 
         int i = 0;
         for (String key : mapNodeIds.keySet()) {
-            System.out.println("aki: " + i);
+            System.out.println("Faltam: " + (mapNodeIds.size() - i));
             i++;
             //template é um valor que ocorre no mesmo path em pelo menos X páginas
             if (mapPageIds.get(key).size() >= (pageIds.size() * IntrasiteExtraction.PR_TEMPLATE / 100)) {
@@ -134,8 +134,8 @@ public class SetTemplates {
             st.execute();
         }*/
 
-        //pulei amazon de books pq não tem memória suficiente, pulei CAREERBUILDER e DICE no jobs
-        SetTemplates st = new SetTemplates(br.edimarmanica.dataset.swde.job.Site.MONSTER); //finalizei o JOBTARGET
+
+        SetTemplates st = new SetTemplates(br.edimarmanica.dataset.swde.movie.Site.ALLMOVIE);
         st.execute();
     }
 }

@@ -4,6 +4,7 @@
  */
 package br.edimarmanica.dataset.weir.finance;
 
+import br.edimarmanica.dataset.Attribute;
 import br.edimarmanica.dataset.weir.Domain;
 import java.io.File;
 
@@ -45,5 +46,10 @@ public enum Site implements br.edimarmanica.dataset.Site {
     @Override
     public String getEntityPath() {
         return getDomain().getDataset().getFolderName() + File.separator + "entity/" + getDomain().getFolderName() + File.separator + getFolderName() + ".csv";
+    }
+
+    @Override
+    public String getGroundTruthPath(Attribute attr) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

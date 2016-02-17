@@ -14,7 +14,7 @@ package br.edimarmanica.dataset.swde.movie;
 public enum Attribute implements br.edimarmanica.dataset.Attribute {
 
     DIRECTOR("director", "director"), GENRE("genre", "genre"),
-    RATING("rating", "rating"), TITLE("title", "title");
+    RATING("rating", "mpaa_rating"), TITLE("title", "title");
     
     private String attributeID;
     private String attributeIDbyDataset; //ID do atributo pelo domínio

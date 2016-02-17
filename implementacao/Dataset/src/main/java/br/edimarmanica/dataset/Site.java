@@ -22,6 +22,8 @@ public interface Site {
 
     public String getGroundTruthPath();
     
+    public String getGroundTruthPath(Attribute attr);
+    
     /**
      * 
      * @return the path with the file that contains the entity described by each page

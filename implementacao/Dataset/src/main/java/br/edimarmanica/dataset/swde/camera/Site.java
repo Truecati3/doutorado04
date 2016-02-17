@@ -38,8 +38,13 @@ public enum Site implements br.edimarmanica.dataset.Site {
     }
     
     @Override
-    public String getGroundTruthPath(){
-        return getDomain().getDataset().getFolderName() + File.separator + "groundtruth/" + getDomain().getFolderName() + File.separator + getFolderName()+"-!attrName!.txt";
+    public String getGroundTruthPath(br.edimarmanica.dataset.Attribute attr){
+        return getDomain().getDataset().getFolderName() + File.separator + "groundtruth/" + getDomain().getFolderName() + File.separator + getFolderName()+"-"+attr.getAttributeID()+".txt";
+    }
+
+    @Override
+    public String getGroundTruthPath() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
