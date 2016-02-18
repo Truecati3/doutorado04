@@ -4,6 +4,9 @@
  */
 package br.edimarmanica.intrasite;
 
+import br.edimarmanica.dataset.Domain;
+import br.edimarmanica.dataset.Site;
+
 
 
 /**
@@ -13,9 +16,9 @@ package br.edimarmanica.intrasite;
 public class Teste {
 
     public static void main(String[] args) {
-
-        String st = "AvisioTech Corp.";
-        String st2 = "Avisio 27.15 Tech - & Corp 15.​";
-        System.out.println("["+st2.replaceAll("[^(a-zA-Z)|\\d|\\.]", "").trim()+"]");
+        Domain domain = br.edimarmanica.dataset.weir.Domain.VIDEOGAME;
+        for (Site site : domain.getSites()) {
+            System.out.println(site);
+        }
     }
 }

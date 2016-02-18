@@ -102,7 +102,7 @@ public class EvaluateSWDE {
 
                     String url = record.get(0);
                     int nrValues = Integer.parseInt(record.get(1));
-                    if (nrValues == 0) {
+                    if (nrValues == 0 || (nrValues == 1 && formatGroundTruthValue(record.get(2)).isEmpty())) {
                         continue;
                     }
                     String value = "";
@@ -122,28 +122,28 @@ public class EvaluateSWDE {
 
         return values;
     }
-    
-    public static String formatGroundTruthValue(String value){
+
+    public static String formatGroundTruthValue(String value) {
         /*return value.replaceAll("&#039;", "'")
-                .replaceAll("&amp;", "&")
-                .replaceAll("&quot;", "\"")
-                .replaceAll("&nbsp;", " ")
-                .replaceAll("&#46;", ".")
-                .replaceAll("&#45;", "-")
-                .replaceAll("&#40;", "(")
-                .replaceAll("&#41;", ")")
-                .replaceAll("&reg;", "®")
-                .replaceAll("&#34;", "\"")
-                .replaceAll("&#47;", "/")
-                .replaceAll("&#43;", "+")
-                .trim();*/
-        
-         return StringEscapeUtils.unescapeHtml(value)
-                 .replaceAll(" ", " ")
-                 .replaceAll("\\\\", "")
-                 .replaceAll("\"", "")
-                 .replaceAll("\\s+", " ")
-                 .replaceAll("[^(a-zA-Z)|\\d|\\.]", ""); //só deixa números, letras e o ponto
+         .replaceAll("&amp;", "&")
+         .replaceAll("&quot;", "\"")
+         .replaceAll("&nbsp;", " ")
+         .replaceAll("&#46;", ".")
+         .replaceAll("&#45;", "-")
+         .replaceAll("&#40;", "(")
+         .replaceAll("&#41;", ")")
+         .replaceAll("&reg;", "®")
+         .replaceAll("&#34;", "\"")
+         .replaceAll("&#47;", "/")
+         .replaceAll("&#43;", "+")
+         .trim();*/
+
+        return StringEscapeUtils.unescapeHtml(value)
+                .replaceAll(" ", " ")
+                .replaceAll("\\\\", "")
+                .replaceAll("\"", "")
+                .replaceAll("\\s+", " ")
+                .replaceAll("[^(a-zA-Z)|\\d|\\.]", ""); //só deixa números, letras e o ponto
     }
 
     /**
@@ -179,8 +179,8 @@ public class EvaluateSWDE {
 
     private void printMetrics(Attribute attribute, boolean append) throws SiteWithoutThisAttribute {
         Map<Integer, String> groundtruth = loadGroundTruth(site, attribute);
-        
-        if (groundtruth.isEmpty()){
+
+        if (groundtruth.isEmpty()) {
             return;
         }
 
@@ -315,7 +315,7 @@ public class EvaluateSWDE {
          eval.printMetrics();
          }*/
 
-        EvaluateSWDE eval = new EvaluateSWDE(br.edimarmanica.dataset.swde.movie.Site.HOLLYWOOD);
+        EvaluateSWDE eval = new EvaluateSWDE(br.edimarmanica.dataset.swde.auto.Site.YAHOO);
         eval.printMetrics();
     }
 }

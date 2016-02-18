@@ -55,7 +55,7 @@ public class EvaluateWEIR {
             try (Reader in = new FileReader(rule.getAbsolutePath())) {
                 try (CSVParser parser = new CSVParser(in, CSVFormat.EXCEL.withHeader())) {
                     for (CSVRecord record : parser) {
-                        values.add(record.get("URL").replaceAll("/sdd/edimar/Desktop/doutorado/doutorado04/bases/", "/media/Dados/bases/") + General.SEPARADOR + record.get("EXTRACTED VALUE"));
+                        values.add(record.get("URL").replaceAll(".*" + site.getDomain().getDataset().getFolderName()+ "/", "") + General.SEPARADOR + record.get("EXTRACTED VALUE"));
                     }
                 }
             } catch (FileNotFoundException ex) {
@@ -91,7 +91,7 @@ public class EvaluateWEIR {
                         throw new SiteWithoutThisAttribute(attribute.getAttributeID(), site.getFolderName());
                     }
                     if (!record.get(attribute.getAttributeIDbyDataset()).trim().isEmpty()) {
-                        values.add(Paths.PATH_BASE + site.getDomain().getDataset().getFolderName() + "/" + record.get("url") + General.SEPARADOR + record.get(attribute.getAttributeIDbyDataset()).trim());
+                        values.add(record.get("url") + General.SEPARADOR + record.get(attribute.getAttributeIDbyDataset()).trim());
                     }
                 }
             }
@@ -233,8 +233,11 @@ public class EvaluateWEIR {
 
     public static void main(String[] args) {
         //edition não pega pq identifica como label (template)
-        Domain domain = br.edimarmanica.dataset.weir.Domain.SOCCER;
+        Domain domain = br.edimarmanica.dataset.weir.Domain.VIDEOGAME;
         for (Site site : domain.getSites()) {
+            if (site == br.edimarmanica.dataset.weir.videogame.Site.CDUNIVERSE){
+                continue;
+            }
             EvaluateWEIR eval = new EvaluateWEIR(site);
             eval.printMetrics();
         }
