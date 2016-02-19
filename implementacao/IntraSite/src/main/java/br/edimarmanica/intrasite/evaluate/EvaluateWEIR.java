@@ -96,7 +96,7 @@ public class EvaluateWEIR {
         //edition não pega pq identifica como label (template)
         Domain domain = br.edimarmanica.dataset.weir.Domain.BOOK;
         for (Site site : domain.getSites()) {
-            if (site != br.edimarmanica.dataset.weir.book.Site.AMAZON) {
+            if (site != br.edimarmanica.dataset.weir.book.Site.BARNESANDNOBLE) {
                 continue;
             }
             EvaluateWEIR eval = new EvaluateWEIR(site);

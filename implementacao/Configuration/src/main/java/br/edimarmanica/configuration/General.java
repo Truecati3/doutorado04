@@ -4,8 +4,6 @@
  */
 package br.edimarmanica.configuration;
 
-import br.edimarmanica.extractionrules.neo4j.Neo4jHandlerType;
-
 /**
  *
  * @author edimar

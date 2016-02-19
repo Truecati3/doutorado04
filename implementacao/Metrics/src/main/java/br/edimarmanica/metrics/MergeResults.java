@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edimarmanica.intrasite.evaluate;
+package br.edimarmanica.metrics;
 
 import br.edimarmanica.configuration.Paths;
 import br.edimarmanica.dataset.Domain;
@@ -30,37 +30,41 @@ import org.apache.commons.csv.CSVRecord;
  */
 public class MergeResults {
     private boolean append = false;
-    private String[] header = {"DATASET", "DOMAIN", "SITE", "ATTRIBUTE", "RULE", "LABEL", "RELEVANTS", "RETRIEVED", "RETRIEVED RELEVANTS", "RECALL", "PRECISION", "DATE"};
+    protected String outputPath;
+
+    public MergeResults(String outputPath) {
+        this.outputPath = outputPath;
+    }
     
     private void addMetricsSite(Site site) {
         
-        try (Reader in = new FileReader(Paths.PATH_INTRASITE + "/" + site.getPath() + "/result.csv")) {
+        try (Reader in = new FileReader(outputPath + "/" + site.getPath() + "/result.csv")) {
             try (CSVParser parser = new CSVParser(in, CSVFormat.EXCEL.withHeader())) {
                 
                 for (CSVRecord record : parser) {
                     List<String> recordList = new ArrayList<>();
-                    for(String head: header){
+                    for(String head: Printer.header){
                         recordList.add(record.get(head));
                     }
                     add(site, recordList);
                 }
             }
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(EvaluateWEIR.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MergeResults.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(EvaluateWEIR.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MergeResults.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
 
     private void add(Site site, List<String> dataRecord) {
-        File file = new File(Paths.PATH_INTRASITE + "/" + site.getDomain().getPath() + "/result.csv");
+        File file = new File(outputPath + "/" + site.getDomain().getPath() + "/result.csv");
         CSVFormat format;
         if (append) {
             format = CSVFormat.EXCEL;
         } else {
             
-            format = CSVFormat.EXCEL.withHeader(header);
+            format = CSVFormat.EXCEL.withHeader(Printer.header);
         }
 
         try (Writer out = new FileWriter(file, append)) {
@@ -80,8 +84,8 @@ public class MergeResults {
     }
     
     public static void main(String[] args) {
-        MergeResults merge = new MergeResults();
-        merge.merge(br.edimarmanica.dataset.weir.Domain.SOCCER);
+        MergeResults merge = new MergeResults(Paths.PATH_TEMPLATE_VARIATION);
+        merge.merge(br.edimarmanica.dataset.swde.Domain.CAMERA);
     }
 }
 
