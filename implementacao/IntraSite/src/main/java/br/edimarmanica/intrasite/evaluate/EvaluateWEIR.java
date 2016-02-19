@@ -4,33 +4,20 @@
  */
 package br.edimarmanica.intrasite.evaluate;
 
-import br.edimarmanica.configuration.General;
 import br.edimarmanica.configuration.Paths;
 import br.edimarmanica.dataset.Attribute;
 import br.edimarmanica.dataset.Domain;
 import br.edimarmanica.dataset.Site;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Reader;
-import java.io.Writer;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
+import br.edimarmanica.metrics.Labels;
+import br.edimarmanica.metrics.RuleMetrics;
+import br.edimarmanica.metrics.SiteWithoutThisAttribute;
+import br.edimarmanica.metrics.weir.GroundTruthWeir;
+import br.edimarmanica.metrics.weir.PrinterWeir;
+import br.edimarmanica.metrics.weir.ResultsWeir;
+import br.edimarmanica.metrics.weir.RuleMetricsWeir;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVPrinter;
-import org.apache.commons.csv.CSVRecord;
 
 /**
  *
@@ -39,104 +26,41 @@ import org.apache.commons.csv.CSVRecord;
 public class EvaluateWEIR {
 
     private Site site;
-    private Map<String, Set<String>> myResults = new HashMap<>();//<RuleName,Set<ExtractedValues>>
-    private Map<String, String> labels = new HashMap<>(); //<RuleName,Label>
+    private Labels labels;
+    private Map<String, Set<String>> myResults; //<RuleName,Set<ExtractedValues>>
+    private PrinterWeir printer;
 
     public EvaluateWEIR(Site site) {
         this.site = site;
     }
 
-    private void loadMyResults() {
-
-        File dir = new File(Paths.PATH_INTRASITE + "/" + site.getPath() + "/extracted_values");
-        for (File rule : dir.listFiles()) {
-
-            Set<String> values = new HashSet<>();
-            try (Reader in = new FileReader(rule.getAbsolutePath())) {
-                try (CSVParser parser = new CSVParser(in, CSVFormat.EXCEL.withHeader())) {
-                    for (CSVRecord record : parser) {
-                        values.add(record.get("URL").replaceAll(".*" + site.getDomain().getDataset().getFolderName()+ "/", "") + General.SEPARADOR + record.get("EXTRACTED VALUE"));
-                    }
-                }
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(EvaluateWEIR.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(EvaluateWEIR.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            myResults.put(rule.getName(), values);
-        }
-    }
-
-    private void loadLabels() {
-        try (Reader in = new FileReader(Paths.PATH_INTRASITE + "/" + site.getPath() + "/rule_info.csv")) {
-            try (CSVParser parser = new CSVParser(in, CSVFormat.EXCEL.withHeader())) {
-                for (CSVRecord record : parser) {
-                    labels.put("rule_" + record.get("ID") + ".csv", record.get("LABEL"));
-                }
-            }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(EvaluateWEIR.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(EvaluateWEIR.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public static Set<String> loadGroundTruth(Site site, Attribute attribute) throws SiteWithoutThisAttribute {
-        Set<String> values = new HashSet<>();
-
-        try (Reader in = new FileReader(Paths.PATH_BASE + site.getGroundTruthPath())) {
-            try (CSVParser parser = new CSVParser(in, CSVFormat.EXCEL.withHeader())) {
-                for (CSVRecord record : parser) {
-                    if (!record.isMapped(attribute.getAttributeIDbyDataset())) {
-                        throw new SiteWithoutThisAttribute(attribute.getAttributeID(), site.getFolderName());
-                    }
-                    if (!record.get(attribute.getAttributeIDbyDataset()).trim().isEmpty()) {
-                        values.add(record.get("url") + General.SEPARADOR + record.get(attribute.getAttributeIDbyDataset()).trim());
-                    }
-                }
-            }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(EvaluateWEIR.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(EvaluateWEIR.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return values;
-    }
-
-    private void printMetrics(Attribute attribute, boolean append) throws SiteWithoutThisAttribute {
-        Set<String> groundtruth = loadGroundTruth(site, attribute);
+    private void printMetrics(Attribute attribute) throws SiteWithoutThisAttribute {
+        GroundTruthWeir groundTruth = new GroundTruthWeir(site, attribute);
+        groundTruth.load();
 
         double maxRecall = 0;
         double maxPrecision = 0;
         double maxF1 = 0;
-        int maxRetrieved = 0;
         int maxRelevantsRetrieved = 0;
         String maxRule = null;
         Set<String> maxExtractValues = new HashSet<>();
 
         for (String rule : myResults.keySet()) {
 
-            Set<String> intersection = new HashSet<>();
-            intersection.addAll(myResults.get(rule));
-            intersection.retainAll(groundtruth);
+            RuleMetrics metrics = new RuleMetricsWeir(myResults.get(rule), groundTruth.getGroundTruth());
+            metrics.computeMetrics();
 
-            double recall = (double) intersection.size() / groundtruth.size();
-            double precision = (double) intersection.size() / myResults.get(rule).size();
-
-            if (recall == 0 || precision == 0) {
+            if (metrics.getF1() == 0) {
                 continue;
             }
-            double F1 = (2 * (recall * precision)) / (recall + precision);
 
-            if (F1 > maxF1) {
-                maxF1 = F1;
-                maxRecall = recall;
-                maxPrecision = precision;
+            if (metrics.getF1() > maxF1) {
+                maxF1 = metrics.getF1();
+                maxRecall = metrics.getRecall();
+                maxPrecision = metrics.getPrecision();
                 maxRule = rule;
 
-                maxRetrieved = myResults.get(rule).size();
-                maxRelevantsRetrieved = intersection.size();
+                maxRelevantsRetrieved = metrics.getRelevantRetrieved();
                 maxExtractValues = myResults.get(rule);
             }
         }
@@ -145,85 +69,22 @@ public class EvaluateWEIR {
             maxRule = "Attribute not found";
         }
 
-        Date date = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        String formattedDate = formatter.format(date);
-
-        /**
-         * ********************** results ******************
-         */
-        String[] header = {"DATASET", "DOMAIN", "SITE", "ATTRIBUTE", "RULE", "LABEL", "RELEVANTS", "RETRIEVED", "RETRIEVED RELEVANTS", "RECALL", "PRECISION", "DATE"};
-        File file = new File(Paths.PATH_INTRASITE + "/" + site.getPath() + "/result.csv");
-        CSVFormat format;
-        if (append) {
-            format = CSVFormat.EXCEL;
-        } else {
-            format = CSVFormat.EXCEL.withHeader(header);
-        }
-
-        try (Writer out = new FileWriter(file, append)) {
-            try (CSVPrinter csvFilePrinter = new CSVPrinter(out, format)) {
-                List<String> studentDataRecord = new ArrayList<>();
-                studentDataRecord.add(site.getDomain().getDataset().getFolderName());
-                studentDataRecord.add(site.getDomain().getFolderName());
-                studentDataRecord.add(site.getFolderName());
-                studentDataRecord.add(attribute.getAttributeID());
-                studentDataRecord.add(maxRule);
-                studentDataRecord.add(labels.get(maxRule));
-                studentDataRecord.add(groundtruth.size() + "");
-                studentDataRecord.add(maxRetrieved + "");
-                studentDataRecord.add(maxRelevantsRetrieved + "");
-                studentDataRecord.add(maxRecall + "");
-                studentDataRecord.add(maxPrecision + "");
-                studentDataRecord.add(formattedDate);
-                csvFilePrinter.printRecord(studentDataRecord);
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(EvaluateWEIR.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        /**
-         * ********************** log ******************
-         */
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(Paths.PATH_INTRASITE + "/" + site.getPath() + "/log.txt", append))) {
-            bw.write("\n\n*************" + formattedDate + " - " + attribute.getAttributeID() + "********************************\n");
-            bw.write("dataset;" + site.getDomain().getDataset().getFolderName() + ";domain;" + site.getDomain().getFolderName()
-                    + ";site;" + site.getFolderName() + ";attribute;"
-                    + attribute.getAttributeID() + ";relevantes;"
-                    + groundtruth.size() + ";recuperados;" + maxRetrieved + ";relevantes recuperados; " + maxRelevantsRetrieved + ";recall;" + maxRecall + ";precision;" + maxPrecision + ";date;" + formattedDate);
-            bw.newLine();
-            bw.write("--------------------------------------------\n");
-            bw.write("Relevantes não recuperados (Problema de recall):\n");
-            for (String rel : groundtruth) {
-                if (!maxExtractValues.contains(rel)) {
-                    String[] partes = rel.split(General.SEPARADOR);
-                    bw.write("Faltando: [" + partes[1] + "] na página: " + partes[0]);
-                    bw.newLine();
-                }
-            }
-            bw.write("--------------------------------------------\n");
-            bw.write("Irrelevantes recuperados (Problema de precision):\n");
-            for (String rel : maxExtractValues) {
-                if (!groundtruth.contains(rel)) {
-                    String[] partes = rel.split(General.SEPARADOR);
-                    bw.write("Faltando: [" + partes[1] + "] na página: " + partes[0]);
-                    bw.newLine();
-                }
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(EvaluateWEIR.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        printer.print(attribute, maxRule, labels.getLabels().get(maxRule), groundTruth.getGroundTruth(), maxExtractValues, maxRecall, maxPrecision, maxRelevantsRetrieved);
     }
 
     public void printMetrics() {
-        loadMyResults();
-        loadLabels();
 
-        boolean append = false;
+        labels = new Labels(site);
+        labels.load();
+
+        ResultsWeir results = new ResultsWeir(site);
+        myResults = results.loadAllRules();
+
+        printer = new PrinterWeir(site, Paths.PATH_INTRASITE);
+
         for (Attribute attr : site.getDomain().getAttributes()) {
             try {
-                printMetrics(attr, append);
-                append = true;
+                printMetrics(attr);
             } catch (SiteWithoutThisAttribute ex) {
                 //Logger.getLogger(EvaluateWEIR.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -233,9 +94,9 @@ public class EvaluateWEIR {
 
     public static void main(String[] args) {
         //edition não pega pq identifica como label (template)
-        Domain domain = br.edimarmanica.dataset.weir.Domain.VIDEOGAME;
+        Domain domain = br.edimarmanica.dataset.weir.Domain.BOOK;
         for (Site site : domain.getSites()) {
-            if (site == br.edimarmanica.dataset.weir.videogame.Site.CDUNIVERSE){
+            if (site != br.edimarmanica.dataset.weir.book.Site.AMAZON) {
                 continue;
             }
             EvaluateWEIR eval = new EvaluateWEIR(site);
