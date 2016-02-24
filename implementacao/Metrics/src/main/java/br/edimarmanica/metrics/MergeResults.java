@@ -84,8 +84,8 @@ public class MergeResults {
     }
     
     public static void main(String[] args) {
-        MergeResults merge = new MergeResults(Paths.PATH_TEMPLATE_VARIATION);
-        merge.merge(br.edimarmanica.dataset.swde.Domain.CAMERA);
+        MergeResults merge = new MergeResults(Paths.PATH_TEMPLATE_VARIATION );
+        merge.merge(br.edimarmanica.dataset.swde.Domain.NBA_PLAYER);
     }
 }
 

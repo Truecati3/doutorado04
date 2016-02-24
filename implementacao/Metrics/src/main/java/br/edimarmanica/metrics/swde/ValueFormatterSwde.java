@@ -6,6 +6,7 @@ package br.edimarmanica.metrics.swde;
 
 import br.edimarmanica.metrics.ValueFormatter;
 import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang.StringUtils;
 
 /**
  *
@@ -28,7 +29,6 @@ public class ValueFormatterSwde implements ValueFormatter{
          .replaceAll("&#47;", "/")
          .replaceAll("&#43;", "+")
          .trim();*/
-
         return StringEscapeUtils.unescapeHtml(value)
                 .replaceAll(" ", " ")
                 .replaceAll("\\\\", "")
@@ -36,5 +36,4 @@ public class ValueFormatterSwde implements ValueFormatter{
                 .replaceAll("\\s+", " ")
                 .replaceAll("[^(a-zA-Z)|\\d|\\.]", ""); //só deixa números, letras e o ponto
     }
-    
 }

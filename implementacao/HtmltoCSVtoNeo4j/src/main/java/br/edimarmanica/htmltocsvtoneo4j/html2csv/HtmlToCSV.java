@@ -159,7 +159,7 @@ public class HtmlToCSV {
     }
 
     public static void main(String[] args) {
-        HtmlToCSV html = new HtmlToCSV("/media/Dados/bases/SWDE/restaurant/restaurant-frommers/0846.htm", br.edimarmanica.dataset.swde.restaurant.Site.FROMMERS, 0, false);
+        HtmlToCSV html = new HtmlToCSV("/media/edimar/SAMSUNG/doutorado04/bases/SWDE/nbaplayer/nbaplayer-usatoday/0275.htm", br.edimarmanica.dataset.swde.nba.Site.USATODAY, 0, false);
         html.insertAllNodes();
     }
 }

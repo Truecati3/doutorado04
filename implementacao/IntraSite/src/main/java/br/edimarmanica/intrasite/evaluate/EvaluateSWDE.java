@@ -6,6 +6,7 @@ package br.edimarmanica.intrasite.evaluate;
 
 import br.edimarmanica.configuration.Paths;
 import br.edimarmanica.dataset.Attribute;
+import br.edimarmanica.dataset.Domain;
 import br.edimarmanica.dataset.Site;
 import br.edimarmanica.metrics.Labels;
 import br.edimarmanica.metrics.SiteWithoutThisAttribute;
@@ -38,6 +39,10 @@ public class EvaluateSWDE {
     private void printMetrics(Attribute attribute) throws SiteWithoutThisAttribute {
         GroundTruthSwde groundTruth = new GroundTruthSwde(site, attribute);
         groundTruth.load();
+        
+        if (groundTruth.getGroundTruth().isEmpty()){
+            return;//não tem esse atributo no gabarito
+        }
 
         double maxRecall = 0;
         double maxPrecision = 0;
@@ -51,7 +56,7 @@ public class EvaluateSWDE {
 
             RuleMetricsSwde metrics = new RuleMetricsSwde(myResults.get(rule), groundTruth.getGroundTruth());
             metrics.computeMetrics();
-            
+
             if (metrics.getF1() > maxF1) {
                 maxF1 = metrics.getF1();
                 maxRecall = metrics.getRecall();
@@ -92,14 +97,18 @@ public class EvaluateSWDE {
     public static void main(String[] args) {
 
         //edition não pega pq identifica como label (template)
-      /*  Domain domain = br.edimarmanica.dataset.swde.Domain.AUTO;
-         for (Site site : domain.getSites()) {
-         System.out.println("Site: " + site);
-         EvaluateSWDE eval = new EvaluateSWDE(site);
-         eval.printMetrics();
-         }*/
+        Domain domain = br.edimarmanica.dataset.swde.Domain.NBA_PLAYER;
+        for (Site site : domain.getSites()) {
+            if (site != br.edimarmanica.dataset.swde.nba.Site.YAHOO){
+                continue;
+            }
+            
+            System.out.println("Site: " + site);
+            EvaluateSWDE eval = new EvaluateSWDE(site);
+            eval.printMetrics();
+        }
 
-        EvaluateSWDE eval = new EvaluateSWDE(br.edimarmanica.dataset.swde.book.Site.BOOKDEPOSITORY);
-        eval.printMetrics();
+        // EvaluateSWDE eval = new EvaluateSWDE(br.edimarmanica.dataset.swde.restaurant.Site.USDINNERS);
+        // eval.printMetrics();
     }
 }

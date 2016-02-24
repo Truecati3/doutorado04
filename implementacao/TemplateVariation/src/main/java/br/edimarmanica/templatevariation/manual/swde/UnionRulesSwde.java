@@ -87,6 +87,10 @@ public class UnionRulesSwde {
         GroundTruthSwde groundTruth = new GroundTruthSwde(site, attribute);
         groundTruth.load();
         
+        if (groundTruth.getGroundTruth().isEmpty()){
+            return;//não tem esse atributo no gabarito
+        }
+        
         if (masterRuleIDs == null){
             printer.print(attribute, "Attribute not found", "", groundTruth.getGroundTruth(), new HashMap<Integer,String>(), new HashSet<Integer>(), 0, 0, 0);
             return;
@@ -114,7 +118,7 @@ public class UnionRulesSwde {
     }
 
     public static void main(String[] args) {
-        Domain domain = br.edimarmanica.dataset.swde.Domain.CAMERA;
+        Domain domain = br.edimarmanica.dataset.swde.Domain.NBA_PLAYER;
         for (Site site : domain.getSites()) {
             System.out.println("Site: "+site);
             UnionRulesSwde urw = new UnionRulesSwde(site);

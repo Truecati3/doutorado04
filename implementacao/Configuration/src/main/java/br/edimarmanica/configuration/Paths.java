@@ -10,7 +10,7 @@ package br.edimarmanica.configuration;
  */
 public class Paths {
 
-    private static final String PATH_ROOT = "/media/Dados/doutorado04/";// /media/Dados/  /media/edimar/SAMSUNG/doutorado04/
+    private static final String PATH_ROOT = "/media/Dados/doutorado04/";// /media/Dados/doutorado04/  /media/edimar/SAMSUNG/doutorado04/
     public static final String PATH_BASE = PATH_ROOT+"bases/";
     public final static String PARTIAL_DB_PATH = PATH_ROOT+"neo4j/data/"; 
     public final static String PARTIAL_CSV_PATH = PATH_ROOT+"neo4j/csv/"; 
