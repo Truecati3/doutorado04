@@ -97,9 +97,9 @@ public class EvaluateSWDE {
     public static void main(String[] args) {
 
         //edition não pega pq identifica como label (template)
-        Domain domain = br.edimarmanica.dataset.swde.Domain.NBA_PLAYER;
+        Domain domain = br.edimarmanica.dataset.swde.Domain.CAMERA;
         for (Site site : domain.getSites()) {
-            if (site != br.edimarmanica.dataset.swde.nba.Site.YAHOO){
+            if (site != br.edimarmanica.dataset.swde.camera.Site.BEACHAUDIO){
                 continue;
             }
             

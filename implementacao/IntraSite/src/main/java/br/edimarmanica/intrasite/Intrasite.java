@@ -8,6 +8,7 @@ import br.edimarmanica.configuration.General;
 import br.edimarmanica.dataset.Site;
 import br.edimarmanica.expressiveness.generate.beans.CypherRule;
 import br.edimarmanica.intrasite.extract.ExtractValues;
+import br.edimarmanica.intrasite.extract.ExtractValuesScalable;
 import br.edimarmanica.intrasite.rules.FindClosestTemplate;
 import br.edimarmanica.intrasite.rules.GenerateRules;
 import br.edimarmanica.intrasite.rules.SetTemplates;
@@ -34,8 +35,8 @@ public class Intrasite {
         }
         
         //Find closest template node to each candidate value node
- //       FindClosestTemplate fct = new FindClosestTemplate(site);
- //       fct.execute();
+    //    FindClosestTemplate fct = new FindClosestTemplate(site);
+    //    fct.execute();
         
         //Generate candidate rules
         GenerateRules gr = new GenerateRules(site);
@@ -63,7 +64,7 @@ public class Intrasite {
             System.out.println(">> ExtractValues");
         }
         // ExtractValues 
-        ExtractValues extractor = new ExtractValues(site, rules);
+        ExtractValuesScalable extractor = new ExtractValuesScalable(site, rules);
         extractor.printExtractedValues();
 
         if (General.DEBUG) {
@@ -75,6 +76,6 @@ public class Intrasite {
         
         General.DEBUG=true;
         Intrasite intra = new Intrasite();
-        intra.execute(br.edimarmanica.dataset.swde.book.Site.ADEBOOKS);
+        intra.execute(br.edimarmanica.dataset.swde.camera.Site.BEACHAUDIO);
     }
 }
