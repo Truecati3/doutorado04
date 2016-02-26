@@ -4,7 +4,7 @@
  */
 package br.edimarmanica.templatevariation.auto.similarity;
 
-import br.edimarmanica.entitysimilarity.InsufficientOverlap;
+import br.edimarmanica.entitysimilarity.InsufficientOverlapException;
 import br.edimarmanica.entitysimilarity.TypeAwareSimilarity;
 import br.edimarmanica.templatevariation.auto.bean.Rule;
 import java.util.Set;
@@ -31,14 +31,14 @@ public class EntitySimilarity extends RuleSimilarity {
 
         double maxSim = 0;
         for (Rule masterRuleInOtherSite : masterRulesInOtherSites) {
-
+            //System.out.println("Master: "+masterRuleInOtherSite.getRuleID() +" - Comp: "+candidateComplementaryRule.getRuleID());
             try {
                 double sim = TypeAwareSimilarity.typeSimilarity(masterRuleInOtherSite.getEntityValues(), candidateComplementaryRule.getEntityValues());
                 
                 if (sim > maxSim){
                     maxSim = sim;
                 }
-            } catch (InsufficientOverlap ex) {
+            } catch (InsufficientOverlapException ex) {
                 //não tinha entidades sobrepostas
             }
         }

@@ -37,7 +37,7 @@ public class DateSimilarity extends TypeAwareSimilarity {
                     }
                 }
             }
-        } catch (UnsupportedOperationException ex) {
+        } catch (NoiseException ex) {
             return 0;//regra pegou lixo. Por ex: Audio Cassete
         }
 
@@ -50,7 +50,7 @@ public class DateSimilarity extends TypeAwareSimilarity {
      * @param date
      * @return all formats possible to this date
      */
-    private static List<String> getAllFormats(String date) {
+    private static List<String> getAllFormats(String date)throws NoiseException{
         // 01/01/2012 or 1/1/2012
         if (date.matches("\\d{1,2}/\\d{1,2}/\\d{4}")) {
             return getAllFormats01(date);
@@ -91,7 +91,7 @@ public class DateSimilarity extends TypeAwareSimilarity {
             return getAllFormats06(date);
         }
         
-        throw new UnsupportedOperationException("Format not supported: " + date);
+        throw new NoiseException(date, DataType.DATE);
     }
 
     /**
@@ -168,7 +168,7 @@ public class DateSimilarity extends TypeAwareSimilarity {
      * @param date
      * @return
      */
-    private static List<String> getAllFormats04(String date) {
+    private static List<String> getAllFormats04(String date) throws NoiseException{
         List<String> allFormats = new ArrayList<>();
 
         String[] partes = date.trim().split(" ");
@@ -184,7 +184,7 @@ public class DateSimilarity extends TypeAwareSimilarity {
             }
         }
 
-        throw new UnsupportedOperationException("Format04 not supported: " + date);
+        throw new NoiseException(date, DataType.DATE);
     }
 
     /**
@@ -193,7 +193,7 @@ public class DateSimilarity extends TypeAwareSimilarity {
      * @param date
      * @return
      */
-    private static List<String> getAllFormats05(String date) {
+    private static List<String> getAllFormats05(String date) throws NoiseException{
         List<String> allFormats = new ArrayList<>();
 
         String[] partes = date.trim().replaceAll(",", "").split(" ");
@@ -203,7 +203,7 @@ public class DateSimilarity extends TypeAwareSimilarity {
             }
         }
 
-        throw new UnsupportedOperationException("Format05 not supported: " + date);
+        throw new NoiseException(date, DataType.DATE);
     }
 
     /**
@@ -212,7 +212,7 @@ public class DateSimilarity extends TypeAwareSimilarity {
      * @param date
      * @return
      */
-    private static List<String> getAllFormats06(String date) {
+    private static List<String> getAllFormats06(String date) throws NoiseException{
         List<String> allFormats = new ArrayList<>();
 
         String[] partes = date.split(" ");
@@ -222,6 +222,6 @@ public class DateSimilarity extends TypeAwareSimilarity {
             }
         }
 
-        throw new UnsupportedOperationException("Format06 not supported: " + date);
+        throw new NoiseException(date, DataType.DATE);
     }
 }

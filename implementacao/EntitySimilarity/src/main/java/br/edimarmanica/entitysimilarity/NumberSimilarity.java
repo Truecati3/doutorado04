@@ -32,14 +32,14 @@ public class NumberSimilarity extends TypeAwareSimilarity {
         double numericValueR1;
         try {
             numericValueR1 = normalize(valueR1);
-        } catch (ParseException ex) {
+        } catch (NoiseException ex) {
             //System.out.println(ex.getMessage());
             return 0; //é um lixo que a regra pegou. Por ex: London
         }
         double numericValueR2;
         try {
             numericValueR2 = normalize(valueR2);
-        } catch (ParseException ex) {
+        } catch (NoiseException ex) {
             //System.out.println(ex.getMessage());
             return 0; //é um lixo que a regra pegou. Por ex: London
         }
@@ -52,7 +52,7 @@ public class NumberSimilarity extends TypeAwareSimilarity {
     }
 
     @Override
-    public double similarity(Map<String, String> r1, Map<String, String> r2) throws InsufficientOverlap {
+    public double similarity(Map<String, String> r1, Map<String, String> r2) throws InsufficientOverlapException {
         train(r1, r2);
 
         return super.similarity(r1, r2);
@@ -78,8 +78,8 @@ public class NumberSimilarity extends TypeAwareSimilarity {
         for (String value : r1.values()) {
             try {
                 numericValuesR1.add(normalize(value)); //lembrando que each value de uma rule é de uma entidade diferente, pois é de uma página diferente e cada página representa uma entidade diferente
-            } catch (ParseException ex) {
-                Logger.getLogger(NumberSimilarity.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoiseException ex) {
+                //Logger.getLogger(NumberSimilarity.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
@@ -89,8 +89,8 @@ public class NumberSimilarity extends TypeAwareSimilarity {
         for (String value : r2.values()) {
             try {
                 numericValuesR2.add(normalize(value)); //lembrando que each value de uma rule é de uma entidade diferente, pois é de uma página diferente e cada página representa uma entidade diferente
-            } catch (ParseException ex) {
-                Logger.getLogger(NumberSimilarity.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoiseException ex) {
+                //Logger.getLogger(NumberSimilarity.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
@@ -100,12 +100,16 @@ public class NumberSimilarity extends TypeAwareSimilarity {
 
     }
 
-    public Double normalize(String numericValue) throws ParseException {
+    public Double normalize(String numericValue) throws NoiseException {
         String aux = numericValue;
         aux = aux.replaceAll("R\\$", "").replaceAll("\\$", "").replaceAll("€", ""); //retirando o simbolo de moeda pq currencyXnumber=numberXnumber, ou seja, se uma das regras e number, compara tudo com number
         aux = aux.replaceAll("[a-zA-Z]", ""); //retirando cm, m, etc. mesmo motivo acima
 
         NumberFormat format = NumberFormat.getNumberInstance(new Locale("en", "US"));
-        return format.parse(aux.trim()).doubleValue();
+        try {
+            return format.parse(aux.trim()).doubleValue();
+        } catch (ParseException ex) {
+            throw new NoiseException(numericValue, DataType.NUMBER);
+        }
     }
 }

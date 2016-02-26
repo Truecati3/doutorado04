@@ -17,38 +17,40 @@ public class DateSimilarityTest extends TestCase {
 
     public DateSimilarityTest(String testName) {
         super(testName);
-        
+
         br.edimarmanica.configuration.TypeAwareSimilarity.MIN_SHARED_ENTITIES = 3;
     }
 
     /**
      * Test of distanceSpecific method, of class DateDistance.
      */
-    public void testDistanceSpecific() throws InsufficientOverlap {
-        
+    public void testDistanceSpecific() throws InsufficientOverlapException {
+
         System.out.println("distanceSpecific");
         Map<String, String> r1 = new HashMap<>();
-        r1.put("1", "11/01/1988"); //1 pq tem valor nulo em r1S2
-        r1.put("2", "11/04/1964");    //0 pq são iguais
-        r1.put("3", "20/02/1985");    //nada pq não tem em r1S2
-        r1.put("4", "29/05/1952"); // 0 pq são iguais
-        r1.put("5", "08/07/1937");         //0 pq são iguais  
+        r1.put("1", "11/01/1988");
+        r1.put("2", "11/04/1964");
+        r1.put("3", "20/02/1985");
+        r1.put("4", "29/05/1952");
+        r1.put("5", "08/07/1937");
+        r1.put("8", "08/07/1937");
 
         Map<String, String> r2 = new HashMap<>();
-        r2.put("2", "1964-04-11");  // ---
-        r2.put("4", "29/05/1952");  // ---
-        r2.put("5", "1937-07-07");        // ---
-        r2.put("6", "11/07/2001");      //nada pq não tem em r1S1
-        r2.put("7", "11/07/2001");      // nada pq não tem em r1S1
+        r2.put("2", "1964-04-11"); // igual
+        r2.put("4", "29/05/1952"); //igual
+        r2.put("5", "1937-07-07"); //diff
+        r2.put("6", "11/07/2001"); // -- ignorado pq não tem em r1
+        r2.put("7", "11/07/2001"); // -- ignorado pq não tem em r1
+        r2.put("8", "ERROR");       // diff
 
         DateSimilarity instance = new DateSimilarity();
-        double expResult = 2.0 / 3; //2 corretas de 3
+        double expResult = 2.0 / 4; //2 corretas de 3
         double result = instance.similarity(r1, r2);
         assertEquals(expResult, result, 0.0);
 
     }
 
-    public void testDifferentFormats() throws InsufficientOverlap {
+    public void testDifferentFormats() throws InsufficientOverlapException {
 
         Map<String, String> r1 = new HashMap<>();
         r1.put("1", "03/01/1988");

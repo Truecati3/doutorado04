@@ -23,7 +23,7 @@ public class LenghtSimilarityTest extends TestCase {
      /**
      * Test of normalize method, of class LenghtDistance.
      */
-    public void testNormalize() {
+    public void testNormalize() throws NoiseException {
         System.out.println("normalize");
         String numericValue = "15m";
         LenghtSimilarity instance = new LenghtSimilarity();
@@ -45,24 +45,26 @@ public class LenghtSimilarityTest extends TestCase {
         
     }
     
-    public void testDistanceSpecific() throws InsufficientOverlap {
+    public void testDistanceSpecific() throws InsufficientOverlapException {
         System.out.println("distanceSpecific");
         Map<String,String> r1 = new HashMap<>();
-        r1.put("1", "3 m"); // 1 pq tem valor nulo em r1S2
-        r1.put("2", "4 m"); // 0 pq são iguais
-        r1.put("3", "5 m"); // nada pq não tem em r1S2
-        r1.put("4", "6 m"); // 0 pq são iguais
-        r1.put("5", "7 m"); // 0 pq são iguais  
+        r1.put("1", "3 m"); 
+        r1.put("2", "4 m"); 
+        r1.put("3", "5 m"); 
+        r1.put("4", "6 m"); 
+        r1.put("5", "7 m"); 
+        r1.put("8", "ERROR"); 
 
         Map<String,String> r2 = new HashMap<>();
-        r2.put("2", "4 m");  // ---
-        r2.put("4", "6 m");  // ---
-        r2.put("5", "7 m");        // ---
-        r2.put("6", "8 m");      //nada pq não tem em r1S1
-        r2.put("7", "9 m");      // nada pq não tem em r1S1
+        r2.put("2", "4 m");  //igual
+        r2.put("4", "6 m");  // igual
+        r2.put("5", "7 m");  // igual    
+        r2.put("6", "8 m");  // -- ignorado pq não tem em r1
+        r2.put("7", "9 m");  // -- ignorado  pq não tem em r1    
+        r2.put("8", "9 m");  // diff
 
         LenghtSimilarity instance = new LenghtSimilarity();
-        double expResult = 1.0;
+        double expResult = 3.0/4; //3 valores iguais de 4 entidades sobrepostas
         double result = instance.similarity(r1, r2);
         assertEquals(expResult, result, 0.0);
 

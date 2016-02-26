@@ -19,7 +19,7 @@ public abstract class TypeAwareSimilarity {
      * @return the entity similarity between r1 and r2 -- Baseado na distancia
      * baseada em tipo do WEIR
      */
-    public static double typeSimilarity(Map<String, String> r1, Map<String, String> r2) throws InsufficientOverlap {
+    public static double typeSimilarity(Map<String, String> r1, Map<String, String> r2) throws InsufficientOverlapException {
 
         DataType type = DataTypeController.getMostSpecificType(r1, r2);
         TypeAwareSimilarity similarity;
@@ -65,7 +65,7 @@ public abstract class TypeAwareSimilarity {
      * @param r2
      * @return
      */
-    public double similarity(Map<String, String> r1, Map<String, String> r2) throws InsufficientOverlap {
+    public double similarity(Map<String, String> r1, Map<String, String> r2) throws InsufficientOverlapException {
 
         double similarity = 0;
         int nrSharedEntities = 0;
@@ -81,7 +81,7 @@ public abstract class TypeAwareSimilarity {
         }
 
         if (nrSharedEntities < br.edimarmanica.configuration.TypeAwareSimilarity.MIN_SHARED_ENTITIES) {
-            throw new InsufficientOverlap(nrSharedEntities);
+            throw new InsufficientOverlapException(nrSharedEntities);
         }
 
         return similarity / nrSharedEntities; //tem que dividir pelo nr de instâncias compartilhadas entre os sites

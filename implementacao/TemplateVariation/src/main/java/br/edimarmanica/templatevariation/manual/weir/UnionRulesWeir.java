@@ -42,7 +42,7 @@ public class UnionRulesWeir {
     }
 
     public void execute() {
-        printer = new PrinterWeir(site, Paths.PATH_TEMPLATE_VARIATION);
+        printer = new PrinterWeir(site, Paths.PATH_TEMPLATE_VARIATION_MANUAL);
         nrPages = getNrPages();
 
         for (Attribute attribute : site.getDomain().getAttributes()) {

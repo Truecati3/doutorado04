@@ -12,13 +12,13 @@ import java.util.Map;
  */
 public class Rule {
 
-    private String ruleID;
+    private int ruleID;
     private String XPath;
     private String label;
     private Map<String, String> urlValues; //Map<URL,Value>
     private Map<String, String> entityValues;//Map<Entity,Value>
 
-    public Rule(String ruleID, String XPath, String label, Map<String, String> urlValues, Map<String, String> entityValues) {
+    public Rule(int ruleID, String XPath, String label, Map<String, String> urlValues, Map<String, String> entityValues) {
         this.ruleID = ruleID;
         this.XPath = XPath;
         this.label = label;
@@ -29,11 +29,11 @@ public class Rule {
     public Rule() {
     }
 
-    public String getRuleID() {
+    public int getRuleID() {
         return ruleID;
     }
 
-    public void setRuleID(String ruleID) {
+    public void setRuleID(int ruleID) {
         this.ruleID = ruleID;
     }
 

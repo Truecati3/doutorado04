@@ -14,7 +14,7 @@ import junit.framework.TestCase;
  * @author edimar
  */
 public class DataTypeControllerTest extends TestCase {
-    
+
     public DataTypeControllerTest(String testName) {
         super(testName);
     }
@@ -73,7 +73,7 @@ public class DataTypeControllerTest extends TestCase {
      */
     public void testGetMostSpecificType_Rule() {
         System.out.println("getMostSpecificType");
-        Map<String,String> r = new HashMap<>();
+        Map<String, String> r = new HashMap<>();
         r.put("1", "3814-2406");
         r.put("2", "3814-2416");
         r.put("3", "3815-2416");
@@ -90,13 +90,13 @@ public class DataTypeControllerTest extends TestCase {
      */
     public void testGetMostSpecificType_Rule_Rule() {
         System.out.println("getMostSpecificType");
-        Map<String,String> r1 = new HashMap<>();
+        Map<String, String> r1 = new HashMap<>();
         r1.put("1", "3814-2406");
         r1.put("2", "3814-2416");
         r1.put("3", "3815-2416");
         r1.put("4", "ERROR");
-        
-        Map<String,String> r2 = new HashMap<>();
+
+        Map<String, String> r2 = new HashMap<>();
         r2.put("1", "1,55 m");
         r2.put("2", "1,75 m");
         r2.put("3", "1,78 m");

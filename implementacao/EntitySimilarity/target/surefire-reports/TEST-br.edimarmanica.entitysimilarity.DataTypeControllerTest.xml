@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="0.029" errors="0" skipped="0" tests="3" name="br.edimarmanica.entitysimilarity.DataTypeControllerTest">
+<testsuite failures="0" time="0.038" errors="0" skipped="0" tests="3" name="br.edimarmanica.entitysimilarity.DataTypeControllerTest">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/local/jdk1.7.0_25/jre/lib/i386"/>
@@ -59,7 +59,7 @@
     <property name="sun.desktop" value="gnome"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase time="0.02" classname="br.edimarmanica.entitysimilarity.DataTypeControllerTest" name="testGetDataType"/>
-  <testcase time="0.002" classname="br.edimarmanica.entitysimilarity.DataTypeControllerTest" name="testGetMostSpecificType_Rule"/>
-  <testcase time="0.006" classname="br.edimarmanica.entitysimilarity.DataTypeControllerTest" name="testGetMostSpecificType_Rule_Rule"/>
+  <testcase time="0.007" classname="br.edimarmanica.entitysimilarity.DataTypeControllerTest" name="testGetMostSpecificType_Rule"/>
+  <testcase time="0.008" classname="br.edimarmanica.entitysimilarity.DataTypeControllerTest" name="testGetDataType"/>
+  <testcase time="0.004" classname="br.edimarmanica.entitysimilarity.DataTypeControllerTest" name="testGetMostSpecificType_Rule_Rule"/>
 </testsuite>

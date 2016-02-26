@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: br.edimarmanica.templatevariation.manual.swde.MasterRuleSwdeTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 15.081 sec
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 26.282 sec

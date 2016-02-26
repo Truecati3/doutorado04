@@ -20,7 +20,7 @@ public class StringSimilarity extends TypeAwareSimilarity {
     private UnsmoothedJS similarity;
 
     @Override
-    public double similarity(Map<String, String> r1, Map<String, String> r2) throws InsufficientOverlap {
+    public double similarity(Map<String, String> r1, Map<String, String> r2) throws InsufficientOverlapException {
         train(r1, r2);
 
         return super.similarity(r1, r2);

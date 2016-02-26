@@ -13,7 +13,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.csv.CSVFormat;
@@ -27,9 +29,9 @@ import org.apache.commons.csv.CSVRecord;
 public class LoadRule {
 
     private Site site;
-    private String ruleID;
+    private int ruleID;
 
-    public LoadRule(Site site, String ruleID) {
+    public LoadRule(Site site, int ruleID) {
         this.site = site;
         this.ruleID = ruleID;
     }
@@ -45,7 +47,7 @@ public class LoadRule {
             try (CSVParser parser = new CSVParser(in, CSVFormat.EXCEL.withHeader())) {
                 for (CSVRecord record : parser) {
 
-                    if (("rule_" + record.get("ID") + ".csv").equals(ruleID)) {
+                    if (Integer.parseInt(record.get("ID")) == ruleID) {
                         rule.setXPath(CypherToXPath.cypher2xpath(record.get("RULE")));
                         rule.setLabel(record.get("LABEL"));
                     }
@@ -57,7 +59,7 @@ public class LoadRule {
             Logger.getLogger(LoadRule.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        rule.setUrlValues(loadURLValues(ruleID));
+        rule.setUrlValues(loadURLValues());
         rule.setEntityValues(loadEntityValues(rule.getUrlValues()));
         rule.setRuleID(ruleID);
         return rule;
@@ -68,13 +70,13 @@ public class LoadRule {
      * @param ruleID
      * @return Map<URL, Value>
      */
-    public Map<String, String> loadURLValues(String ruleID) {
-        File fileRule = new File(Paths.PATH_INTRASITE + "/" + site.getPath() + "/extracted_values/" + ruleID);
+    public Map<String, String> loadURLValues() {
+        File fileRule = new File(Paths.PATH_INTRASITE + "/" + site.getPath() + "/extracted_values/rule_" + ruleID + ".csv");
         Map<String, String> values = new HashMap<>();
         try (Reader in = new FileReader(fileRule)) {
             try (CSVParser parser = new CSVParser(in, CSVFormat.EXCEL.withHeader())) {
                 for (CSVRecord record : parser) {
-                    values.put(record.get("URL").replaceAll(".*" + site.getPath() + "/", ""),
+                    values.put(record.get("URL").replaceAll(".*" + site.getPath() + "/", "").replaceAll(".htm", ""),
                             record.get("EXTRACTED VALUE"));
                 }
             }
@@ -97,12 +99,12 @@ public class LoadRule {
         try (Reader in = new FileReader(Paths.PATH_BASE + site.getEntityPath())) {
             try (CSVParser parser = new CSVParser(in, CSVFormat.EXCEL.withHeader())) {
                 for (CSVRecord record : parser) {
-                    if (urlValues.get(record.get("url").replaceAll(".*" + site.getPath() + "/", "")) == null) {
+                    if (urlValues.get(record.get("url").replaceAll(".*" + site.getPath() + "/", "").replaceAll(".htm", "")) == null) {
                         continue;
                     }
 
                     entityValues.put(record.get("entityID"),
-                            urlValues.get(record.get("url").replaceAll(".*" + site.getPath() + "/", "")));
+                            urlValues.get(record.get("url").replaceAll(".*" + site.getPath() + "/", "").replaceAll(".htm", "")));
                 }
             }
         } catch (FileNotFoundException ex) {
@@ -110,14 +112,26 @@ public class LoadRule {
         } catch (IOException ex) {
             Logger.getLogger(LoadRule.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return entityValues;
     }
 
-    public static void main(String[] args) {
-        Site site = br.edimarmanica.dataset.swde.camera.Site.THENERDS;
+    public static Map<Integer, Rule> loadAllRules(Site site) {
+        Map<Integer, Rule> rules = new HashMap<>();
 
-        LoadRule load = new LoadRule(site, "rule_2.csv");
+        File rulesDir = new File(Paths.PATH_INTRASITE + "/" + site.getPath() + "/extracted_values/");
+        for (String rule : rulesDir.list()) {
+            LoadRule lr = new LoadRule(site, new Integer(rule.replaceAll("rule_", "").replaceAll(".csv", "")));
+            Rule r = lr.loadRule();
+            rules.put(r.getRuleID(), r);
+        }
+        return rules;
+    }
+
+    public static void main(String[] args) {
+        Site site = br.edimarmanica.dataset.swde.camera.Site.AMAZON;
+
+        LoadRule load = new LoadRule(site, 1142);
         Rule rule = load.loadRule();
         System.out.println("RuleID: " + rule.getRuleID());
         System.out.println("XPath: " + rule.getXPath());

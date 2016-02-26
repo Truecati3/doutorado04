@@ -24,7 +24,7 @@ public class CurrencySimilarity extends NumberSimilarity {
      * @return
      */
     @Override
-    public Double normalize(String numericValue) {
+    public Double normalize(String numericValue) throws NoiseException{
         String aux = numericValue;
         Locale local;
         aux = aux.toUpperCase(); //tem que estar em maiúsculo o R do R$
@@ -46,7 +46,7 @@ public class CurrencySimilarity extends NumberSimilarity {
                 aux = aux.replaceAll(",", "").replaceAll("\\.", ",");
             }
         } else {
-            throw new UnsupportedOperationException("Unit " + aux + "not supported yet!");
+            throw new NoiseException(aux, DataType.CURRENCY);
         }
 
         NumberFormat form01 = NumberFormat.getCurrencyInstance(local);

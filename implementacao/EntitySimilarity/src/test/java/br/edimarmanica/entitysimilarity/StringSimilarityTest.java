@@ -22,7 +22,7 @@ public class StringSimilarityTest extends TestCase {
         br.edimarmanica.configuration.TypeAwareSimilarity.MIN_SHARED_ENTITIES=3; 
     }
 
-     public void testDistance() throws InsufficientOverlap {
+     public void testDistance() throws InsufficientOverlapException {
         System.out.println("distance");
 
         Map<String, String> r1S1 = new HashMap<>();
@@ -33,10 +33,10 @@ public class StringSimilarityTest extends TestCase {
         r1S1.put("5","Cesar Maia");        
 
         Map<String, String> r1S2 = new HashMap<>();
-        r1S2.put("1","Jorge Manaia");      // 0
-        r1S2.put("2","Cristiane Brasil");  // 1
-        r1S2.put("4","Magalhaes Silva");  // 0,5
-        r1S2.put("5","Cesar Maia");        // 1
+        r1S2.put("1","Jorge Manaia");      // 0 - diferente
+        r1S2.put("2","Cristiane Brasil");  // 1 - igual
+        r1S2.put("4","Magalhaes Silva");  // 0,5 - similar
+        r1S2.put("5","Cesar Maia");        // 1  - diferente
         r1S2.put("6","Dr. Jairinho");      // -- não conta pq não é compartilhado
 
         StringSimilarity instance = new StringSimilarity();

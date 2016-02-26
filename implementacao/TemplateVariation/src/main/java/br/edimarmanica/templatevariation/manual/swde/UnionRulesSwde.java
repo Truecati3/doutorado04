@@ -41,7 +41,7 @@ public class UnionRulesSwde {
     }
 
     public void execute() {
-        printer = new PrinterSwde(site, Paths.PATH_TEMPLATE_VARIATION);
+        printer = new PrinterSwde(site, Paths.PATH_TEMPLATE_VARIATION_MANUAL);
         nrPages = getNrPages();
 
         for (Attribute attribute : site.getDomain().getAttributes()) {

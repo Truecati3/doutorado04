@@ -43,7 +43,7 @@ public class DomainSimilarity extends RuleSimilarity {
              * next duas vezes. Desta forma ele sempre perde os valores da
              * posição par. Lembrando que índice começa em zero
              */
-         //   list.add(score.prepare("nulo"));
+            list.add(similarity.prepare("nulo"));
             list.add(similarity.prepare(value));
         }
 
@@ -53,7 +53,7 @@ public class DomainSimilarity extends RuleSimilarity {
              * next duas vezes. Desta forma ele sempre perde os valores da
              * posição par. Lembrando que índice começa em zero
              */
-          //  list.add(score.prepare("nulo"));
+            list.add(similarity.prepare("nulo"));
             list.add(similarity.prepare(value));
         }
 
