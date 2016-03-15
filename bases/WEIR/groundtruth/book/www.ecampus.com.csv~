@@ -1,0 +1,85 @@
+url,STRING : TITLE,STRING : AUTHOR,ISBN : ISBN13,STRING : BINDING,DATE : DATE,STRING : PUBLISHER,STRING : EDITION
+book/www.ecampus.com/0001049307.html,Love and War in the Apennines,"Newby, Eric",9780001049307,Audio CD,10/23/1995,Gardners Books,Abridged
+book/www.ecampus.com/0001049314.html,A Short Walk in the Hindu Kush,"Newby, Eric",9780001049314,Audio CD,10/23/1995,Gardners Books,Abridged
+book/www.ecampus.com/0001049345.html,Poems and Letters of Emily Dickinson,"Dickinson, Emily",9780001049345,Audio CD,9/25/1995,Gardners Books,
+book/www.ecampus.com/0001049352.html,Uncle Tom's Cabin,"Stowe, Harriet Beecher",9780001049352,Audio CD,1/1/1900,TRAFALGAR SQUARE,Abridged
+book/www.ecampus.com/0001049697.html,Victory,,9780001049697,Audio CD,9/1/1995,HarperCollins UK,Abridged
+book/www.ecampus.com/0001050075.html,Copperhead,"Cornwell, Bernard",9780001050075,Audio CD,12/4/1995,Gardners Books,Abridged
+book/www.ecampus.com/0001050181.html,"Not a Penny More, Not a Penny Less","Archer, Jeffrey",9780001050181,Audio CD,12/1/1996,TRAFALGAR SQUARE,Abridged
+book/www.ecampus.com/0001050198.html,Shall We Tell the President?: 6 Days and 13 Hours to Go Before,"Archer, Jeffrey",9780001050198,Audio CD,1/1/1900,TRAFALGAR SQUARE,Abridged
+book/www.ecampus.com/0001050204.html,A Twist in the Tale: A Perfect Murder and Other Stories,"Archer, Jeffrey",9780001050204,Audio CD,12/1/1988,TRAFALGAR SQUARE,Unabridged
+book/www.ecampus.com/0001050211.html,A Twist in the Tale: The Loophole and Other Stories,"Archer, Jeffrey",9780001050211,Audio CD,12/1/1996,TRAFALGAR SQUARE,Unabridged
+book/www.ecampus.com/0001050488.html,"John Bull's Other Island Performed by Christopher Benjamin, Patrick Duggan, Edward Petherbridge & Cast","Shaw, Bernard",9780001050488,Audio CD,4/22/1996,Gardners Books,Unabridged
+book/www.ecampus.com/0001050495.html,Heart of Darkness,"Conrad, Joseph",9780001050495,Audio CD,1/1/1900,TRAFALGAR SQUARE,Abridged
+book/www.ecampus.com/0001050525.html,Empire of the Sun,"Ballard, J. G.",9780001050525,Audio CD,11/27/1995,Gardners Books,Abridged
+book/www.ecampus.com/0001050594.html,Treasure,"Cussler, Clive",9780001050594,Audio CD,12/4/1995,Gardners Books,Abridged
+book/www.ecampus.com/0001050921.html,Star Wars Nightlily: the Lover's Tale,"Hambly, Barbara",9780001050921,Audio CD,9/16/1996,Gardners Books,Unabridged
+book/www.ecampus.com/0001052017.html,The Woodlanders,,9780001052017,Audio CD,5/1/1996,HarperCollins UK,Abridged
+book/www.ecampus.com/0001052024.html,Lord Jim,"Conrad, Joseph",9780001052024,Audio CD,1/1/1900,TRAFALGAR SQUARE,Abridged
+book/www.ecampus.com/0001052048.html,An April Shroud,"Hill, Reginald",9780001052048,Audio CD,2/19/1996,Gardners Books,Abridged
+book/www.ecampus.com/0001052109.html,Her Own Rules,"Bradford, Barbara Taylor",9780001052109,Audio CD,7/22/1996,Gardners Books,Abridged
+book/www.ecampus.com/0001052123.html,Next of Kin,"Trollope, Joanna",9780001052123,Audio CD,5/20/1996,Gardners Books,Abridged
+book/www.ecampus.com/0001052130.html,Swann's Way,,9780001052130,Audio CD,7/1/1996,HarperCollins UK,Abridged
+book/www.ecampus.com/0001052215.html,"""A Needle for the Devil and Other Stories","Rendell, Ruth",9780001052215,Audio CD,8/19/1996,Gardners Books,
+book/www.ecampus.com/0002199964.html,Wild Flowers of Britain and Europe,,9780002199964,Trade Paper,5/1/1994,HarperCollins UK,
+book/www.ecampus.com/0002200035.html,Birds of Britain and Ireland,"Holden, Peter",9780002200035,Paperback,1/1/1996,Harpercollins Pub Ltd,
+book/www.ecampus.com/0002200073.html,Mushrooms and Toadstools,,9780002200073,Trade Paper,9/1/1996,HarperCollins UK,
+book/www.ecampus.com/0002200080.html,Wild Animals: Of Britain and Europe,John A. Burton,9780002200080,Paperback,1/1/1998,TRAFALGAR SQUARE,
+book/www.ecampus.com/0002200097.html,Trees,,9780002200097,Trade Paper,9/1/1996,HarperCollins UK,
+book/www.ecampus.com/0002200103.html,Collins Wild Guide : Butterflies and Moths,"Still, John",9780002200103,Paperback,1/1/1996,TRAFALGAR SQUARE,
+book/www.ecampus.com/0002200110.html,Collins Wildlife Trust Guide : Birds of Britain and Europe,John Gooders,9780002200110,Paperback,1/1/1998,TRAFALGAR SQUARE,
+book/www.ecampus.com/0002200127.html,Mushrooms of Britain and Europe,"Courtecuisse, Regis",9780002200127,Paperback,1/1/1999,Harpercollins Pub Ltd,
+book/www.ecampus.com/0002200134.html,Trees of Britain and Europe,"Rushforth, Keith",9780002200134,Paperback,1/1/1999,Harpercollins Pub Ltd,
+book/www.ecampus.com/0002200141.html,Collins Wildlife Trust Guide : Night Sky,"Chartrand, Mark R.",9780002200141,Paperback,1/1/1999,TRAFALGAR SQUARE,
+book/www.ecampus.com/0002200172.html,Alpine Flowers: Of Britain and Europe,"Grey-Wilson, Christopher",9780002200172,Paperback,1/1/1995,Harpercollins Pub Ltd,2nd
+book/www.ecampus.com/0002200257.html,Collins Field Guide : Mushrooms and Toadstools,R. Courtecuisse,9780002200257,Hardcover,1/1/1995,TRAFALGAR SQUARE,
+book/www.ecampus.com/0002200295.html,Butterflies and Moths of Britain and Europe,,9780002200295,Trade Paper,6/1/1995,HarperCollins UK,
+book/www.ecampus.com/0002200349.html,Collins Safari Guide : Common Birds of East Africa,"Hosking, David",9780002200349,Paperback,1/1/1996,Harpercollins Pub Ltd,
+book/www.ecampus.com/0002200363.html,Collins Safari Guide : Larger Animals of Eastern Africa,"Hosking, David",9780002200363,Paperback,1/1/1996,Harpercollins Pub Ltd,
+book/www.ecampus.com/0002200370.html,Bird Songs and Calls : Of Britain and Northern Europe,,9780002200370,Trade Book,4/1/1996,Trafalgar Square Computer & Audio,
+book/www.ecampus.com/0002200561.html,Garden Birds of Britain and Europe,,9780002200561,Trade Paper,3/1/1996,HarperCollins UK,
+book/www.ecampus.com/0002200592.html,Collins Wildlife Trust Guide : Butterflies of Britain and Europe,Michael Chinery,9780002200592,Paperback,1/1/1998,TRAFALGAR SQUARE,
+book/www.ecampus.com/0002200622.html,Wild Flowers of Britain and Northern Europe,,9780002200622,Trade Paper,4/1/1996,HarperCollins UK,5th
+book/www.ecampus.com/0002200639.html,"Collins Photoguide Pests, Diseases and Disorders of Garden Plants","Buczacki, Stefan",9780002200639,Hardcover,1/1/1998,Harpercollins Pub Ltd,2nd
+book/www.ecampus.com/0002200653.html,Self-Esteem Simple Steps to Develop Self-Worth and Heal Emotional Wounds (Audio),"Lindenfield, Gael",9780002200653,Nonspecific Binding,4/1/2001,NATIONAL BOOK NETWORK,1st
+book/www.ecampus.com/0002200677.html,Collins How to ID Trees of Britain and Europe,"Harding, P.",9780002200677,Paperback,1/1/1998,Harpercollins Pub Ltd,
+book/www.ecampus.com/0002200691.html,Collins Wings Guide to British Birds,Dominic Couzens,9780002200691,Paperback,1/1/1997,TRAFALGAR SQUARE,
+book/www.ecampus.com/0002200714.html,Complete British Wildlife,,9780002200714,Trade Paper,4/1/1997,HarperCollins UK,
+book/www.ecampus.com/0002200721.html,Collins Nature Guide : Garden Wildlife,"Chinery, Michael",9780002200721,Paperback,1/1/1997,Harpercollins Pub Ltd,
+book/www.ecampus.com/0002200776.html,Collins Illustrated Checklist : Birds of Southern South America and Antarctica,DE LA PENA,9780002200776,Paperback,1/1/1998,TRAFALGAR SQUARE,Illus.
+book/www.ecampus.com/0002200790.html,Natural History of Ireland,"Cabot, David",9780002200790,Hardcover,3/1/1999,Harpercollins Pub Ltd,
+book/www.ecampus.com/0002200806.html,Ireland : The New Naturalist,Collins Celtic,9780002200806,Paperback,1/1/1999,TRAFALGAR SQUARE,Illus.
+book/www.ecampus.com/0002200813.html,Lichens: The New Naturalist,GILBERT,9780002200813,Hardcover,3/1/2000,Harpercollins Pub Ltd,
+book/www.ecampus.com/0002200820.html,New Naturalist Lichens,"Gilbert, Oliver",9780002200820,Paperback,3/1/2000,Harpercollins Pub Ltd,
+book/www.ecampus.com/0002200882.html,Collins Watch Guide : Seashore,HarperCollins,9780002200882,Paperback,1/1/1997,TRAFALGAR SQUARE,
+book/www.ecampus.com/0002200899.html,"Collins Watch Guide : Whales, Dolphins and Seals",HarperCollins,9780002200899,Paperback,1/1/1997,TRAFALGAR SQUARE,
+book/www.ecampus.com/0002200912.html,Collins Watch Guide : Wildlife of the Town,HarperCollins,9780002200912,Paperback,1/1/1997,TRAFALGAR SQUARE,
+book/www.ecampus.com/0002200929.html,Collins Watch Guide : Flowers of the Wayside,HarperCollins,9780002200929,Paperback,1/1/1997,TRAFALGAR SQUARE,
+book/www.ecampus.com/0002201001.html,Collins Watch Guide : Birds in Winter,HarperCollins,9780002201001,Paperback,1/1/1997,TRAFALGAR SQUARE,
+book/www.ecampus.com/0002201018.html,Collins Watch Guide : Trees of the Countryside,HarperCollins,9780002201018,Paperback,1/1/1997,TRAFALGAR SQUARE,
+book/www.ecampus.com/0002201063.html,Savage Earth,Alwyn Scarth,9780002201063,Hardcover,1/1/1997,TRAFALGAR SQUARE,
+book/www.ecampus.com/0002201070.html,Collins How to Identify Wild Flowers,"Grey-Wilson, Christopher",9780002201070,Paperback,4/1/2000,Harpercollins Pub Ltd,
+book/www.ecampus.com/0002201100.html,Wildfowl of the World,"Scott, Peter Markham",9780002201100,Paperback,1/1/1998,Harpercollins Pub Ltd,
+book/www.ecampus.com/0002201131.html,Collins Ramblers' Guide — North Wales,,9780002201131,Trade Paper,7/1/2000,HarperCollins UK,
+book/www.ecampus.com/0002201155.html,Collins Ramblers’ Guide — Ben Nevis & Glen Coe,,9780002201155,Trade Paper,5/1/2000,HarperCollins UK,
+book/www.ecampus.com/0002201179.html,Birds of Southern Africa,VAN PERLO,9780002201179,Paperback,1/1/1999,TRAFALGAR SQUARE,
+book/www.ecampus.com/0002201193.html,NRSV Holy Bible; Cross Reference Edition with the Apocrypha/Dueterocanonical Books,,9780002201193,Trade Book,11/1/2001,HarperCollins UK,
+book/www.ecampus.com/0002201216.html,Collins Rambler's Guide Connemara,"Dillon, Paddy",9780002201216,Paperback,7/1/2001,Harpercollins Pub Ltd,
+book/www.ecampus.com/0002201223.html,Collins Field Guide : Bird Call Identification,"Sample, Geoff",9780002201223,Hardcover,1/1/1998,Harpercollins Pub Ltd,
+book/www.ecampus.com/0002201230.html,How to Identify Butterflies : Britain and Europe,LEWINGTON,9780002201230,Paperback,1/1/1999,Harpercollins Pub Ltd,
+book/www.ecampus.com/0002201254.html,"Bird Nests, Eggs and Nestlings of Britain & Europe: With North Africa and the Middle East","Harrison, Colin",9780002201254,Hardcover,5/1/2002,Harpercollins Pub Ltd,
+book/www.ecampus.com/0002201278.html,Collins Wild Guide Night Sky,"Dunlop, Storm",9780002201278,Paperback,1/1/1999,Harpercollins Pub Ltd,
+book/www.ecampus.com/0002201346.html,Insects of Britain and Europe,HARPERCOLL,9780002201346,Paperback,1/1/1999,Harpercollins Pub Ltd,
+book/www.ecampus.com/0002201384.html,Collins Wildlife Trust Guide to the Weather of Britain and Europe: A Photographic Guide to the Weather of Britain and Europe,"Ludlum, David McWilliams",9780002201384,Paperback,1/1/2002,Harpercollins Pub Ltd,
+book/www.ecampus.com/0002201391.html,Wild Flowers: A Photographic Guide to the Flowers of Britain and Northern Europe,"Heukels, Peter",9780002201391,Paperback,5/1/2000,Harpercollins Pub Ltd,
+book/www.ecampus.com/0002201575.html,Giants,"Marven, Nigel",9780002201575,Hardcover,10/1/1999,Harpercollins Pub Ltd,
+book/www.ecampus.com/0002201612.html,Complete Mediterranean Wildlife : Collins Photoguide,"Sterry, Paul",9780002201612,Paperback,2/1/2000,TRAFALGAR SQUARE,
+book/www.ecampus.com/0002201667.html,Ramblers Guide Dartmoor,Sale,9780002201667,Paperback,7/1/2000,Harpercollins Pub Ltd,
+book/www.ecampus.com/0002201681.html,Gardening for Birds : How to Help Birds Make the Most of Your Garden,,9780002201681,Trade Book,4/1/2000,HarperCollins UK,
+book/www.ecampus.com/0002201698.html,The Millennium Experience,PARTON,9780002201698,Paperback,5/1/2000,TRAFALGAR SQUARE,
+book/www.ecampus.com/0002201711.html,A Moment in Time; The Millennium Celebrated Around the Globe,,9780002201711,Trade Book,1/1/2000,HarperCollins UK,
+book/www.ecampus.com/0002201728.html,GMT 2000 : A Portrait of Britain in a Week,,9780002201728,Trade Paper,1/1/2000,HarperCollins UK,
+book/www.ecampus.com/0002201773.html,Rocks and Minerals: Collins Wild Guide,"Jones, Adrian P.",9780002201773,Paperback,10/1/2000,Harpercollins Pub Ltd,
+book/www.ecampus.com/0004140339.html,Rose Eliot's Vegetarian Barbecues and Grills; Over 150 Quick and Easy Vegetarian Recipes,,9780004140339,Trade Book,4/1/1999,HarperCollins UK,
+book/www.ecampus.com/0004140490.html,Collins Complete Book of Soft Furnishings,"More, Hilary",9780004140490,Paperback,9/1/1998,Harpercollins Pub Ltd,Revised
+book/www.ecampus.com/0004140520.html,Woodworking for Beginners : What Every First-Time Woodworker Needs to Know,"Jackson, Albert",9780004140520,Hardcover,11/1/1998,TRAFALGAR SQUARE,

@@ -1,0 +1,102 @@
+url,STRING : TITLE,ISBN : ISBN13,STRING : PUBLISHER,DATE : DATE,STRING : AUTHOR
+book/www.barnesandnoble.com/0001049305.html,Love War Appenines,9780001049307,"Ulverscroft Large Print Books, Ltd.",10/23/1995,Eric Newby
+book/www.barnesandnoble.com/0001049313.html,Short Walk Hindu Kush,9780001049314,"Ulverscroft Large Print Books, Ltd.",8/1/1996,Eric Newby
+book/www.barnesandnoble.com/0001049356.html,Uncle Tom's Cabin,9780001049352,HarperCollins Publishers,3/28/2000,Harriet Beecher Stowe
+book/www.barnesandnoble.com/0001049461.html,Wilderness of Mirror,9780001049468,"Ulverscroft Large Print Books, Ltd.",10/1/2000,Linda Davies
+book/www.barnesandnoble.com/0001049682.html,House of Echoes,9780001049680,"Ulverscroft Large Print Books, Ltd.",3/1/2001,Barbara Erskine
+book/www.barnesandnoble.com/0001049690.html,Victory: An Island Tale,9780001049697,HarperCollins UK,9/1/1995,"Joseph Conrad,"
+book/www.barnesandnoble.com/0001050044.html,Wicked Women,9780001050044,"Ulverscroft Large Print Books, Ltd.",8/1/1996,Fay Weldon
+book/www.barnesandnoble.com/0001050079.html,Copperhead (Nathaniel Starbuck Chronicles ),9780001050075,"Ulverscroft Large Print Books, Ltd.",9/1/1999,Bernard Cornwell
+book/www.barnesandnoble.com/0001050125.html,A Demon in My View,9780001050129,"Ulverscroft Large Print Books, Ltd.",8/1/1996,Ruth Rendell
+book/www.barnesandnoble.com/0001050133.html,Tree of Hands,9780001050136,"Ulverscroft Large Print Books, Ltd.",8/1/1996,Ruth Rendell
+book/www.barnesandnoble.com/0001050184.html,"Not a Penny More, Not a Penny Less",9780001050181,HarperCollins Publishers,1/1/2001,"Jeffrey Archer,"
+book/www.barnesandnoble.com/0001050192.html,Shall We Tell the President?,9780001050198,HarperCollins UK,7/28/2000,"Jeffrey Archer,"
+book/www.barnesandnoble.com/0001050206.html,"A Twist in the Tale, Volume 1: A Perfect Murder and Other Stories",9780001050204,HarperCollins UK,1/1/2001,"Jeffrey Archer,"
+book/www.barnesandnoble.com/0001050214.html,"A Twist in the Tale, Volume 2: The Loophole and Other Stories",9780001050211,HarperCollins UK,1/1/2001,"Jeffrey Archer,"
+book/www.barnesandnoble.com/0001050230.html,Love's Labour's Lost,9780001050235,"Ulverscroft Large Print Books, Ltd.",3/1/2000,"William Shakespeare,"
+book/www.barnesandnoble.com/0001050257.html,City of Djinns,9780001050259,"Ulverscroft Large Print Books, Ltd.",8/1/1996,William Dalrymple
+book/www.barnesandnoble.com/0001050427.html,Out of the Sun,9780001050426,"Ulverscroft Large Print Books, Ltd.",7/1/2000,Robert Goddard
+book/www.barnesandnoble.com/0001050451.html,By Grand Central Station I Sat Down and Wept,9780001050457,"Ulverscroft Large Print Books, Ltd.",8/1/1996,Elizabeth Smart
+book/www.barnesandnoble.com/0001050494.html,Heart of Darkness,9780001050495,HarperCollins UK,1/1/1999,"Joseph Conrad,"
+book/www.barnesandnoble.com/0001050885.html,Star Wars,9780001050884,"Ulverscroft Large Print Books, Ltd.",1/1/2001,"Roger Allen,"
+book/www.barnesandnoble.com/0001050893.html,Star Wars,9780001050891,"Ulverscroft Large Print Books, Ltd.",1/1/2001,"Roger Allen,"
+book/www.barnesandnoble.com/0001050907.html,Star Wars Darksaber,9780001050907,"Ulverscroft Large Print Books, Ltd.",8/1/1996,"Kevin J. Anderson,"
+book/www.barnesandnoble.com/0001050915.html,Star Wars,9780001050914,"Ulverscroft Large Print Books, Ltd.",8/1/1996,Kathy Tyers
+book/www.barnesandnoble.com/0001050923.html,Star Wars Nightlily: The Lovers' Tale,9780001050921,"Ulverscroft Large Print Books, Ltd.",9/1/1996,"Barbara Hambly,"
+book/www.barnesandnoble.com/0001050931.html,Star Wars X-Wing : Rogue Squadron,9780001050938,"Ulverscroft Large Print Books, Ltd.",10/1/1996,"Michael A. Stackpole,"
+book/www.barnesandnoble.com/0001050990.html,The Bloody Ground (Nathaniel Starbuck Chronicles ),9780001050990,"Ulverscroft Large Print Books, Ltd.",8/1/1996,Bernard Cornwell
+book/www.barnesandnoble.com/0001052004.html,Star Wars The Thrawn Trilogy Box Set (Heir to the Empire/Dark Force Rising/The Last Command),9780001052000,"Ulverscroft Large Print Books, Ltd.",8/1/1996,"Timothy Zahn,"
+book/www.barnesandnoble.com/0001052012.html,The Woodlanders,9780001052017,HarperCollins UK,5/1/1996,"Thomas Hardy,"
+book/www.barnesandnoble.com/0001052020.html,Lord Jim,9780001052024,Trafalgar Square,3/28/2000,"Joseph Conrad,"
+book/www.barnesandnoble.com/0001052071.html,Snow Falling on Cedars,9780001052079,"Ulverscroft Large Print Books, Ltd.",11/28/1998,"David Guterson,"
+book/www.barnesandnoble.com/0001052136.html,Swann's Way,9780001052130,HarperCollins UK,7/1/1996,"Marcel Proust,"
+book/www.barnesandnoble.com/0001052152.html,The Fourth Estate,9780001052154,"Ulverscroft Large Print Books, Ltd.",8/1/1996,"Jeffrey Archer,"
+book/www.barnesandnoble.com/0001052160.html,Goodfellow,9780001052161,"Ulverscroft Large Print Books, Ltd.",1/1/1997,Michael Dobbs
+book/www.barnesandnoble.com/0001052195.html,Sporting Profiles,9780001052192,"Ulverscroft Large Print Books, Ltd.",10/1/1996,Michael Parkinson
+book/www.barnesandnoble.com/0001052209.html,A Dark Blue Perfume and Other Stories,9780001052208,"Ulverscroft Large Print Books, Ltd.",9/1/1996,Ruth Rendell
+book/www.barnesandnoble.com/0001052217.html,A Needle for the Devil,9780001052215,"Ulverscroft Large Print Books, Ltd.",8/1/1996,Ruth Rendell
+book/www.barnesandnoble.com/0001052225.html,A Respectable Trade,9780001052222,"Ulverscroft Large Print Books, Ltd.",1/1/1998,Philippa Gregory
+book/www.barnesandnoble.com/0002199963.html,Wild Flowers of Britian and Europe,9780002199964,HarperCollins UK,1/1/1994,"W. Lippert,"
+book/www.barnesandnoble.com/0002200031.html,Birds of Britain and Ireland,9780002200035,Zondervan,1/1/1996,"Peter Holden,"
+book/www.barnesandnoble.com/0002200074.html,Mushrooms & Toadstools,9780002200073,HarperCollins UK,1/1/1996,Brian Spooner
+book/www.barnesandnoble.com/0002200082.html,Wild Animals of Britain and Europe,9780002200080,Zondervan,4/1/1998,"John A. Burton,"
+book/www.barnesandnoble.com/0002200090.html,Trees,9780002200097,HarperCollins UK,1/1/1996,"Bob Press,"
+book/www.barnesandnoble.com/0002200104.html,Butterflies and Moths,9780002200103,Zondervan,1/1/1996,"John Still,"
+book/www.barnesandnoble.com/0002200112.html,Birds of Britain and Europe,9780002200110,Zondervan,6/28/1998,"John Gooders,"
+book/www.barnesandnoble.com/0002200120.html,Mushrooms of Britain and Europe,9780002200127,HarperCollins UK,2/28/2000,Regis Courtecuisse
+book/www.barnesandnoble.com/0002200139.html,Trees : Of Britain and Europe,9780002200134,Zondervan,2/28/2000,Keith Rushforth
+book/www.barnesandnoble.com/0002200147.html,Collins Guide to the Night Sky: A Photographic Guide to the Night Sky,9780002200141,HarperCollins UK,6/28/1998,"Mark R. Chartrand,"
+book/www.barnesandnoble.com/0002200171.html,Alpine Flowers of Britain and Europe,9780002200172,Zondervan,1/1/1995,"Christopher Grey-Wilson,"
+book/www.barnesandnoble.com/0002200252.html,Mushrooms and Toadstoolsof Britain and Europe,9780002200257,Zondervan,1/1/1995,"Regis Courtecuisse,"
+book/www.barnesandnoble.com/0002200295.html,Butterflies & Moths of Britain and Europe,9780002200295,HarperCollins UK,6/1/1995,"H Hofmann,"
+book/www.barnesandnoble.com/0002200341.html,Collins Safari Guide: Common Birds of East Africa,9780002200349,Zondervan,3/28/1997,"Martin B. Withers,"
+book/www.barnesandnoble.com/0002200368.html,Larger Animals of East Africa,9780002200363,Zondervan,3/28/1997,"David Hosking,"
+book/www.barnesandnoble.com/0002200376.html,Bird Songs & Calls of Britain and Northern Europe,9780002200370,HarperCollins UK,4/1/1996,Geoff Sample
+book/www.barnesandnoble.com/0002200562.html,Garden Birds of Britain & Europe,9780002200561,HarperCollins UK,3/1/1996,"Detlef Singer,"
+book/www.barnesandnoble.com/0002200597.html,Butterflies of Britain and Europe,9780002200592,Zondervan,6/1/1998,"Michael Chinery,"
+book/www.barnesandnoble.com/0002200627.html,Wild Flowers of Britain & Northern Europe,9780002200622,HarperCollins UK,1/1/1998,"Richard Sidney Fitter,"
+book/www.barnesandnoble.com/0002200635.html,"Collins Photoguide Pests, Diseases and Disorders of Garden Plants",9780002200639,HarperCollins Publishers,8/28/1998,"Stefan Buczacki,"
+book/www.barnesandnoble.com/0002200651.html,Self Esteem,9780002200653,Thorsons/Element,4/15/2001,Gael Lindenfield
+book/www.barnesandnoble.com/0002200678.html,How to Identify Trees,9780002200677,Zondervan,5/28/1998,"Patrick Harding,"
+book/www.barnesandnoble.com/0002200694.html,Wings Guide to British Birds,9780002200691,Zondervan,1/28/1997,Dominic Couzens
+book/www.barnesandnoble.com/0002200716.html,Complete British Wildlife Photoguide,9780002200714,HarperCollins UK,1/1/1997,Paul Sterry
+book/www.barnesandnoble.com/0002200724.html,Garden Wildlife of Britain and Europe,9780002200721,HarperCollins Publishers,1/1/1997,"Michael Chinery,"
+book/www.barnesandnoble.com/0002200775.html,Birds of Southern South America and Antarctica,9780002200776,Zondervan,6/1/1998,"Martin R. de La Pena,"
+book/www.barnesandnoble.com/0002200791.html,Ireland,9780002200790,HarperCollins Publishers,3/28/1999,"David Cabot,"
+book/www.barnesandnoble.com/0002200805.html,The Ireland; The New Naturalist,9780002200806,Zondervan,7/28/1998,"Collins Celtic,"
+book/www.barnesandnoble.com/0002200813.html,New Naturalist Lichens,9780002200813,Zondervan,3/1/2000,Oliver L. Gilbert
+book/www.barnesandnoble.com/0002200821.html,Lichens (New Naturalist),9780002200820,Zondervan,3/1/1900,Oliver L. Gilbert
+book/www.barnesandnoble.com/0002200880.html,Seashore: Adventures in the Natural World,9780002200882,Zondervan,1/28/1998,"Pascal Robins,"
+book/www.barnesandnoble.com/0002200899.html,"Whales, Dolphins and Seals",9780002200899,Zondervan,1/1/1998,HarperCollins Publishing
+book/www.barnesandnoble.com/0002200910.html,Collins Watch Guide: Wildlife of the Town,9780002200912,Zondervan,1/28/1998,"Guilhem Lesaffre,"
+book/www.barnesandnoble.com/0002200929.html,Flowers of the Wayside: Adventures in the Natural World,9780002200929,Zondervan,1/1/1998,"Elisabeth Trotignon,"
+book/www.barnesandnoble.com/0002201003.html,Birds in Winter,9780002201001,Zondervan,1/1/1998,HarperCollins Publishing
+book/www.barnesandnoble.com/0002201011.html,Trees of the Countryside,9780002201018,Zondervan,1/1/1998,"Elisabeth Trotignon,"
+book/www.barnesandnoble.com/0002201062.html,Savage Earth : The Book Of The ITV Series,9780002201063,Zondervan,1/1/1997,"Alwyn Scarth,"
+book/www.barnesandnoble.com/0002201070.html,How to Identify Wild Flowers,9780002201070,HarperCollins Publishers,11/1/2000,"Christopher Grey-Wilson,"
+book/www.barnesandnoble.com/0002201100.html,Coloured Key to the Wildfowl of the World,9780002201100,Transworld Publishers Limited,1/28/1999,"Peter Scott,"
+book/www.barnesandnoble.com/0002201135.html,Collins Ramblers' Guide - North Wales,9780002201131,HarperCollins UK,7/1/2000,"Richard Sale,"
+book/www.barnesandnoble.com/0002201151.html,Ben Nevis and Glen Coe,9780002201155,HarperCollins UK,5/1/2000,Chris Townsend
+book/www.barnesandnoble.com/0002201178.html,Birds of South Africa,9780002201179,Zondervan,2/28/2000,Ber Van Perlo
+book/www.barnesandnoble.com/0002201194.html,NRSV Cross Reference Apocrypha Bible,9780002201193,HarperCollins UK,11/1/2001,HarperCollins UK
+book/www.barnesandnoble.com/0002201216.html,Connemara (Collins Ramblers Guides),9780002201216,HarperCollins Publishers,4/28/2001,Paddy Dillon
+book/www.barnesandnoble.com/0002201224.html,Bird Call Identification,9780002201223,HarperCollins Publishers,4/1/1998,Geoff Sample
+book/www.barnesandnoble.com/0002201232.html,How to Identify Butterflies,9780002201230,HarperCollins UK,2/28/2000,"Richard Lewington,"
+book/www.barnesandnoble.com/0002201259.html,"Bird Nests, Eggs, and Nestling of Britain and Europe",9780002201254,Zondervan,4/28/1998,"Colin James Oliver Harrison,"
+book/www.barnesandnoble.com/0002201275.html,Night Sky: Wild About the Stars ?,9780002201278,HarperCollins UK,4/28/1999,"Storm Dunlop,"
+book/www.barnesandnoble.com/0002201283.html,Collins Spacewatching: The Ultimate Guide to the Stars and Beyond,9780002201285,HarperCollins Publishers,10/5/1998,"O'BYRNE,"
+book/www.barnesandnoble.com/0002201348.html,Insects: of Britain and Europe,9780002201346,HarperCollins UK,2/28/2000,Bob Gibbons
+book/www.barnesandnoble.com/0002201380.html,Weather: Collins Wildlife Trust Guide,9780002201384,HarperCollins Publishers,10/28/2000,David M. Ludlum
+book/www.barnesandnoble.com/0002201399.html,Wild Flowers,9780002201391,Zondervan,4/28/2000,Peter Heurkels
+book/www.barnesandnoble.com/0002201577.html,Giants: Face to Face with the Worlds Largest Predators,9780002201575,HarperCollins UK,1/1/2000,Nigel Marven
+book/www.barnesandnoble.com/0002201615.html,Complete Mediterranean,9780002201612,HarperCollins UK,2/1/2000,Paul Sterry
+book/www.barnesandnoble.com/0002201666.html,Dartmoor (Collins Ramblers Guides),9780002201667,HarperCollins Publishers,2/29/2000,Richard Sale
+book/www.barnesandnoble.com/0002201682.html,Gardening for Birds: How to Help Birds Make the Most of Your Garden,9780002201681,HarperCollins UK,9/1/1900,"Stephen Moss,"
+book/www.barnesandnoble.com/0002201690.html,The Millennium Experience,9780002201698,Zondervan,1/28/2000,Jim Parton
+book/www.barnesandnoble.com/0002201712.html,A Moment in Time: The Millennium Celebrated Around the Globe,9780002201711,HarperCollins UK,1/1/2000,Staff of Trafalgar Square Press
+book/www.barnesandnoble.com/0002201720.html,GMT 2000: A Portrait of Britain in a Week,9780002201728,HarperCollins UK,1/1/2000,Magnum Photo Agency
+book/www.barnesandnoble.com/0002201771.html,Rocks and Minerals,9780002201773,HarperCollins UK,8/28/2000,"Adrian P. Jones,"
+book/www.barnesandnoble.com/0004140338.html,Vegetarian Barbecues and Grills: Over 150 Quick and Easy Vegetarian Recipes,9780004140339,HarperCollins UK,4/1/1999,"Rose Elliot,"
+book/www.barnesandnoble.com/0004140494.html,Complete Book of Soft Furnishings,9780004140490,Zondervan,6/28/1999,"Jane Churchill,"
+book/www.barnesandnoble.com/0004140524.html,Woodworking for Beginners: What Every First-Time Woodworker Needs to Know from the Experts,9780004140520,HarperCollins UK,2/28/1999,"Albert Jackson,"
+book/www.barnesandnoble.com/0004140540.html,East India Company,9780004140544,HarperCollins Publishers,1/1/1999,Anthony Wild
