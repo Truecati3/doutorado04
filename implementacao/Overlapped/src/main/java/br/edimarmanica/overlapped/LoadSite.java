@@ -36,7 +36,7 @@ public class LoadSite {
         try (Reader in = new FileReader(Paths.PATH_BASE + site.getEntityPath())) {
             try (CSVParser parser = new CSVParser(in, CSVFormat.EXCEL.withHeader())) {
                 for (CSVRecord record : parser) {
-                    entities.add(record.get("entityID"));
+                    entities.add(record.get("entityID").trim());
                 }
             }
         } catch (FileNotFoundException ex) {

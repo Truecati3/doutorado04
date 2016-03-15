@@ -2,15 +2,14 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edimarmanica.templatevariation.manual.swde;
+package br.edimarmanica.templatevariation.manual;
 
 import br.edimarmanica.dataset.Attribute;
 import br.edimarmanica.dataset.Site;
+import br.edimarmanica.metrics.GroundTruth;
+import br.edimarmanica.metrics.Results;
 import br.edimarmanica.metrics.RuleMetrics;
 import br.edimarmanica.metrics.SiteWithoutThisAttribute;
-import br.edimarmanica.metrics.swde.GroundTruthSwde;
-import br.edimarmanica.metrics.swde.ResultsSWDE;
-import br.edimarmanica.metrics.swde.RuleMetricsSwde;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -23,13 +22,14 @@ import java.util.logging.Logger;
  *
  * @author edimar
  */
-public class ComplementaryRuleSwde {
+public class ComplementaryRule {
 
     private Site site;
     private Attribute attribute;
-    private Map<String, Map<Integer, String>> allRules;
+    private Map<String, Map<String, String>> allRules;
     private List<String> masterRuleIDs;
-    private Map<Integer,String> masterRuleValues;
+    private Map<String, String> masterRuleValues;
+    private int nrPagesSite;
 
     /**
      *
@@ -42,12 +42,13 @@ public class ComplementaryRuleSwde {
      * @param masterRuleValues conjunto resultado da união do conjunto de
      * valores das regras contidas em masterRuleIds
      */
-    public ComplementaryRuleSwde(Site site, Attribute attribute, Map<String, Map<Integer,String>> allRules, List<String> masterRuleIDs, Map<Integer, String> masterRuleValues) {
+    public ComplementaryRule(Site site, Attribute attribute, Map<String, Map<String, String>> allRules, List<String> masterRuleIDs, Map<String, String> masterRuleValues, int nrPagesSite) {
         this.site = site;
         this.attribute = attribute;
         this.allRules = allRules;
         this.masterRuleIDs = masterRuleIDs;
         this.masterRuleValues = masterRuleValues;
+        this.nrPagesSite = nrPagesSite;
     }
 
     /**
@@ -65,7 +66,11 @@ public class ComplementaryRuleSwde {
                 continue;
             }
 
-            Set<Integer> intersection = new HashSet<>();
+            if (nrPagesSite < masterRuleValues.size() + allRules.get(rule).size()) {
+                continue;
+            }
+
+            Set<String> intersection = new HashSet<>();
             intersection.addAll(masterRuleValues.keySet());
             intersection.retainAll(allRules.get(rule).keySet());
             if (intersection.isEmpty()) {
@@ -81,7 +86,7 @@ public class ComplementaryRuleSwde {
     public String getComplementaryRule() throws SiteWithoutThisAttribute {
 
         Set<String> disjointedRules = getDisjointRules();
-        GroundTruthSwde groundTruth = new GroundTruthSwde(site, attribute);
+        GroundTruth groundTruth = GroundTruth.getInstance(site, attribute);
         groundTruth.load();
 
         double maxF1 = 0;
@@ -89,7 +94,7 @@ public class ComplementaryRuleSwde {
 
         for (String rule : disjointedRules) {
 
-            RuleMetrics metrics = new RuleMetricsSwde(allRules.get(rule), groundTruth.getGroundTruth());
+            RuleMetrics metrics = RuleMetrics.getInstance(site, allRules.get(rule), groundTruth.getGroundTruth());
             metrics.computeMetrics();
 
             if (metrics.getF1() == 0) {
@@ -105,20 +110,27 @@ public class ComplementaryRuleSwde {
     }
 
     public static void main(String[] args) {
-        Site site = br.edimarmanica.dataset.swde.camera.Site.AMAZON;
-        Attribute attribute = br.edimarmanica.dataset.swde.camera.Attribute.MANUFECTURER;
-        ResultsSWDE results = new ResultsSWDE(site);
-        Map<String, Map<Integer,String>> allRules = results.loadAllRules();
+
+        /**
+         * Teste SWDE *
+         */
+//        
+        /**
+         * Teste WEIR *
+         */
+        Site site = br.edimarmanica.dataset.weir.book.Site.BLACKWELL;
+        Attribute attribute = br.edimarmanica.dataset.weir.book.Attribute.TITLE;
+        Results results = Results.getInstance(site);
+        Map<String, Map<String, String>> allRules = results.loadAllRules();
 
         List<String> masterRuleIDs = new ArrayList<>();
-        masterRuleIDs.add("rule_1100.csv");
-        Map<Integer,String> masterRuleValues = allRules.get("rule_1100.csv");
-
-        ComplementaryRuleSwde rum = new ComplementaryRuleSwde(site, attribute, allRules, masterRuleIDs, masterRuleValues);
+        masterRuleIDs.add("rule_263.csv");
+        Map<String, String> masterRuleValues = allRules.get(masterRuleIDs.get(0));
+        ComplementaryRule rum = new ComplementaryRule(site, attribute, allRules, masterRuleIDs, masterRuleValues, UnionRules.getNrPages(site));
         try {
-            System.out.println("Complemented Rule: " + rum.getComplementaryRule());
+            System.out.println("Complemented Rule: " + rum.getComplementaryRule());//Esperado rule_303.csv
         } catch (SiteWithoutThisAttribute ex) {
-            Logger.getLogger(ComplementaryRuleSwde.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ComplementaryRule.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

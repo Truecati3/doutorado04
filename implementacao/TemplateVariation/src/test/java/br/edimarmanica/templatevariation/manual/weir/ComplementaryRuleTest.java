@@ -8,6 +8,8 @@ import br.edimarmanica.dataset.Attribute;
 import br.edimarmanica.dataset.Site;
 import br.edimarmanica.metrics.SiteWithoutThisAttribute;
 import br.edimarmanica.metrics.weir.ResultsWeir;
+import br.edimarmanica.templatevariation.manual.ComplementaryRule;
+import br.edimarmanica.templatevariation.manual.UnionRules;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -22,9 +24,9 @@ import junit.framework.TestCase;
  *
  * @author edimar
  */
-public class ComplementaryRuleWeirTest extends TestCase {
+public class ComplementaryRuleTest extends TestCase {
 
-    public ComplementaryRuleWeirTest(String testName) {
+    public ComplementaryRuleTest(String testName) {
         super(testName);
     }
 
@@ -34,23 +36,23 @@ public class ComplementaryRuleWeirTest extends TestCase {
     public void testGetComplementaryRule() throws Exception {
         System.out.println("getComplementaryRule");
 
-        String expResult = "rule_48.csv";
+        String expResult = "rule_313.csv";
 
         Site site = br.edimarmanica.dataset.weir.book.Site.BLACKWELL;
         Attribute attribute = br.edimarmanica.dataset.weir.book.Attribute.TITLE;
         ResultsWeir results = new ResultsWeir(site);
-        Map<String, Set<String>> allRules = results.loadAllRules();
+        Map<String, Map<String, String>> allRules = results.loadAllRules();
 
         List<String> masterRuleIDs = new ArrayList<>();
-        masterRuleIDs.add("rule_120.csv");
-        Set<String> masterRuleValues = allRules.get("rule_120.csv");
+        masterRuleIDs.add("rule_263.csv");
+        Map<String, String> masterRuleValues = allRules.get(masterRuleIDs.get(0));
 
-        ComplementaryRuleWeir rum = new ComplementaryRuleWeir(site, attribute, allRules, masterRuleIDs, masterRuleValues);
+        ComplementaryRule rum = new ComplementaryRule(site, attribute, allRules, masterRuleIDs, masterRuleValues, UnionRules.getNrPages(site));
         try {
             String result = rum.getComplementaryRule();
             assertEquals(expResult, result);
         } catch (SiteWithoutThisAttribute ex) {
-            Logger.getLogger(ComplementaryRuleWeir.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ComplementaryRuleTest.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

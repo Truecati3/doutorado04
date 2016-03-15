@@ -9,17 +9,16 @@ import br.edimarmanica.configuration.Paths;
 import br.edimarmanica.dataset.Attribute;
 import br.edimarmanica.dataset.Domain;
 import br.edimarmanica.dataset.Site;
+import br.edimarmanica.metrics.GroundTruth;
 import br.edimarmanica.metrics.Labels;
+import br.edimarmanica.metrics.Printer;
+import br.edimarmanica.metrics.Results;
+import br.edimarmanica.metrics.RuleMetrics;
 import br.edimarmanica.metrics.SiteWithoutThisAttribute;
 import br.edimarmanica.metrics.ValueFormatter;
-import br.edimarmanica.metrics.swde.GroundTruthSwde;
-import br.edimarmanica.metrics.swde.PrinterSwde;
-import br.edimarmanica.metrics.swde.ResultsSWDE;
-import br.edimarmanica.metrics.swde.RuleMetricsSwde;
-import br.edimarmanica.metrics.swde.ValueFormatterSwde;
 import br.edimarmanica.templatevariation.auto.bean.Rule;
 import br.edimarmanica.templatevariation.auto.load.LoadRule;
-import br.edimarmanica.templatevariation.manual.swde.MasterRuleSwde;
+import br.edimarmanica.templatevariation.manual.MasterRule;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,8 +26,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -39,7 +36,7 @@ public class UnionRulesSwde {
     private Site site;
     private Map<Integer, Rule> allRules;
     private int nrPages;
-    private PrinterSwde printer;
+    private Printer printer;
 
     public UnionRulesSwde(Site site) {
         this.site = site;
@@ -48,7 +45,7 @@ public class UnionRulesSwde {
     }
 
     public void execute() {
-        printer = new PrinterSwde(site, Paths.PATH_TEMPLATE_VARIATION_AUTO);
+        printer = new Printer(site, Paths.PATH_TEMPLATE_VARIATION_AUTO);
         nrPages = getNrPages();
 
         for (Attribute attribute : site.getDomain().getAttributes()) {
@@ -57,9 +54,9 @@ public class UnionRulesSwde {
     }
 
     public static Integer getMasterRuleManual(Site site, Attribute attribute) throws SiteWithoutThisAttribute {
-        ResultsSWDE results = new ResultsSWDE(site);
-        Map<String, Map<Integer, String>> allRules = results.loadAllRules();
-        MasterRuleSwde master = new MasterRuleSwde(site, attribute, allRules);
+        Results results = Results.getInstance(site);
+        Map<String, Map<String, String>> allRules = results.loadAllRules();
+        MasterRule master = new MasterRule(site, attribute, allRules);
         return Integer.parseInt(master.getMasterRule().replaceAll("rule_", "").replaceAll(".csv", ""));
     }
 
@@ -120,7 +117,7 @@ public class UnionRulesSwde {
     }
 
     private void print(Attribute attribute, List<Integer> masterRuleIDs, Map<String, String> masterRuleValues) throws SiteWithoutThisAttribute {
-        GroundTruthSwde groundTruth = new GroundTruthSwde(site, attribute);
+        GroundTruth groundTruth = GroundTruth.getInstance(site, attribute);
         groundTruth.load();
 
         if (groundTruth.getGroundTruth().isEmpty()) {
@@ -128,20 +125,19 @@ public class UnionRulesSwde {
         }
 
         if (masterRuleIDs == null) {
-            printer.print(attribute, "Attribute not found", "", groundTruth.getGroundTruth(), new HashMap<Integer, String>(), new HashSet<Integer>(), 0, 0, 0);
+            printer.print(attribute, "Attribute not found", "", groundTruth.getGroundTruth(), new HashMap<String, String>(), new HashSet<String>(), 0, 0, 0);
             return;
         }
 
         Labels labels = new Labels(site);
         labels.load();
 
-        ValueFormatter formatter = new ValueFormatterSwde();
-        Map<Integer, String> pairUrlValue = new HashMap<>();
+        Map<String, String> pairUrlValue = new HashMap<>();
         for (String url : masterRuleValues.keySet()) {
-            pairUrlValue.put(Integer.parseInt(url), formatter.format(masterRuleValues.get(url))); //esse formater vai preparar os valores para a avaliação deixando de acordo com a formatação do groundtruth
+            pairUrlValue.put(url, masterRuleValues.get(url)); 
         }
 
-        RuleMetricsSwde metrics = new RuleMetricsSwde(pairUrlValue, groundTruth.getGroundTruth());
+        RuleMetrics metrics = RuleMetrics.getInstance(site, pairUrlValue, groundTruth.getGroundTruth());
         metrics.computeMetrics();
 
         String masterRuleIDSst = "";
@@ -161,7 +157,7 @@ public class UnionRulesSwde {
 
     public static void main(String[] args) {
         General.DEBUG = true;
-        Domain domain = br.edimarmanica.dataset.swde.Domain.CAMERA;
+        Domain domain = br.edimarmanica.dataset.swde.Domain.AUTO;
         for (Site site : domain.getSites()) {
             System.out.println("Site: " + site);
             UnionRulesSwde urw = new UnionRulesSwde(site);

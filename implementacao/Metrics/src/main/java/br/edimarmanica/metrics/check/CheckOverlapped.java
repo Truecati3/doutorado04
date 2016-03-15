@@ -31,11 +31,11 @@ public class CheckOverlapped {
 
     public void printOverlapped() {
         ResultsSWDE results = new ResultsSWDE(site);
-        Map<Integer, String> r1Values = results.loadRule(new File(Paths.PATH_INTRASITE + site.getPath() + "/extracted_values/" + ruleID1));
+        Map<String, String> r1Values = results.loadRule(new File(Paths.PATH_INTRASITE + site.getPath() + "/extracted_values/" + ruleID1));
 
-        Map<Integer, String> r2Values = results.loadRule(new File(Paths.PATH_INTRASITE + site.getPath() + "/extracted_values/" + ruleID2));
+        Map<String, String> r2Values = results.loadRule(new File(Paths.PATH_INTRASITE + site.getPath() + "/extracted_values/" + ruleID2));
 
-        for (Integer u1: r1Values.keySet()) {
+        for (String u1: r1Values.keySet()) {
             if (r2Values.containsKey(u1)){
                 System.out.println("URL: ["+u1+"] - Value R1: ["+r1Values.get(u1)+"] - Value R2: ["+r2Values.get(u1)+"]");
             }
@@ -43,10 +43,10 @@ public class CheckOverlapped {
     }
     
     public static void main(String[] args) {
-        Site site = br.edimarmanica.dataset.swde.camera.Site.NEWEGG;
-        Attribute attribute = br.edimarmanica.dataset.swde.camera.Attribute.PRICE;
-        String ruleID1 = "rule_286.csv";
-        String ruleID2 = "rule_353.csv";
+        Site site = br.edimarmanica.dataset.swde.restaurant.Site.URBANSPOON;
+        Attribute attribute = br.edimarmanica.dataset.swde.restaurant.Attribute.CUISINE;
+        String ruleID1 = "rule_1414.csv";
+        String ruleID2 = "rule_230.csv";
         
         CheckOverlapped check = new CheckOverlapped(site, attribute, ruleID1, ruleID2);
         check.printOverlapped();

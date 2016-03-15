@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 public class Blocking {
 
     private Site site;
-    public static final int BLOCK_SIZE = 1;
+    public static final int BLOCK_SIZE = 3;
     private Neo4jHandler neo4j;
 
     public Blocking(Site site) {

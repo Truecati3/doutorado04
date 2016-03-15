@@ -5,8 +5,7 @@
 package br.edimarmanica.metrics.weir;
 
 import br.edimarmanica.metrics.RuleMetrics;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Map;
 
 /**
  *
@@ -14,31 +13,21 @@ import java.util.Set;
  */
 public class RuleMetricsWeir extends RuleMetrics {
 
-    private Set<String> ruleValues;
-    private Set<String> groundtruth;
-
-    public RuleMetricsWeir(Set<String> ruleValues, Set<String> groundtruth) {
-        this.ruleValues = ruleValues;
-        this.groundtruth = groundtruth;
+    public RuleMetricsWeir(Map<String, String> ruleValues, Map<String, String> groundTruth) {
+        super(ruleValues, groundTruth);
     }
 
+    /**
+     *
+     * encontra o conjunto de paǵinas cujo valor extraído pela regra casa com o
+     * valor do gabarito
+     */
     @Override
-    public void computeMetrics() {
-
-        Set<String> intersection = new HashSet<>();
-        intersection.addAll(ruleValues);
-        intersection.retainAll(groundtruth);
-
-        setRelevantRetrieved(intersection.size());
-        setRecall((double) intersection.size() / groundtruth.size());
-        setPrecision((double) intersection.size() / ruleValues.size());
-
-        if (getRecall() == 0 || getPrecision() == 0) {
-            setRecall(0);
-            setPrecision(0);
-            setF1(0);
-        } else {
-            setF1((2 * (getRecall() * getPrecision())) / (getRecall() + getPrecision()));
+    protected void computeIntersection() {
+        for (String pageId : groundTruth.keySet()) {
+            if (ruleValues.containsKey(pageId) && ruleValues.get(pageId).equals(groundTruth.get(pageId))) {
+                intersection.add(pageId);
+            }
         }
     }
 }

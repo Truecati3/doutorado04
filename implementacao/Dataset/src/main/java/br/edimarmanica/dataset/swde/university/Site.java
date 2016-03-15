@@ -50,6 +50,6 @@ public enum Site implements br.edimarmanica.dataset.Site {
 
     @Override
     public String getEntityPath() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       return getDomain().getDataset().getFolderName() + File.separator + "entity/" + getDomain().getFolderName() + File.separator + getFolderName()+".csv";
     }
 }

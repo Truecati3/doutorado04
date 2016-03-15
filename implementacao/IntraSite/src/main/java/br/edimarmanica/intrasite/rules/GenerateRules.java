@@ -4,13 +4,10 @@
  */
 package br.edimarmanica.intrasite.rules;
 
-import br.edimarmanica.configuration.General;
 import br.edimarmanica.configuration.Paths;
 import br.edimarmanica.dataset.Site;
 import br.edimarmanica.expressiveness.generate.CypherNotation;
 import br.edimarmanica.expressiveness.generate.beans.CypherRule;
-import br.edimarmanica.intrasite.evaluate.EvaluateWEIR;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -45,9 +42,9 @@ public class GenerateRules {
                 }
             }
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(EvaluateWEIR.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GenerateRules.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(EvaluateWEIR.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GenerateRules.class.getName()).log(Level.SEVERE, null, ex);
         }
         return rules;
     }

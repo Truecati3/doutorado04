@@ -60,12 +60,12 @@ public class FindClosestTemplate {
     private void generate() {
 
         Long count = new Long(0);
-        if(General.DEBUG){
+        if (General.DEBUG) {
             String query = "MATCH (v:CandValue) RETURN count(v) as count";
             count = (Long) neo4j.querySingleColumn(query, "count").get(0);
-            System.out.println("Total CandValue: "+count);
+            System.out.println("Total CandValue: " + count);
         }
-        
+
         //seleciona os candValues
         String cypherQuery = "MATCH (v:CandValue) RETURN v as candValue";
         Iterator<Map<String, Object>> iterator = neo4j.executeCypher(cypherQuery);
@@ -73,7 +73,7 @@ public class FindClosestTemplate {
         while (iterator.hasNext()) { //para cada CandValue
 
             if (General.DEBUG) {
-                System.out.println("Faltam: " + (count-i));
+                System.out.println("Faltam: " + (count - i));
             }
 
             i++;
@@ -83,8 +83,10 @@ public class FindClosestTemplate {
             //seleciona o nodo mais próximo
             Node closestNode = closestTemplateNode(getNodeById(candNode.getId()));
 
-            //imprime label, UP_label, UP_value
-            printRuleInfo(closestNode.getProperty("VALUE").toString(), closestNode.getProperty("UNIQUE_PATH").toString(), candNode.getProperty("UNIQUE_PATH").toString());
+            if (closestNode != null) { 
+                //imprime label, UP_label, UP_value
+                printRuleInfo(closestNode.getProperty("VALUE").toString(), closestNode.getProperty("UNIQUE_PATH").toString(), candNode.getProperty("UNIQUE_PATH").toString());
+            }
         }
     }
 

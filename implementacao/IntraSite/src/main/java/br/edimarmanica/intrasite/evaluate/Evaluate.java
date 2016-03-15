@@ -8,12 +8,12 @@ import br.edimarmanica.configuration.Paths;
 import br.edimarmanica.dataset.Attribute;
 import br.edimarmanica.dataset.Domain;
 import br.edimarmanica.dataset.Site;
+import br.edimarmanica.metrics.GroundTruth;
 import br.edimarmanica.metrics.Labels;
+import br.edimarmanica.metrics.Printer;
+import br.edimarmanica.metrics.Results;
+import br.edimarmanica.metrics.RuleMetrics;
 import br.edimarmanica.metrics.SiteWithoutThisAttribute;
-import br.edimarmanica.metrics.swde.GroundTruthSwde;
-import br.edimarmanica.metrics.swde.PrinterSwde;
-import br.edimarmanica.metrics.swde.ResultsSWDE;
-import br.edimarmanica.metrics.swde.RuleMetricsSwde;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -25,22 +25,22 @@ import java.util.logging.Logger;
  *
  * @author edimar
  */
-public class EvaluateSWDE {
+public class Evaluate {
 
     private Site site;
-    private Map<String, Map<Integer, String>> myResults = new HashMap<>();//<RuleName,Map<PageID,Value>>
+    private Map<String, Map<String, String>> myResults = new HashMap<>();//<RuleName,Map<PageID,Value>>
     private Labels labels;
-    private PrinterSwde printer;
+    private Printer printer;
 
-    public EvaluateSWDE(Site site) {
+    public Evaluate(Site site) {
         this.site = site;
     }
 
     private void printMetrics(Attribute attribute) throws SiteWithoutThisAttribute {
-        GroundTruthSwde groundTruth = new GroundTruthSwde(site, attribute);
+        GroundTruth groundTruth = GroundTruth.getInstance(site, attribute);
         groundTruth.load();
-        
-        if (groundTruth.getGroundTruth().isEmpty()){
+
+        if (groundTruth.getGroundTruth().isEmpty()) {
             return;//não tem esse atributo no gabarito
         }
 
@@ -49,12 +49,12 @@ public class EvaluateSWDE {
         double maxF1 = 0;
         int maxRelevantsRetrieved = 0;
         String maxRule = null;
-        Map<Integer, String> maxExtractValues = new HashMap<>();
-        Set<Integer> maxIntersection = new HashSet<>();
+        Map<String, String> maxExtractValues = new HashMap<>();
+        Set<String> maxIntersection = new HashSet<>();
 
         for (String rule : myResults.keySet()) {//para cada regra
 
-            RuleMetricsSwde metrics = new RuleMetricsSwde(myResults.get(rule), groundTruth.getGroundTruth());
+            RuleMetrics metrics = RuleMetrics.getInstance(site, myResults.get(rule), groundTruth.getGroundTruth());
             metrics.computeMetrics();
 
             if (metrics.getF1() > maxF1) {
@@ -80,35 +80,34 @@ public class EvaluateSWDE {
         labels = new Labels(site);
         labels.load();
 
-        ResultsSWDE results = new ResultsSWDE(site);
+        Results results = Results.getInstance(site);
         myResults = results.loadAllRules();
 
-        printer = new PrinterSwde(site, Paths.PATH_INTRASITE);
+        printer = new Printer(site, Paths.PATH_INTRASITE);
 
         for (Attribute attr : site.getDomain().getAttributes()) {
             try {
                 printMetrics(attr);
             } catch (SiteWithoutThisAttribute ex) {
-                Logger.getLogger(EvaluateWEIR.class.getName()).log(Level.SEVERE, null, ex);
+               // Logger.getLogger(Evaluate.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
 
     public static void main(String[] args) {
 
-        //edition não pega pq identifica como label (template)
-        Domain domain = br.edimarmanica.dataset.swde.Domain.CAMERA;
+        Domain domain = br.edimarmanica.dataset.weir.Domain.BOOK;
         for (Site site : domain.getSites()) {
-            if (site != br.edimarmanica.dataset.swde.camera.Site.BEACHAUDIO){
+            /*if (site != br.edimarmanica.dataset.weir.book.Site.BARNESANDNOBLE) {
                 continue;
-            }
-            
+            }*/
+
             System.out.println("Site: " + site);
-            EvaluateSWDE eval = new EvaluateSWDE(site);
+            Evaluate eval = new Evaluate(site);
             eval.printMetrics();
         }
 
-        // EvaluateSWDE eval = new EvaluateSWDE(br.edimarmanica.dataset.swde.restaurant.Site.USDINNERS);
+        // Evaluate eval = new Evaluate(br.edimarmanica.dataset.swde.restaurant.Site.USDINNERS);
         // eval.printMetrics();
     }
 }

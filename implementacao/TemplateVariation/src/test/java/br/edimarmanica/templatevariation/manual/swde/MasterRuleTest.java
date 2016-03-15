@@ -4,6 +4,7 @@
  */
 package br.edimarmanica.templatevariation.manual.swde;
 
+import br.edimarmanica.templatevariation.manual.MasterRule;
 import br.edimarmanica.dataset.Attribute;
 import br.edimarmanica.dataset.Site;
 import br.edimarmanica.metrics.SiteWithoutThisAttribute;
@@ -18,14 +19,14 @@ import junit.framework.TestCase;
  *
  * @author edimar
  */
-public class MasterRuleSwdeTest extends TestCase {
+public class MasterRuleTest extends TestCase {
 
-    public MasterRuleSwdeTest(String testName) {
+    public MasterRuleTest(String testName) {
         super(testName);
     }
 
     /**
-     * Test of getMasterRule method, of class MasterRuleSwde.
+     * Test of getMasterRule method, of class MasterRule.
      */
     public void testGetMasterRule() throws Exception {
         System.out.println("getMasterRule");
@@ -36,14 +37,14 @@ public class MasterRuleSwdeTest extends TestCase {
         Site site = br.edimarmanica.dataset.swde.book.Site.BOOKDEPOSITORY;
         Attribute attribute = br.edimarmanica.dataset.swde.book.Attribute.TITLE;
         ResultsSWDE results = new ResultsSWDE(site);
-        Map<String, Map<Integer, String>> allRules = results.loadAllRules();
+        Map<String, Map<String, String>> allRules = results.loadAllRules();
 
-        MasterRuleSwde master = new MasterRuleSwde(site, attribute, allRules);
+        MasterRule master = new MasterRule(site, attribute, allRules);
         try {
             String result = master.getMasterRule();
             assertEquals(expResult, result);
         } catch (SiteWithoutThisAttribute ex) {
-            Logger.getLogger(MasterRuleSwde.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MasterRule.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

@@ -8,14 +8,13 @@ import br.edimarmanica.configuration.General;
 import br.edimarmanica.configuration.Paths;
 import br.edimarmanica.dataset.Attribute;
 import br.edimarmanica.dataset.Site;
+import br.edimarmanica.metrics.GroundTruth;
 import br.edimarmanica.metrics.SiteWithoutThisAttribute;
 import br.edimarmanica.metrics.ValueFormatter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.csv.CSVFormat;
@@ -26,18 +25,20 @@ import org.apache.commons.csv.CSVRecord;
  *
  * @author edimar
  */
-public class GroundTruthSwde {
-    
-    private Site site;
-    private Attribute attribute;
-    private Map<Integer, String> groundTruth = new HashMap<>();
+public class GroundTruthSwde extends GroundTruth {
+
     private ValueFormatter formatter = new ValueFormatterSwde();
 
     public GroundTruthSwde(Site site, Attribute attribute) {
-        this.site = site;
-        this.attribute = attribute;
+        super(site, attribute);
     }
-    
+
+    /**
+     * Tratamento especial para multivalores.
+     * GroundTruth => Map<PageID, NrValues + Values>
+     * @throws SiteWithoutThisAttribute 
+     */
+    @Override
     public void load() throws SiteWithoutThisAttribute {
 
         try (Reader in = new FileReader(Paths.PATH_BASE + site.getGroundTruthPath(attribute))) {
@@ -60,7 +61,7 @@ public class GroundTruthSwde {
                     }
                     value = value.replaceFirst(General.SEPARADOR, "");
 
-                    groundTruth.put(Integer.parseInt(url), nrValues + General.SEPARADOR + value);
+                    groundTruth.put(url, nrValues + General.SEPARADOR + value);
                 }
             }
         } catch (FileNotFoundException ex) {
@@ -68,9 +69,5 @@ public class GroundTruthSwde {
         } catch (IOException ex) {
             Logger.getLogger(GroundTruthSwde.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    public Map<Integer, String> getGroundTruth() {
-        return groundTruth;
     }
 }

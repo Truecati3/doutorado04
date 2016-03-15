@@ -80,7 +80,7 @@ public class ExtractValuesScalable {
 
             String[] header = {"URL", "EXTRACTED VALUE"};
             try (CSVPrinter csvFilePrinter = new CSVPrinter(out, CSVFormat.EXCEL.withHeader(header))) {
-                Map<String, String> extractedValues = neo4j.extract(scaleQuery(rule.getQuery(), rule.getLabel()), rule.getParams(), "URL", "VALUE");
+                Map<String, String> extractedValues = scaleQuery(rule);
                 for (String url : extractedValues.keySet()) {
                     List<String> dataRecord = new ArrayList<>();
                     dataRecord.add(url);
@@ -136,8 +136,12 @@ public class ExtractValuesScalable {
      * @param originalQuery
      * @return originalQuery scalable
      */
-    private String scaleQuery(String originalQuery, String label) {
-        return originalQuery.replaceAll("MATCH ", "MATCH (block:Block) WHERE block.KEY=LEFT('" + label + "', " + Blocking.BLOCK_SIZE + ") WITH block \n"
+    private Map<String, String> scaleQuery(CypherRule rule) {
+        String scaleQuery = rule.getQuery().replaceAll("MATCH ", "MATCH (block:Block) WHERE block.KEY=LEFT({valuex}, " + Blocking.BLOCK_SIZE + ") WITH block \n"
                 + "MATCH block-->");
+        Map<String, Object> scaleParams = rule.getParams();
+        scaleParams.put("valuex", rule.getLabel());
+
+        return neo4j.extract(scaleQuery, scaleParams, "URL", "VALUE");
     }
 }
