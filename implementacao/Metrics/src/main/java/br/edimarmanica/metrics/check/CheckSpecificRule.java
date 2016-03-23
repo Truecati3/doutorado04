@@ -79,9 +79,9 @@ public class CheckSpecificRule {
 //        check.printInfo();
         
         
-        Site site = br.edimarmanica.dataset.weir.book.Site.BLACKWELL;
-        Attribute attribute = br.edimarmanica.dataset.weir.book.Attribute.TITLE;
-        String ruleID = "rule_120.csv";//263 - P[0.90] - R[1] / 
+        Site site = br.edimarmanica.dataset.weir.videogame.Site.TEAMBOX;
+        Attribute attribute = br.edimarmanica.dataset.weir.videogame.Attribute.PUBLISHER;
+        String ruleID = "rule_4686.csv";
         CheckSpecificRule check = new CheckSpecificRule(site, attribute, ruleID);
         check.printInfo();
 

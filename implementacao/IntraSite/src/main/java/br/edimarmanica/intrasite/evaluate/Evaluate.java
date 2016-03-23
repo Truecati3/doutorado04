@@ -6,6 +6,7 @@ package br.edimarmanica.intrasite.evaluate;
 
 import br.edimarmanica.configuration.Paths;
 import br.edimarmanica.dataset.Attribute;
+import br.edimarmanica.dataset.Dataset;
 import br.edimarmanica.dataset.Domain;
 import br.edimarmanica.dataset.Site;
 import br.edimarmanica.metrics.GroundTruth;
@@ -89,23 +90,29 @@ public class Evaluate {
             try {
                 printMetrics(attr);
             } catch (SiteWithoutThisAttribute ex) {
-               // Logger.getLogger(Evaluate.class.getName()).log(Level.SEVERE, null, ex);
+                // Logger.getLogger(Evaluate.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
 
     public static void main(String[] args) {
 
-        Domain domain = br.edimarmanica.dataset.weir.Domain.BOOK;
-        for (Site site : domain.getSites()) {
-            /*if (site != br.edimarmanica.dataset.weir.book.Site.BARNESANDNOBLE) {
-                continue;
-            }*/
+        for (Dataset dataset : Dataset.values()) {
+            System.out.println("\tDataset: " + dataset);
+            for (Domain domain : dataset.getDomains()) {
+                System.out.println("\tDomain: " + domain);
+                for (Site site : domain.getSites()) {
+                    if (site != br.edimarmanica.dataset.weir.soccer.Site.CNN) {
+                        continue;
+                    }
 
-            System.out.println("Site: " + site);
-            Evaluate eval = new Evaluate(site);
-            eval.printMetrics();
+                    System.out.println("\t\tSite: " + site);
+                    Evaluate eval = new Evaluate(site);
+                    eval.printMetrics();
+                }
+            }
         }
+
 
         // Evaluate eval = new Evaluate(br.edimarmanica.dataset.swde.restaurant.Site.USDINNERS);
         // eval.printMetrics();

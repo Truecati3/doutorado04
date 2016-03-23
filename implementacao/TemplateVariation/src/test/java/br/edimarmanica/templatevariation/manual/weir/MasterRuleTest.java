@@ -6,6 +6,7 @@ package br.edimarmanica.templatevariation.manual.weir;
 
 import br.edimarmanica.dataset.Attribute;
 import br.edimarmanica.dataset.Site;
+import br.edimarmanica.metrics.Results;
 import br.edimarmanica.metrics.SiteWithoutThisAttribute;
 import br.edimarmanica.metrics.weir.ResultsWeir;
 import br.edimarmanica.templatevariation.manual.MasterRule;
@@ -28,19 +29,35 @@ public class MasterRuleTest extends TestCase {
     /**
      * Test of getMasterRule method, of class MasterRuleWeir.
      */
-    public void testGetMasterRule() throws Exception {
-        System.out.println("getMasterRule");
+    public void testGetMasterRuleWeir() throws Exception {
+        System.out.println("getMasterRuleWeir");
 
         String expResult = "rule_263.csv";
 
         Site site = br.edimarmanica.dataset.weir.book.Site.BLACKWELL;
         Attribute attribute = br.edimarmanica.dataset.weir.book.Attribute.TITLE;
-        ResultsWeir results = new ResultsWeir(site);
-        Map<String, Map<String, String>> allRules = results.loadAllRules();
-
-        MasterRule master = new MasterRule(site, attribute, allRules);
+        
         try {
-            String result = master.getMasterRule();
+            String result = MasterRule.getMasterRule(site, attribute);
+            assertEquals(expResult, result);
+        } catch (SiteWithoutThisAttribute ex) {
+            Logger.getLogger(MasterRule.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+     /**
+     * Test of getMasterRule method, of class MasterRuleWeir.
+     */
+    public void testGetMasterRuleSWDE() throws Exception {
+        System.out.println("getMasterRuleSWDE");
+
+        String expResult = "rule_12420.csv";
+
+        Site site = br.edimarmanica.dataset.swde.book.Site.CHRISTIANBOOK;
+        Attribute attribute = br.edimarmanica.dataset.swde.book.Attribute.TITLE;
+        
+        try {
+            String result = MasterRule.getMasterRule(site, attribute);
             assertEquals(expResult, result);
         } catch (SiteWithoutThisAttribute ex) {
             Logger.getLogger(MasterRule.class.getName()).log(Level.SEVERE, null, ex);

@@ -20,10 +20,10 @@ import java.util.Set;
  */
 public class Ranking {
 
-    public static final double T_xpath = 0.22;
-    public static final double T_label = 0.22;
-    public static final double T_domain = 0.22;
-    public static final double T_entity = 0.24;
+    public static final double T_xpath = 0.1;
+    public static final double T_label = 0.1;
+    public static final double T_domain = 0.3;
+    public static final double T_entity = 0.4;
     public static final double T_size = 0.1;
 
     // tem aquele artigo que diz quando somar e quando multiplicar e o efeito disso

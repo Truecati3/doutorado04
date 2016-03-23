@@ -36,14 +36,14 @@ public class DirectoryToCSV {
 
     public void loadPages() throws FileNotFoundException {
         File fDir = new File(Paths.PATH_BASE + "/" + site.getPath());
+        int i = 0;
         for (File f : fDir.listFiles()) {
-            Integer nr = Integer.valueOf(f.getName().replaceAll(".htm", ""));
-
+            i++;
             /*if (nr<0 || nr > 460){
              continue;
              }*/
             if (General.DEBUG) {
-                System.out.println("Page:" + f.getAbsolutePath());
+                System.out.println("Page["+i+"]:" + f.getAbsolutePath());
             }
             loadPage(f);
         }
@@ -62,7 +62,7 @@ public class DirectoryToCSV {
         //   for (Site site : domain.getSites()) {
         //       System.out.println("Site: " + site.getFolderName());
         //     DirectoryToCSV load = new DirectoryToCSV(site);
-        DirectoryToCSV load = new DirectoryToCSV(br.edimarmanica.dataset.swde.nba.Site.USATODAY);
+        DirectoryToCSV load = new DirectoryToCSV(br.edimarmanica.dataset.weir.videogame.Site.GAMES);
 
         try {
             load.loadPages();

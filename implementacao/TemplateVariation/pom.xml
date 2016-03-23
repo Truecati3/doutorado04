@@ -49,11 +49,6 @@
             <version>2.6</version>
         </dependency>
         <dependency>
-            <groupId>ch.epfl.bbp.nlp</groupId>
-            <artifactId>bluima_abbreviations</artifactId>
-            <version>1.0.1</version>
-        </dependency>
-        <dependency>
             <groupId>br.edimarmanica</groupId>
             <artifactId>Metrics</artifactId>
             <version>1.0-SNAPSHOT</version>
@@ -61,6 +56,11 @@
         <dependency>
             <groupId>br.edimarmanica</groupId>
             <artifactId>EntitySimilarity</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>br.edimarmanica</groupId>
+            <artifactId>ContentSimilarity</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>

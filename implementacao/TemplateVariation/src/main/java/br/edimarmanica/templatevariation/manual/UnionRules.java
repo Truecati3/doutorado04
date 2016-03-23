@@ -9,6 +9,7 @@ import br.edimarmanica.templatevariation.manual.MasterRule;
 import br.edimarmanica.configuration.General;
 import br.edimarmanica.configuration.Paths;
 import br.edimarmanica.dataset.Attribute;
+import br.edimarmanica.dataset.Dataset;
 import br.edimarmanica.dataset.Domain;
 import br.edimarmanica.dataset.Site;
 import br.edimarmanica.metrics.GroundTruth;
@@ -53,11 +54,11 @@ public class UnionRules {
 
     public void execute(Attribute attribute) {
         System.out.println("\tAttribute: " + attribute);
-        MasterRule master = new MasterRule(site, attribute, allRules);
+
         try {
-            String masterRuleID = master.getMasterRule();
-            
-            if (masterRuleID == null){
+            String masterRuleID = MasterRule.getMasterRule(site, attribute);
+
+            if (masterRuleID == null) {
                 print(attribute, null, null);
                 return;
             }
@@ -88,13 +89,13 @@ public class UnionRules {
     private void print(Attribute attribute, List<String> masterRuleIDs, Map<String, String> masterRuleValues) throws SiteWithoutThisAttribute {
         GroundTruth groundTruth = GroundTruth.getInstance(site, attribute);
         groundTruth.load();
-        
-        if (groundTruth.getGroundTruth().isEmpty()){
+
+        if (groundTruth.getGroundTruth().isEmpty()) {
             return;//não tem esse atributo no gabarito
         }
-        
-        if (masterRuleIDs == null){
-            printer.print(attribute, "Attribute not found", "", groundTruth.getGroundTruth(), new HashMap<String,String>(), new HashSet<String>(), 0, 0, 0);
+
+        if (masterRuleIDs == null) {
+            printer.print(attribute, "Attribute not found", "", groundTruth.getGroundTruth(), new HashMap<String, String>(), new HashSet<String>(), 0, 0, 0);
             return;
         }
 
@@ -120,15 +121,21 @@ public class UnionRules {
     }
 
     public static void main(String[] args) {
-        Domain domain = br.edimarmanica.dataset.swde.Domain.BOOK;
-        for (Site site : domain.getSites()) {
-            if (site != br.edimarmanica.dataset.swde.book.Site.CHRISTIANBOOK){
-                continue;
+
+        for (Dataset dataset : Dataset.values()) {
+            System.out.println("Dataset: " + dataset);
+            for (Domain domain : dataset.getDomains()) {
+                System.out.println("\tDomain: " + domain);
+                for (Site site : domain.getSites()) {
+                    if (site != br.edimarmanica.dataset.weir.soccer.Site.CNN) {
+                        continue;
+                    }
+
+                    System.out.println("\t\tSite: " + site);
+                    UnionRules urw = new UnionRules(site);
+                    urw.execute();
+                }
             }
-            
-            System.out.println("Site: "+site);
-            UnionRules urw = new UnionRules(site);
-            urw.execute();
         }
     }
 }

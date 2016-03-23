@@ -4,15 +4,28 @@
  */
 package br.edimarmanica.templatevariation.manual;
 
+import br.edimarmanica.configuration.Paths;
 import br.edimarmanica.dataset.Attribute;
 import br.edimarmanica.dataset.Site;
 import br.edimarmanica.metrics.GroundTruth;
+import br.edimarmanica.metrics.MergeResults;
+import br.edimarmanica.metrics.Printer;
 import br.edimarmanica.metrics.Results;
 import br.edimarmanica.metrics.RuleMetrics;
 import br.edimarmanica.metrics.SiteWithoutThisAttribute;
+import br.edimarmanica.metrics.weir.ResultsWeir;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 
 /**
  *
@@ -20,41 +33,36 @@ import java.util.logging.Logger;
  */
 public class MasterRule {
 
-    private Site site;
-    private Attribute attribute;
-    private Map<String, Map<String, String>> allRules;
+    /** Pegando direto do intrasite **/
+    public static String getMasterRule(Site site, Attribute attribute) throws SiteWithoutThisAttribute {
 
-    public MasterRule(Site site, Attribute attribute, Map<String, Map<String, String>> allRules) {
-        this.site = site;
-        this.attribute = attribute;
-        this.allRules = allRules;
+        try (Reader in = new FileReader(Paths.PATH_INTRASITE + "/" + site.getPath() + "/result.csv")) {
+            try (CSVParser parser = new CSVParser(in, CSVFormat.EXCEL.withHeader())) {
+
+                for (CSVRecord record : parser) {
+                    if (record.get("ATTRIBUTE").equals(attribute.getAttributeID())) {
+                        return record.get("RULE");
+                    }
+                }
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(MergeResults.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(MergeResults.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        throw new SiteWithoutThisAttribute(attribute.getAttributeID(), site.getFolderName());
     }
 
-    /**
-     *
-     * @return ID of the master rule (rule with the largest F1)
-     */
-    public String getMasterRule() throws SiteWithoutThisAttribute {
-        GroundTruth groundTruth = GroundTruth.getInstance(site, attribute);
-        groundTruth.load();
+    public static void main(String[] args) {
+        Site site = br.edimarmanica.dataset.swde.book.Site.CHRISTIANBOOK;
+        Attribute attribute = br.edimarmanica.dataset.swde.book.Attribute.TITLE;
 
-        double maxF1 = 0;
-        String maxRule = null;
-
-        for (String rule : allRules.keySet()) {
-
-            RuleMetrics metrics = RuleMetrics.getInstance(site, allRules.get(rule), groundTruth.getGroundTruth());
-            metrics.computeMetrics();
-
-            if (metrics.getF1() == 0) {
-                continue;
-            }
-
-            if (metrics.getF1() > maxF1) {
-                maxF1 = metrics.getF1();
-                maxRule = rule;
-            }
+        try {
+            String result = MasterRule.getMasterRule(site, attribute);
+            System.out.println("Result: " + result);
+        } catch (SiteWithoutThisAttribute ex) {
+            Logger.getLogger(MasterRule.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return maxRule;
     }
 }

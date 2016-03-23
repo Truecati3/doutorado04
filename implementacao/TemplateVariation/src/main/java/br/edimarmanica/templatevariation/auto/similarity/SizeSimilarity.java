@@ -21,7 +21,7 @@ public class SizeSimilarity extends RuleSimilarity{
     
     @Override
     public double score() {
-        return candidateComplementaryRule.getUrlValues().size() / nrPages;
+        return (double)candidateComplementaryRule.getUrlValues().size() / nrPages;
     }
     
 }

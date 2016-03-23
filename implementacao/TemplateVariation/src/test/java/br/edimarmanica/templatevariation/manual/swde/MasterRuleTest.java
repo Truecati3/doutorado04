@@ -36,12 +36,9 @@ public class MasterRuleTest extends TestCase {
 
         Site site = br.edimarmanica.dataset.swde.book.Site.BOOKDEPOSITORY;
         Attribute attribute = br.edimarmanica.dataset.swde.book.Attribute.TITLE;
-        ResultsSWDE results = new ResultsSWDE(site);
-        Map<String, Map<String, String>> allRules = results.loadAllRules();
 
-        MasterRule master = new MasterRule(site, attribute, allRules);
         try {
-            String result = master.getMasterRule();
+            String result = MasterRule.getMasterRule(site, attribute);
             assertEquals(expResult, result);
         } catch (SiteWithoutThisAttribute ex) {
             Logger.getLogger(MasterRule.class.getName()).log(Level.SEVERE, null, ex);

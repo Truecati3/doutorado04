@@ -5,7 +5,10 @@
 package br.edimarmanica.templatevariation.auto.load;
 
 import br.edimarmanica.configuration.Paths;
+import br.edimarmanica.dataset.Dataset;
 import br.edimarmanica.dataset.Site;
+import br.edimarmanica.metrics.Results;
+import br.edimarmanica.metrics.weir.ResultsWeir;
 import br.edimarmanica.templatevariation.auto.bean.Rule;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -70,41 +73,57 @@ public class LoadRule {
      * @param ruleID
      * @return Map<URL, Value>
      */
-    public Map<String, String> loadURLValues() {
-        File fileRule = new File(Paths.PATH_INTRASITE + "/" + site.getPath() + "/extracted_values/rule_" + ruleID + ".csv");
+    private Map<String, String> loadURLValues() {
+        
         Map<String, String> values = new HashMap<>();
-        try (Reader in = new FileReader(fileRule)) {
+        try (Reader in = new FileReader(Paths.PATH_INTRASITE + "/" + site.getPath() + "/extracted_values/rule_" + ruleID + ".csv")) {
             try (CSVParser parser = new CSVParser(in, CSVFormat.EXCEL.withHeader())) {
                 for (CSVRecord record : parser) {
-                    values.put(record.get("URL").replaceAll(".*" + site.getPath() + "/", "").replaceAll(".htm", ""),
-                            record.get("EXTRACTED VALUE"));
+                    values.put(formatUrl(record.get("URL")), record.get("EXTRACTED VALUE"));
                 }
             }
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(LoadRule.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ResultsWeir.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(LoadRule.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ResultsWeir.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         return values;
+    }
+    
+    private String formatUrl(String url){
+        if (site.getDomain().getDataset() == Dataset.WEIR){
+            return url.replaceAll(".*" + site.getDomain().getDataset().getFolderName() + "/", "");
+        }else if (site.getDomain().getDataset() == Dataset.SWDE){
+            return url.replaceAll(".*" + site.getPath() + "/", "").replaceAll(".htm", "");
+        }else{
+            return null;
+        }
     }
 
     /**
      *
-     * @param urlValues Map<Entity, Value>
-     * @return
+     * @param urlValues Map<PageID, Value>
+     * @return Map<Entity, Value>
      */
-    public Map<String, String> loadEntityValues(Map<String, String> urlValues) {
+    private Map<String, String> loadEntityValues(Map<String, String> urlValues) {
         Map<String, String> entityValues = new HashMap<>();
 
         try (Reader in = new FileReader(Paths.PATH_BASE + site.getEntityPath())) {
             try (CSVParser parser = new CSVParser(in, CSVFormat.EXCEL.withHeader())) {
                 for (CSVRecord record : parser) {
-                    if (urlValues.get(record.get("url").replaceAll(".*" + site.getPath() + "/", "").replaceAll(".htm", "")) == null) {
+                    String pageID = null;
+                    if (site.getDomain().getDataset() == Dataset.SWDE) {
+                        pageID = record.get("url").replaceAll(".*" + site.getFolderName() + "/", "").replaceAll(".htm", "");
+                    } else {//WEIR
+                        pageID = record.get("url");
+                    }
+
+                    if (!urlValues.containsKey(pageID)) {
                         continue;
                     }
 
-                    entityValues.put(record.get("entityID"),
-                            urlValues.get(record.get("url").replaceAll(".*" + site.getPath() + "/", "").replaceAll(".htm", "")));
+                    entityValues.put(record.get("entityID"), urlValues.get(pageID));
                 }
             }
         } catch (FileNotFoundException ex) {
@@ -129,9 +148,9 @@ public class LoadRule {
     }
 
     public static void main(String[] args) {
-        Site site = br.edimarmanica.dataset.swde.camera.Site.AMAZON;
+        Site site = br.edimarmanica.dataset.swde.movie.Site.MSN;
 
-        LoadRule load = new LoadRule(site, 1142);
+        LoadRule load = new LoadRule(site, 8);
         Rule rule = load.loadRule();
         System.out.println("RuleID: " + rule.getRuleID());
         System.out.println("XPath: " + rule.getXPath());

@@ -1,0 +1,2 @@
+Duas regras são consideradas disjuntas mesmo se extraem valores para as mesmas páginas desde que extraiam o mesmo valor nas páginas compartilhadas
+O recall e a precisão são calculados apenas sobre a diferença
