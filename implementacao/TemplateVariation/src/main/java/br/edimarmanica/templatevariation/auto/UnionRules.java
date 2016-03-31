@@ -138,19 +138,19 @@ public class UnionRules {
         labels.load();
 
         Map<String, String> pairUrlValue = new HashMap<>();
-        for (String url : masterRuleValues.keySet()) {
-            pairUrlValue.put(url, masterRuleValues.get(url));
-        }
-
-        RuleMetrics metrics = RuleMetrics.getInstance(site, pairUrlValue, groundTruth.getGroundTruth());
-        metrics.computeMetrics();
-
+        Results results = Results.getInstance(site);
+            
         String masterRuleIDSst = "";
         String labelsSt = "";
         for (Integer ruleID : masterRuleIDs) {
-            masterRuleIDSst += ruleID + General.SEPARADOR;
+            masterRuleIDSst += "rule_" + ruleID + ".csv" + General.SEPARADOR;
             labelsSt += labels.getLabels().get("rule_" + ruleID + ".csv") + General.SEPARADOR;
+                        
+            pairUrlValue.putAll(results.loadRule(new File(Paths.PATH_INTRASITE+site.getPath()+"/extracted_values/rule_" + ruleID + ".csv")));  //vai ler no formato correto do metrics
         }
+        
+        RuleMetrics metrics = RuleMetrics.getInstance(site, pairUrlValue, groundTruth.getGroundTruth());
+        metrics.computeMetrics();
 
         printer.print(attribute, masterRuleIDSst, labelsSt, groundTruth.getGroundTruth(), pairUrlValue, metrics.getIntersection(), metrics.getRecall(), metrics.getPrecision(), metrics.getRelevantRetrieved());
     }
@@ -166,7 +166,7 @@ public class UnionRules {
 
     public static void main(String[] args) {
         General.DEBUG = true;
-        Domain domain = br.edimarmanica.dataset.weir.Domain.BOOK;
+        Domain domain = br.edimarmanica.dataset.swde.Domain.AUTO;
         for (Site site : domain.getSites()) {
             System.out.println("Site: " + site);
             UnionRules urw = new UnionRules(site);

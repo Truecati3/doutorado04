@@ -84,7 +84,7 @@ public class MergeResults {
     }
     
     public static void main(String[] args) {
-        MergeResults merge = new MergeResults(Paths.PATH_INTRASITE );
+        MergeResults merge = new MergeResults(Paths.PATH_TEMPLATE_VARIATION_AUTO );
         merge.merge(br.edimarmanica.dataset.swde.Domain.MOVIE);
     }
 }

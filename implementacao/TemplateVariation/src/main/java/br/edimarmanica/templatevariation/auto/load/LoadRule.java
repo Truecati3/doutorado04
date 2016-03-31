@@ -33,6 +33,7 @@ public class LoadRule {
 
     private Site site;
     private int ruleID;
+    public static final int MIN_PAGES = 20; //1%
 
     public LoadRule(Site site, int ruleID) {
         this.site = site;
@@ -74,7 +75,7 @@ public class LoadRule {
      * @return Map<URL, Value>
      */
     private Map<String, String> loadURLValues() {
-        
+
         Map<String, String> values = new HashMap<>();
         try (Reader in = new FileReader(Paths.PATH_INTRASITE + "/" + site.getPath() + "/extracted_values/rule_" + ruleID + ".csv")) {
             try (CSVParser parser = new CSVParser(in, CSVFormat.EXCEL.withHeader())) {
@@ -87,16 +88,16 @@ public class LoadRule {
         } catch (IOException ex) {
             Logger.getLogger(ResultsWeir.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return values;
     }
-    
-    private String formatUrl(String url){
-        if (site.getDomain().getDataset() == Dataset.WEIR){
+
+    private String formatUrl(String url) {
+        if (site.getDomain().getDataset() == Dataset.WEIR) {
             return url.replaceAll(".*" + site.getDomain().getDataset().getFolderName() + "/", "");
-        }else if (site.getDomain().getDataset() == Dataset.SWDE){
+        } else if (site.getDomain().getDataset() == Dataset.SWDE) {
             return url.replaceAll(".*" + site.getPath() + "/", "").replaceAll(".htm", "");
-        }else{
+        } else {
             return null;
         }
     }
@@ -142,7 +143,10 @@ public class LoadRule {
         for (String rule : rulesDir.list()) {
             LoadRule lr = new LoadRule(site, new Integer(rule.replaceAll("rule_", "").replaceAll(".csv", "")));
             Rule r = lr.loadRule();
-            rules.put(r.getRuleID(), r);
+
+            if (r.getUrlValues().size() >= MIN_PAGES) {
+                rules.put(r.getRuleID(), r);
+            }
         }
         return rules;
     }

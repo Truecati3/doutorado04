@@ -27,6 +27,7 @@ public class LabelSimilarityTest extends TestCase {
 
         Rule complementaryRule = new Rule();
         complementaryRule.setLabel("Heig.");
+        //complementaryRule.setLabel("Height:");
         
         LabelSimilarity instance = new LabelSimilarity(masterRule, complementaryRule);
         double expResult = 0.893;

@@ -39,12 +39,12 @@ public class EntitySimilarity extends RuleSimilarity {
 
         double maxSim = 0;
         for (Rule masterRuleInOtherSite : masterRulesInOtherSites) {
-            System.out.println("Master: " + masterRuleInOtherSite.getRuleID() + " - Comp: " + candidateComplementaryRule.getRuleID());
+            //System.out.println("Master: " + masterRuleInOtherSite.getRuleID() + " - Comp: " + candidateComplementaryRule.getRuleID());
             try {
                 //  System.out.println("Master: "+masterRuleInOtherSite.getEntityValues());
                 //  System.out.println("Complementar: "+candidateComplementaryRule.getEntityValues());
                 double sim = TypeAwareSimilarity.typeSimilarity(masterRuleInOtherSite.getEntityValues(), candidateComplementaryRule.getEntityValues());
-                System.out.println("sim: " + sim);
+               // System.out.println("sim: " + sim);
                 if (sim > maxSim) {
                     maxSim = sim;
                 }

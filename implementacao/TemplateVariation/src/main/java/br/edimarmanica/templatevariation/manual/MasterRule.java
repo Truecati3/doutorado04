@@ -41,6 +41,9 @@ public class MasterRule {
 
                 for (CSVRecord record : parser) {
                     if (record.get("ATTRIBUTE").equals(attribute.getAttributeID())) {
+                        if (record.get("RULE").equals("Attribute not found")){
+                            throw new SiteWithoutThisAttribute(attribute.getAttributeID(), site.getFolderName());
+                        }
                         return record.get("RULE");
                     }
                 }
