@@ -31,7 +31,7 @@ public class CheckSpecificRule {
     }
 
     public void printInfo() throws SiteWithoutThisAttribute {
-        Results results = Results.getInstance(site);
+        Results results = new Results(site);
         Map<String, String> ruleValues = results.loadRule(new File(Paths.PATH_INTRASITE + site.getPath() + "/extracted_values/" + ruleID));
 
         GroundTruth groundTruth = GroundTruth.getInstance(site, attribute);

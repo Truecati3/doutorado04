@@ -9,7 +9,7 @@ import br.edimarmanica.dataset.Attribute;
 import br.edimarmanica.dataset.Site;
 import br.edimarmanica.metrics.GroundTruth;
 import br.edimarmanica.metrics.SiteWithoutThisAttribute;
-import br.edimarmanica.metrics.ValueFormatter;
+import br.edimarmanica.metrics.Formatter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -25,9 +25,6 @@ import org.apache.commons.csv.CSVRecord;
  * @author edimar
  */
 public class GroundTruthWeir extends GroundTruth{
-
-    private ValueFormatter formatter = new ValueFormatterWeir();
-   
 
     public GroundTruthWeir(Site site, Attribute attribute) {
         super(site, attribute);
@@ -46,7 +43,7 @@ public class GroundTruthWeir extends GroundTruth{
                         throw new SiteWithoutThisAttribute(attribute.getAttributeID(), site.getFolderName());
                     }
                     if (!record.get(attribute.getAttributeIDbyDataset()).trim().isEmpty()) {
-                        groundTruth.put(record.get("url"), formatter.format(record.get(attribute.getAttributeIDbyDataset())));
+                        groundTruth.put(Formatter.formatURL(record.get("url")), Formatter.formatValue(record.get(attribute.getAttributeIDbyDataset())));
                     }
                 }
             }

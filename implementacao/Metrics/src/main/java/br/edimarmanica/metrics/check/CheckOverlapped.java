@@ -7,7 +7,7 @@ package br.edimarmanica.metrics.check;
 import br.edimarmanica.configuration.Paths;
 import br.edimarmanica.dataset.Attribute;
 import br.edimarmanica.dataset.Site;
-import br.edimarmanica.metrics.swde.ResultsSWDE;
+import br.edimarmanica.metrics.Results;
 import java.io.File;
 import java.util.Map;
 
@@ -30,7 +30,7 @@ public class CheckOverlapped {
     }
 
     public void printOverlapped() {
-        ResultsSWDE results = new ResultsSWDE(site);
+        Results results = new Results(site);
         Map<String, String> r1Values = results.loadRule(new File(Paths.PATH_INTRASITE + site.getPath() + "/extracted_values/" + ruleID1));
 
         Map<String, String> r2Values = results.loadRule(new File(Paths.PATH_INTRASITE + site.getPath() + "/extracted_values/" + ruleID2));

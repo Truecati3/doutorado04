@@ -10,7 +10,7 @@ import br.edimarmanica.dataset.Attribute;
 import br.edimarmanica.dataset.Site;
 import br.edimarmanica.metrics.GroundTruth;
 import br.edimarmanica.metrics.SiteWithoutThisAttribute;
-import br.edimarmanica.metrics.ValueFormatter;
+import br.edimarmanica.metrics.Formatter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -27,7 +27,6 @@ import org.apache.commons.csv.CSVRecord;
  */
 public class GroundTruthSwde extends GroundTruth {
 
-    private ValueFormatter formatter = new ValueFormatterSwde();
 
     public GroundTruthSwde(Site site, Attribute attribute) {
         super(site, attribute);
@@ -50,14 +49,14 @@ public class GroundTruthSwde extends GroundTruth {
                         continue; //ignore os cabeçalhos
                     }
 
-                    String url = record.get(0);
+                    String url = Formatter.formatURL(record.get(0));
                     int nrValues = Integer.parseInt(record.get(1));
-                    if (nrValues == 0 || (nrValues == 1 && formatter.format(record.get(2)).isEmpty())) {
+                    if (nrValues == 0 || (nrValues == 1 && Formatter.formatValue(record.get(2)).isEmpty())) {
                         continue;
                     }
                     String value = "";
                     for (int j = 0; j < nrValues; j++) {
-                        value += General.SEPARADOR + formatter.format(record.get(2 + j));
+                        value += General.SEPARADOR + Formatter.formatValue(record.get(2 + j));
                     }
                     value = value.replaceFirst(General.SEPARADOR, "");
 
