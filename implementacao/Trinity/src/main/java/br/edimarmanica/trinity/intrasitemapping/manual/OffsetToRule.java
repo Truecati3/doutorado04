@@ -158,9 +158,9 @@ public class OffsetToRule {
                 System.out.println("\tDomain: " + domain);
                 for (Site site : domain.getSites()) {
 
-                    /*  if (site != br.edimarmanica.dataset.swde.auto.Site.AOL) {
+                    if (site != br.edimarmanica.dataset.weir.book.Site.BOOKMOOCH) {
                         continue;
-                    }*/
+                    }
                     try {
                         System.out.println("\t\tSite: " + site);
                         OffsetToRule am = new OffsetToRule(site);

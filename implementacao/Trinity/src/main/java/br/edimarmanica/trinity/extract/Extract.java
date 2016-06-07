@@ -2,7 +2,6 @@ package br.edimarmanica.trinity.extract;
 
 import br.edimarmanica.configuration.General;
 import br.edimarmanica.configuration.Paths;
-import br.edimarmanica.dataset.Domain;
 import br.edimarmanica.dataset.Site;
 import gnu.regexp.REException;
 import java.io.File;
@@ -10,13 +9,10 @@ import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.Writer;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.xml.parsers.ParserConfigurationException;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
@@ -43,16 +39,14 @@ import tdg.tex.Text;
  *
  * @author edimar
  */
-public class Extract {
+public abstract class Extract {
 
-    protected Pattern pattern;
-    
     private Site site;
     private Tokeniser tokeniser;
     private Node root = new Node();
     public static final int VALUE_MAX_LENGHT = 150; //um valor com mais caracteres é descartado
     public static final int NR_SHARED_PAGES = 5;  //número de páginas usadas no treinamento e execução em todas as iterações
-    private static final int WINDOW_SIZE = 100; //número de elementos usados em cada iteração
+    public static int WINDOW_SIZE = 100; //número de elementos usados em cada iteração
     private boolean append = false;
 
     public Extract(Site site) {
@@ -103,11 +97,13 @@ public class Extract {
             System.out.println("CPU Learning time: " + stat.getCPUInterval() / 1.0E10D);
         }
 
-        pattern = Pattern.compile(regex);
+        compileRegex(regex);
         if (General.DEBUG) {
             System.out.println("Ending training");
         }
     }
+
+    protected abstract void compileRegex(String regex);
 
     private void train(File fPage) throws IOException {
         String sPage = UTF8FileUtil.readStrippedHTML(fPage.toURI());
@@ -119,35 +115,11 @@ public class Extract {
         root.add(textPage);
     }
 
-    private String format(String value) {
+    protected String format(String value) {
         return value.replaceAll("\n", " ");
     }
-    
-     public Matcher getMatcher(File file) throws IOException{
-        return pattern.matcher(UTF8FileUtil.readStrippedHTML(file.toURI()));
-    }
 
-    protected void execute(File file, int offset) throws IOException {
-
-        List<String> dataRecord = new ArrayList<>();
-        Matcher m = getMatcher(file);
-        dataRecord.add(file.getName());
-
-        if (m.matches()) {
-            for (int i = 0; i != m.groupCount(); i++) {
-                if (m.group(i) == null || m.group(i).length() > VALUE_MAX_LENGHT) {
-                    dataRecord.add("");
-                } else {
-                    dataRecord.add(format(m.group(i)));
-                }
-            }
-        } else {
-            for (int i = 0; i != m.groupCount(); i++) {
-                dataRecord.add("not matched");
-            }
-        }
-        printResults(dataRecord, offset);
-    }
+    protected abstract void execute(File file, int offset) throws IOException;
 
     private void execute(int offset) throws IOException, REException {
         int start = ((WINDOW_SIZE - NR_SHARED_PAGES) * offset) + NR_SHARED_PAGES;
@@ -193,11 +165,11 @@ public class Extract {
         }
     }
 
-    private void printResults(List<String> dataRecord, int offset) {
+    protected void printResults(List<String> dataRecord, int offset) {
         /**
          * ********************** results ******************
          */
-        File dir = new File(Paths.PATH_TRINITY + site.getPath()+"/offset");
+        File dir = new File(Paths.PATH_TRINITY + site.getPath() + "/offset");
         dir.mkdirs();
 
         File file = new File(dir.getAbsolutePath() + "/result_" + offset + ".csv");
@@ -212,24 +184,4 @@ public class Extract {
         }
         append = true;
     }
-
-    public static void main(String[] args) {
-        //configurar essa opção (-Xss40m) da VM para não dar stackoverflow 
-        General.DEBUG = true;
-        Domain domain = br.edimarmanica.dataset.weir.Domain.BOOK;
-        for (Site site : domain.getSites()) {
-            
-            if (site != br.edimarmanica.dataset.weir.book.Site.BOOKMOOCH){
-                continue;
-            }
-            System.out.println("Site: " + site);
-            Extract run = new Extract(site);
-            try {
-                run.execute();
-            } catch (IOException | REException ex1) {
-                Logger.getLogger(Extract.class.getName()).log(Level.SEVERE, null, ex1);
-            }
-        }
-    }
-
 }

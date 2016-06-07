@@ -22,11 +22,11 @@ import tdg.cedar.utilities.UTF8FileUtil;
  *
  * @author edimar
  */
-public class Extract extends br.edimarmanica.trinity.extract.Extract {
+public class ExtractTimeout extends br.edimarmanica.trinity.extract.ExtractPattern {
 
     private static final int TIME_OUT_MILLIS = 60 * 1000; //em milisegundos
 
-    public Extract(Site site) {
+    public ExtractTimeout(Site site) {
         super(site);
     }
 
@@ -58,11 +58,11 @@ public class Extract extends br.edimarmanica.trinity.extract.Extract {
             }
 
             System.out.println("Site: " + site);
-            Extract run = new Extract(site);
+            ExtractTimeout run = new ExtractTimeout(site);
             try {
                 run.execute();
             } catch (IOException | REException ex1) {
-                Logger.getLogger(Extract.class.getName()).log(Level.SEVERE, null, ex1);
+                Logger.getLogger(ExtractTimeout.class.getName()).log(Level.SEVERE, null, ex1);
             }
         }
     }

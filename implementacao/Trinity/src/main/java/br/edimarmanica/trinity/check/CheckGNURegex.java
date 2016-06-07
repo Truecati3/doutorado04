@@ -30,13 +30,13 @@ import tdg.tex.Text;
  *
  * @author edimar
  */
-public class CheckRegex {
+public class CheckGNURegex {
 
     private String dir;
     private String[] pagesID;
     private String[] pagesContent;
 
-    public CheckRegex(String dir, String[] pagesID) {
+    public CheckGNURegex(String dir, String[] pagesID) {
         this.dir = dir;
         this.pagesID = pagesID;
     }
@@ -94,11 +94,11 @@ public class CheckRegex {
         String dir = "/media/Dados/doutorado04/bases/WEIR/book/bookmooch.com/";
         String[] pages = {"0001049305.html", "0001049313.html", "0004140273.html",
             "0001049321.html", "0001049356.html", "0001049410.html", "0001049429.html"};
-        CheckRegex cr = new CheckRegex(dir, pages);
+        CheckGNURegex cr = new CheckGNURegex(dir, pages);
         try {
             cr.execute();
         } catch (REException | IOException | ParserConfigurationException | SAXException ex) {
-            Logger.getLogger(CheckRegex.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CheckGNURegex.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

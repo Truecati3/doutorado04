@@ -1,0 +1,564 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (mmap) failed to map 179830784 bytes for committing reserved memory.
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   In 32 bit mode, the process size limit was hit
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Use 64 bit Java on a 64 bit OS
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (os_linux.cpp:2627), pid=15967, tid=603605824
+#
+# JRE version: Java(TM) SE Runtime Environment (8.0_91-b14) (build 1.8.0_91-b14)
+# Java VM: Java HotSpot(TM) Server VM (25.91-b14 mixed mode linux-x86 )
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x1ee11000):  VMThread [stack: 0x23f24000,0x23fa5000] [id=15974]
+
+Stack: [0x23f24000,0x23fa5000],  sp=0x23fa3800,  free space=510k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [libjvm.so+0x8cff4f]  VMError::report_and_die()+0x16f
+V  [libjvm.so+0x38d165]  report_vm_out_of_memory(char const*, int, unsigned int, VMErrorType, char const*)+0x55
+V  [libjvm.so+0x7536d6]  os::Linux::commit_memory_impl(char*, unsigned int, bool)+0xe6
+V  [libjvm.so+0x753ba8]  os::pd_commit_memory(char*, unsigned int, unsigned int, bool)+0x28
+V  [libjvm.so+0x74dacc]  os::commit_memory(char*, unsigned int, unsigned int, bool)+0x2c
+V  [libjvm.so+0x7b8608]  PSVirtualSpace::expand_by(unsigned int)+0x48
+V  [libjvm.so+0x7ab6a1]  PSOldGen::expand(unsigned int)+0x141
+V  [libjvm.so+0x7ab76f]  PSOldGen::resize(unsigned int)+0x8f
+V  [libjvm.so+0x7b2294]  PSParallelCompact::invoke_no_policy(bool)+0x874
+V  [libjvm.so+0x7b6c6d]  PSScavenge::invoke()+0x16d
+V  [libjvm.so+0x77511a]  ParallelScavengeHeap::failed_mem_allocate(unsigned int)+0x5a
+V  [libjvm.so+0x8d1a1a]  VM_ParallelGCFailedAllocation::doit()+0x7a
+V  [libjvm.so+0x8db027]  VM_Operation::evaluate()+0x47
+V  [libjvm.so+0x8d9103]  VMThread::evaluate_operation(VM_Operation*)+0xb3
+V  [libjvm.so+0x8d94a0]  VMThread::loop()+0x1b0
+V  [libjvm.so+0x8d9905]  VMThread::run()+0x85
+V  [libjvm.so+0x755d19]  java_start(Thread*)+0x119
+C  [libpthread.so.0+0x6f72]  start_thread+0xd2
+
+VM_Operation (0xb66bc544): ParallelGCFailedAllocation, mode: safepoint, requested by thread 0xb3d09000
+
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+  0x1ee39000 JavaThread "Service Thread" daemon [_thread_blocked, id=15980, stack(0x14a0b000,0x1720c000)]
+  0x1ee36000 JavaThread "C1 CompilerThread1" daemon [_thread_blocked, id=15979, stack(0x1720c000,0x1728d000)]
+  0x1ee34400 JavaThread "C2 CompilerThread0" daemon [_thread_blocked, id=15978, stack(0x1ef5a000,0x1efdb000)]
+  0x1ee32800 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=15977, stack(0x1728d000,0x19a8e000)]
+  0x1ee18400 JavaThread "Finalizer" daemon [_thread_blocked, id=15976, stack(0x19dfe000,0x1c5ff000)]
+  0x1ee15800 JavaThread "Reference Handler" daemon [_thread_blocked, id=15975, stack(0x1c5ff000,0x1ee00000)]
+  0xb3d09000 JavaThread "main" [_thread_blocked, id=15971, stack(0xb3ebe000,0xb66bf000)]
+
+Other Threads:
+=>0x1ee11000 VMThread [stack: 0x23f24000,0x23fa5000] [id=15974]
+  0x1ee3b000 WatcherThread [stack: 0x1498a000,0x14a0b000] [id=15981]
+
+VM state:at safepoint (normal execution)
+
+VM Mutex/Monitor currently owned by a thread:  ([mutex/lock_event])
+[0xb3d06320] ExpandHeap_lock - owner thread: 0x1ee11000
+[0xb3d06868] Threads_lock - owner thread: 0x1ee11000
+[0xb3d06c78] Heap_lock - owner thread: 0xb3d09000
+
+Heap:
+ PSYoungGen      total 589056K, used 0K [0x79d80000, 0xa3e40000, 0xa4800000)
+  eden space 504064K, 0% used [0x79d80000,0x79d80000,0x989c0000)
+  from space 84992K, 0% used [0x9eb40000,0x9eb40000,0xa3e40000)
+  to   space 92416K, 0% used [0x989c0000,0x989c0000,0x9e400000)
+ ParOldGen       total 1106688K, used 1075159K [0x24800000, 0x680c0000, 0x79d80000)
+  object space 1106688K, 97% used [0x24800000,0x661f5cd0,0x680c0000)
+ Metaspace       used 4057K, capacity 4108K, committed 4120K, reserved 4400K
+
+Card table byte_map: [0x243ff000,0x24800000] byte_map_base: 0x242db000
+
+Marking Bits: (ParMarkBitMap*) 0xb7108bc0
+ Begin Bits: [0x1fe00000, 0x21e00000)
+ End Bits:   [0x21e00000, 0x23e00000)
+
+Polling page: 0xb7715000
+
+CodeCache: size=245760Kb used=3031Kb max_used=3381Kb free=242728Kb
+ bounds [0xa4d00000, 0xa5080000, 0xb3d00000]
+ total_blobs=889 nmethods=726 adapters=79
+ compilation: enabled
+
+Compilation events (10 events):
+Event: 79,102 Thread 0x1ee34400  962       4       java.util.HashSet::contains (9 bytes)
+Event: 79,106 Thread 0x1ee34400 nmethod 962 0xa4f0f848 code [0xa4f0f960, 0xa4f0fb70]
+Event: 79,106 Thread 0x1ee34400  936       4       java.util.HashMap::remove (26 bytes)
+Event: 79,111 Thread 0x1ee34400 nmethod 936 0xa4f09048 code [0xa4f09180, 0xa4f094f0]
+Event: 79,111 Thread 0x1ee34400  940       4       tdg.cedar.patriciaTree.Node::removeChild (43 bytes)
+Event: 79,117 Thread 0x1ee34400 nmethod 940 0xa4dcd848 code [0xa4dcd9a0, 0xa4dcddd0]
+Event: 79,117 Thread 0x1ee34400  943       4       java.util.HashSet::iterator (13 bytes)
+Event: 79,124 Thread 0x1ee34400 nmethod 943 0xa4ef0cc8 code [0xa4ef0e00, 0xa4ef11d0]
+Event: 79,124 Thread 0x1ee34400  937       4       java.util.HashSet::<init> (16 bytes)
+Event: 79,125 Thread 0x1ee34400 nmethod 937 0xa4f20888 code [0xa4f20980, 0xa4f20a50]
+
+GC Heap History (10 events):
+Event: 116,020 GC heap after
+Heap after GC invocations=451 (full 15):
+ PSYoungGen      total 605696K, used 33760K [0x79d80000, 0xa3ec0000, 0xa4800000)
+  eden space 535296K, 0% used [0x79d80000,0x79d80000,0x9a840000)
+  from space 70400K, 47% used [0x9fa00000,0xa1af8000,0xa3ec0000)
+  to   space 77056K, 0% used [0x9a840000,0x9a840000,0x9f380000)
+ ParOldGen       total 1106688K, used 913329K [0x24800000, 0x680c0000, 0x79d80000)
+  object space 1106688K, 82% used [0x24800000,0x5c3ec7f0,0x680c0000)
+ Metaspace       used 4057K, capacity 4108K, committed 4120K, reserved 4400K
+}
+Event: 116,313 GC heap before
+{Heap before GC invocations=452 (full 15):
+ PSYoungGen      total 605696K, used 569056K [0x79d80000, 0xa3ec0000, 0xa4800000)
+  eden space 535296K, 100% used [0x79d80000,0x9a840000,0x9a840000)
+  from space 70400K, 47% used [0x9fa00000,0xa1af8000,0xa3ec0000)
+  to   space 77056K, 0% used [0x9a840000,0x9a840000,0x9f380000)
+ ParOldGen       total 1106688K, used 913329K [0x24800000, 0x680c0000, 0x79d80000)
+  object space 1106688K, 82% used [0x24800000,0x5c3ec7f0,0x680c0000)
+ Metaspace       used 4057K, capacity 4108K, committed 4120K, reserved 4400K
+Event: 116,360 GC heap after
+Heap after GC invocations=452 (full 15):
+ PSYoungGen      total 612352K, used 66160K [0x79d80000, 0xa4800000, 0xa4800000)
+  eden space 535296K, 0% used [0x79d80000,0x79d80000,0x9a840000)
+  from space 77056K, 85% used [0x9a840000,0x9e8dc000,0x9f380000)
+  to   space 83200K, 0% used [0x9f6c0000,0x9f6c0000,0xa4800000)
+ ParOldGen       total 1106688K, used 913329K [0x24800000, 0x680c0000, 0x79d80000)
+  object space 1106688K, 82% used [0x24800000,0x5c3ec7f0,0x680c0000)
+ Metaspace       used 4057K, capacity 4108K, committed 4120K, reserved 4400K
+}
+Event: 116,609 GC heap before
+{Heap before GC invocations=453 (full 15):
+ PSYoungGen      total 612352K, used 601456K [0x79d80000, 0xa4800000, 0xa4800000)
+  eden space 535296K, 100% used [0x79d80000,0x9a840000,0x9a840000)
+  from space 77056K, 85% used [0x9a840000,0x9e8dc000,0x9f380000)
+  to   space 83200K, 0% used [0x9f6c0000,0x9f6c0000,0xa4800000)
+ ParOldGen       total 1106688K, used 913329K [0x24800000, 0x680c0000, 0x79d80000)
+  object space 1106688K, 82% used [0x24800000,0x5c3ec7f0,0x680c0000)
+ Metaspace       used 4057K, capacity 4108K, committed 4120K, reserved 4400K
+Event: 116,681 GC heap after
+Heap after GC invocations=453 (full 15):
+ PSYoungGen      total 582400K, used 83200K [0x79d80000, 0xa4800000, 0xa4800000)
+  eden space 499200K, 0% used [0x79d80000,0x79d80000,0x98500000)
+  from space 83200K, 100% used [0x9f6c0000,0xa4800000,0xa4800000)
+  to   space 99840K, 0% used [0x98500000,0x98500000,0x9e680000)
+ ParOldGen       total 1106688K, used 928785K [0x24800000, 0x680c0000, 0x79d80000)
+  object space 1106688K, 83% used [0x24800000,0x5d3047f0,0x680c0000)
+ Metaspace       used 4057K, capacity 4108K, committed 4120K, reserved 4400K
+}
+Event: 116,917 GC heap before
+{Heap before GC invocations=454 (full 15):
+ PSYoungGen      total 582400K, used 582400K [0x79d80000, 0xa4800000, 0xa4800000)
+  eden space 499200K, 100% used [0x79d80000,0x98500000,0x98500000)
+  from space 83200K, 100% used [0x9f6c0000,0xa4800000,0xa4800000)
+  to   space 99840K, 0% used [0x98500000,0x98500000,0x9e680000)
+ ParOldGen       total 1106688K, used 928785K [0x24800000, 0x680c0000, 0x79d80000)
+  object space 1106688K, 83% used [0x24800000,0x5d3047f0,0x680c0000)
+ Metaspace       used 4057K, capacity 4108K, committed 4120K, reserved 4400K
+Event: 118,453 GC heap after
+Heap after GC invocations=454 (full 15):
+ PSYoungGen      total 599040K, used 48368K [0x79d80000, 0xa4800000, 0xa4800000)
+  eden space 499200K, 0% used [0x79d80000,0x79d80000,0x98500000)
+  from space 99840K, 48% used [0x98500000,0x9b43c000,0x9e680000)
+  to   space 94976K, 0% used [0x9eb40000,0x9eb40000,0xa4800000)
+ ParOldGen       total 1106688K, used 1004665K [0x24800000, 0x680c0000, 0x79d80000)
+  object space 1106688K, 90% used [0x24800000,0x61d1e7f0,0x680c0000)
+ Metaspace       used 4057K, capacity 4108K, committed 4120K, reserved 4400K
+}
+Event: 118,684 GC heap before
+{Heap before GC invocations=455 (full 15):
+ PSYoungGen      total 599040K, used 547568K [0x79d80000, 0xa4800000, 0xa4800000)
+  eden space 499200K, 100% used [0x79d80000,0x98500000,0x98500000)
+  from space 99840K, 48% used [0x98500000,0x9b43c000,0x9e680000)
+  to   space 94976K, 0% used [0x9eb40000,0x9eb40000,0xa4800000)
+ ParOldGen       total 1106688K, used 1004665K [0x24800000, 0x680c0000, 0x79d80000)
+  object space 1106688K, 90% used [0x24800000,0x61d1e7f0,0x680c0000)
+ Metaspace       used 4057K, capacity 4108K, committed 4120K, reserved 4400K
+Event: 126,313 GC heap after
+Heap after GC invocations=455 (full 15):
+ PSYoungGen      total 589056K, used 35072K [0x79d80000, 0xa3e40000, 0xa4800000)
+  eden space 504064K, 0% used [0x79d80000,0x79d80000,0x989c0000)
+  from space 84992K, 41% used [0x9eb40000,0xa0d80000,0xa3e40000)
+  to   space 92416K, 0% used [0x989c0000,0x989c0000,0x9e400000)
+ ParOldGen       total 1106688K, used 1060269K [0x24800000, 0x680c0000, 0x79d80000)
+  object space 1106688K, 95% used [0x24800000,0x6536b7f0,0x680c0000)
+ Metaspace       used 4057K, capacity 4108K, committed 4120K, reserved 4400K
+}
+Event: 126,313 GC heap before
+{Heap before GC invocations=456 (full 16):
+ PSYoungGen      total 589056K, used 35072K [0x79d80000, 0xa3e40000, 0xa4800000)
+  eden space 504064K, 0% used [0x79d80000,0x79d80000,0x989c0000)
+  from space 84992K, 41% used [0x9eb40000,0xa0d80000,0xa3e40000)
+  to   space 92416K, 0% used [0x989c0000,0x989c0000,0x9e400000)
+ ParOldGen       total 1106688K, used 1060269K [0x24800000, 0x680c0000, 0x79d80000)
+  object space 1106688K, 95% used [0x24800000,0x6536b7f0,0x680c0000)
+ Metaspace       used 4057K, capacity 4108K, committed 4120K, reserved 4400K
+
+Deoptimization events (10 events):
+Event: 22,479 Thread 0xb3d09000 Uncommon trap: reason=bimorphic action=maybe_recompile pc=0xa4fc7dd4 method=java.util.HashMap.getNode(ILjava/lang/Object;)Ljava/util/HashMap$Node; @ 126
+Event: 22,479 Thread 0xb3d09000 Uncommon trap: reason=null_check action=make_not_entrant pc=0xa4f209e8 method=java.lang.Character.equals(Ljava/lang/Object;)Z @ 1
+Event: 33,888 Thread 0xb3d09000 Uncommon trap: reason=unstable_if action=reinterpret pc=0xa502a214 method=gnu.regexp.RETokenRepeated.match(Lgnu/regexp/CharIndexed;Lgnu/regexp/REMatch;)Z @ 182
+Event: 49,147 Thread 0xb3d09000 Uncommon trap: reason=unstable_if action=reinterpret pc=0xa502649c method=java.util.HashMap.keySet()Ljava/util/Set; @ 6
+Event: 74,452 Thread 0xb3d09000 Uncommon trap: reason=unstable_if action=reinterpret pc=0xa4f04458 method=tdg.tex.Learner.checkOptionality(Ltdg/tex/Node;Ljava/util/List;)V @ 28
+Event: 74,618 Thread 0xb3d09000 Uncommon trap: reason=class_check action=maybe_recompile pc=0xa5015f8c method=java.util.HashMap.putVal(ILjava/lang/Object;Ljava/lang/Object;ZZ)Ljava/lang/Object; @ 91
+Event: 74,908 Thread 0xb3d09000 Uncommon trap: reason=class_check action=maybe_recompile pc=0xa5015f8c method=java.util.HashMap.putVal(ILjava/lang/Object;Ljava/lang/Object;ZZ)Ljava/lang/Object; @ 91
+Event: 74,912 Thread 0xb3d09000 Uncommon trap: reason=class_check action=maybe_recompile pc=0xa5015f8c method=java.util.HashMap.putVal(ILjava/lang/Object;Ljava/lang/Object;ZZ)Ljava/lang/Object; @ 91
+Event: 74,938 Thread 0xb3d09000 Uncommon trap: reason=unstable_if action=reinterpret pc=0xa4fcee6c method=java.util.HashMap.getNode(ILjava/lang/Object;)Ljava/util/HashMap$Node; @ 62
+Event: 75,664 Thread 0xb3d09000 Uncommon trap: reason=unstable_if action=reinterpret pc=0xa500d620 method=gnu.regexp.RE.initialize(Ljava/lang/Object;ILgnu/regexp/RESyntax;II)V @ 2040
+
+Internal exceptions (8 events):
+Event: 0,027 Thread 0xb3d09000 Exception <a 'java/lang/NoSuchMethodError': Method sun.misc.Unsafe.defineClass(Ljava/lang/String;[BII)Ljava/lang/Class; name or signature does not match> (0x79d86ea0) thrown at [/HUDSON/workspace/8-2-build-linux-i586/jdk8u91/6644/hotspot/src/share/vm/prim
+Event: 0,027 Thread 0xb3d09000 Exception <a 'java/lang/NoSuchMethodError': Method sun.misc.Unsafe.prefetchRead(Ljava/lang/Object;J)V name or signature does not match> (0x79d87170) thrown at [/HUDSON/workspace/8-2-build-linux-i586/jdk8u91/6644/hotspot/src/share/vm/prims/jni.cpp, line 40
+Event: 0,771 Thread 0xb3d09000 Exception <a 'java/security/PrivilegedActionException'> (0x7a011ee8) thrown at [/HUDSON/workspace/8-2-build-linux-i586/jdk8u91/6644/hotspot/src/share/vm/prims/jvm.cpp, line 1386]
+Event: 0,771 Thread 0xb3d09000 Exception <a 'java/security/PrivilegedActionException'> (0x7a0120e8) thrown at [/HUDSON/workspace/8-2-build-linux-i586/jdk8u91/6644/hotspot/src/share/vm/prims/jvm.cpp, line 1386]
+Event: 0,771 Thread 0xb3d09000 Exception <a 'java/security/PrivilegedActionException'> (0x7a014400) thrown at [/HUDSON/workspace/8-2-build-linux-i586/jdk8u91/6644/hotspot/src/share/vm/prims/jvm.cpp, line 1386]
+Event: 0,771 Thread 0xb3d09000 Exception <a 'java/security/PrivilegedActionException'> (0x7a014600) thrown at [/HUDSON/workspace/8-2-build-linux-i586/jdk8u91/6644/hotspot/src/share/vm/prims/jvm.cpp, line 1386]
+Event: 22,408 Thread 0xb3d09000 Implicit null exception at 0xa4e6ffcd to 0xa4e71101
+Event: 22,479 Thread 0xb3d09000 Implicit null exception at 0xa4f20997 to 0xa4f209d9
+
+Events (10 events):
+Event: 115,731 Executing VM operation: ParallelGCFailedAllocation done
+Event: 115,983 Executing VM operation: ParallelGCFailedAllocation
+Event: 116,020 Executing VM operation: ParallelGCFailedAllocation done
+Event: 116,313 Executing VM operation: ParallelGCFailedAllocation
+Event: 116,360 Executing VM operation: ParallelGCFailedAllocation done
+Event: 116,609 Executing VM operation: ParallelGCFailedAllocation
+Event: 116,681 Executing VM operation: ParallelGCFailedAllocation done
+Event: 116,917 Executing VM operation: ParallelGCFailedAllocation
+Event: 118,453 Executing VM operation: ParallelGCFailedAllocation done
+Event: 118,684 Executing VM operation: ParallelGCFailedAllocation
+
+
+Dynamic libraries:
+08048000-08049000 r-xp 00000000 08:05 1485070    /home/edimar/jdk1.8.0_91/bin/java
+08049000-0804a000 rw-p 00000000 08:05 1485070    /home/edimar/jdk1.8.0_91/bin/java
+089f3000-0988a000 rw-p 00000000 00:00 0          [heap]
+14000000-14182000 rw-p 00000000 00:00 0 
+14182000-14200000 ---p 00000000 00:00 0 
+14200000-142fb000 rw-p 00000000 00:00 0 
+142fb000-14300000 ---p 00000000 00:00 0 
+14300000-143f9000 rw-p 00000000 00:00 0 
+143f9000-14400000 ---p 00000000 00:00 0 
+14400000-144f9000 rw-p 00000000 00:00 0 
+144f9000-14500000 ---p 00000000 00:00 0 
+14500000-14600000 rw-p 00000000 00:00 0 
+14600000-146f9000 rw-p 00000000 00:00 0 
+146f9000-14700000 ---p 00000000 00:00 0 
+147ce000-147d6000 r-xp 00000000 08:05 1628746    /home/edimar/jdk1.8.0_91/jre/lib/i386/libmanagement.so
+147d6000-147d7000 rw-p 00007000 08:05 1628746    /home/edimar/jdk1.8.0_91/jre/lib/i386/libmanagement.so
+147d7000-147e1000 r--s 00116000 08:05 1628808    /home/edimar/jdk1.8.0_91/jre/lib/ext/localedata.jar
+147e1000-147e3000 r--s 00005000 08:05 1478213    /home/edimar/.m2/repository/org/slf4j/slf4j-api/1.6.5/slf4j-api-1.6.5.jar
+147e3000-147ec000 r--s 0004d000 08:05 1478210    /home/edimar/.m2/repository/ch/qos/logback/logback-core/1.0.6/logback-core-1.0.6.jar
+147ec000-147f2000 r--s 00038000 08:05 1478209    /home/edimar/.m2/repository/ch/qos/logback/logback-classic/1.0.6/logback-classic-1.0.6.jar
+147f2000-147f5000 r--s 00011000 08:05 1478204    /home/edimar/.m2/repository/org/apache/uima/ConceptMapper/2.3.1/ConceptMapper-2.3.1.jar
+147f5000-14800000 r--s 00030000 08:05 1478219    /home/edimar/.m2/repository/org/apache/uima/RegularExpressionAnnotator/2.3.2-BBP/RegularExpressionAnnotator-2.3.2-BBP.jar
+14800000-14900000 rw-p 00000000 00:00 0 
+14900000-14902000 r--s 00003000 08:05 1478206    /home/edimar/.m2/repository/org/slf4j/jcl-over-slf4j/1.6.5/jcl-over-slf4j-1.6.5.jar
+14902000-14904000 r--s 00014000 08:05 1478205    /home/edimar/.m2/repository/org/apache/uima/SnowballAnnotator/2.3.1/SnowballAnnotator-2.3.1.jar
+14904000-14908000 r--s 0002a000 08:05 1478201    /home/edimar/.m2/repository/commons-io/commons-io/2.4/commons-io-2.4.jar
+14908000-14914000 r--s 00085000 08:05 1478200    /home/edimar/.m2/repository/org/springframework/spring-beans/3.1.2.RELEASE/spring-beans-3.1.2.RELEASE.jar
+14914000-14929000 r--s 000b7000 08:05 1478194    /home/edimar/.m2/repository/org/springframework/spring-context/3.1.2.RELEASE/spring-context-3.1.2.RELEASE.jar
+14929000-14933000 r--s 00064000 08:05 1478190    /home/edimar/.m2/repository/org/springframework/spring-core/3.1.2.RELEASE/spring-core-3.1.2.RELEASE.jar
+14933000-14939000 r--s 00048000 08:05 1478182    /home/edimar/.m2/repository/org/apache/commons/commons-lang3/3.1/commons-lang3-3.1.jar
+14939000-14947000 r--s 0007f000 08:05 1474999    /home/edimar/.m2/repository/commons-collections/commons-collections/3.2.1/commons-collections-3.2.1.jar
+14947000-1495f000 r--s 00144000 08:05 1478166    /home/edimar/.m2/repository/org/apache/uima/uimaj-core/2.4.2/uimaj-core-2.4.2.jar
+1495f000-1498a000 r--s 001fc000 08:05 1478160    /home/edimar/.m2/repository/com/google/guava/guava/18.0/guava-18.0.jar
+1498a000-1498b000 ---p 00000000 00:00 0 
+1498b000-14a0b000 rw-p 00000000 00:00 0          [stack:15981]
+14a0b000-14a0e000 ---p 00000000 00:00 0 
+14a0e000-1720c000 rw-p 00000000 00:00 0          [stack:15980]
+1720c000-1720f000 ---p 00000000 00:00 0 
+1720f000-1728d000 rw-p 00000000 00:00 0          [stack:15979]
+1728d000-17290000 ---p 00000000 00:00 0 
+17290000-19a8e000 rw-p 00000000 00:00 0          [stack:15977]
+19a8e000-19bfe000 r--p 002ca000 08:05 793784     /usr/lib/locale/locale-archive
+19bfe000-19dfe000 r--p 00000000 08:05 793784     /usr/lib/locale/locale-archive
+19dfe000-19e01000 ---p 00000000 00:00 0 
+19e01000-1c5ff000 rw-p 00000000 00:00 0          [stack:15976]
+1c5ff000-1c602000 ---p 00000000 00:00 0 
+1c602000-1ee00000 rw-p 00000000 00:00 0          [stack:15975]
+1ee00000-1ef00000 rw-p 00000000 00:00 0 
+1ef01000-1ef05000 r--s 00027000 08:05 1478199    /home/edimar/.m2/repository/org/springframework/spring-expression/3.1.2.RELEASE/spring-expression-3.1.2.RELEASE.jar
+1ef05000-1ef1c000 r--s 00123000 08:05 1478162    /home/edimar/.m2/repository/org/apache/commons/commons-math3/3.0/commons-math3-3.0.jar
+1ef1c000-1ef5a000 r--s 0025b000 08:05 1478155    /home/edimar/.m2/repository/org/apache/xmlbeans/xmlbeans/2.5.0/xmlbeans-2.5.0.jar
+1ef5a000-1ef5d000 ---p 00000000 00:00 0 
+1ef5d000-1efdb000 rw-p 00000000 00:00 0          [stack:15978]
+1efdb000-1f1b4000 r--s 03d1f000 08:05 1628994    /home/edimar/jdk1.8.0_91/jre/lib/rt.jar
+1f1b4000-1f5ba000 rw-p 00000000 00:00 0 
+1f5ba000-1f600000 ---p 00000000 00:00 0 
+1f600000-23e00000 rw-p 00000000 00:00 0 
+23e00000-23efb000 rw-p 00000000 00:00 0 
+23efb000-23f00000 ---p 00000000 00:00 0 
+23f01000-23f03000 r--s 0000d000 08:05 1476696    /home/edimar/.m2/repository/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar
+23f03000-23f0d000 r--s 00078000 08:05 1478175    /home/edimar/.m2/repository/org/apache/uima/uimaj-tools/2.4.2/uimaj-tools-2.4.2.jar
+23f0d000-23f24000 r--s 000e5000 08:05 1478154    /home/edimar/.m2/repository/ch/epfl/bbp/nlp/bluima_typesystem/1.0.1/bluima_typesystem-1.0.1.jar
+23f24000-23f25000 ---p 00000000 00:00 0 
+23f25000-24000000 rw-p 00000000 00:00 0          [stack:15974]
+24000000-24021000 rw-p 00000000 00:00 0 
+24021000-24100000 ---p 00000000 00:00 0 
+24100000-24101000 r--s 0000c000 08:05 1478193    /home/edimar/.m2/repository/org/springframework/spring-asm/3.1.2.RELEASE/spring-asm-3.1.2.RELEASE.jar
+24101000-24105000 r--s 00025000 08:05 1478183    /home/edimar/.m2/repository/org/apache/uima/uimafit-core/2.0.0/uimafit-core-2.0.0.jar
+24105000-24371000 rw-p 00000000 00:00 0 
+24371000-243ff000 ---p 00000000 00:00 0 
+243ff000-2461c000 rw-p 00000000 00:00 0 
+2461c000-246a9000 ---p 00000000 00:00 0 
+246a9000-247fb000 rw-p 00000000 00:00 0 
+247fb000-247ff000 ---p 00000000 00:00 0 
+247ff000-680c0000 rw-p 00000000 00:00 0 
+72c15000-72c17000 rw-p 00000000 00:00 0 
+72c17000-72c1e000 r--s 00000000 08:05 1333825    /usr/lib/i386-linux-gnu/gconv/gconv-modules.cache
+72c1e000-72c40000 r--p 00000000 08:05 1444886    /usr/share/locale-langpack/pt_BR/LC_MESSAGES/libc.mo
+72c40000-79d80000 ---p 00000000 00:00 0 
+79d80000-a3e40000 rw-p 00000000 00:00 0 
+a3e40000-a4800000 ---p 00000000 00:00 0 
+a4800000-a4803000 r--s 00022000 08:05 1478184    /home/edimar/.m2/repository/org/apache/uima/jVinci/2.4.2/jVinci-2.4.2.jar
+a4803000-a4808000 r--s 0004f000 08:05 1478176    /home/edimar/.m2/repository/org/apache/uima/uimaj-cpe/2.4.2/uimaj-cpe-2.4.2.jar
+a4808000-a480e000 r--s 00041000 08:05 1478172    /home/edimar/.m2/repository/org/htmlparser/htmlparser/1.6/htmlparser-1.6.jar
+a480e000-a483e000 rw-p 00000000 00:00 0 
+a483e000-a483f000 ---p 00000000 00:00 0 
+a483f000-a48bf000 rw-p 00000000 00:00 0          [stack:15973]
+a48bf000-a48c0000 ---p 00000000 00:00 0 
+a48c0000-a494e000 rw-p 00000000 00:00 0          [stack:15972]
+a494e000-a4d00000 ---p 00000000 00:00 0 
+a4d00000-a5080000 rwxp 00000000 00:00 0 
+a5080000-b3d00000 ---p 00000000 00:00 0 
+b3d00000-b3dfa000 rw-p 00000000 00:00 0 
+b3dfa000-b3e00000 ---p 00000000 00:00 0 
+b3e00000-b3e01000 r--s 0000a000 08:05 1478189    /home/edimar/.m2/repository/commons-logging/commons-logging-api/1.1/commons-logging-api-1.1.jar
+b3e01000-b3e06000 r--s 00068000 08:05 1475001    /home/edimar/.m2/repository/antlr/antlr/2.7.7/antlr-2.7.7.jar
+b3e06000-b3e09000 r--s 00022000 08:05 1478170    /home/edimar/.m2/repository/org/antlr/stringtemplate/3.2.1/stringtemplate-3.2.1.jar
+b3e09000-b3e15000 r--s 000be000 08:05 1478164    /home/edimar/.m2/repository/org/apache/uima/ruta-core/2.1.0/ruta-core-2.1.0.jar
+b3e15000-b3e27000 r--s 002f5000 08:05 1478156    /home/edimar/.m2/repository/ch/epfl/bbp/nlp/bluima_utils/1.0.1/bluima_utils-1.0.1.jar
+b3e27000-b3e40000 r-xp 00000000 08:05 1628880    /home/edimar/jdk1.8.0_91/jre/lib/i386/libzip.so
+b3e40000-b3e41000 rw-p 00019000 08:05 1628880    /home/edimar/jdk1.8.0_91/jre/lib/i386/libzip.so
+b3e41000-b3e4b000 r-xp 00000000 08:05 1328147    /lib/i386-linux-gnu/libnss_files-2.19.so
+b3e4b000-b3e4c000 r--p 00009000 08:05 1328147    /lib/i386-linux-gnu/libnss_files-2.19.so
+b3e4c000-b3e4d000 rw-p 0000a000 08:05 1328147    /lib/i386-linux-gnu/libnss_files-2.19.so
+b3e4d000-b3e57000 r-xp 00000000 08:05 1321857    /lib/i386-linux-gnu/libnss_nis-2.19.so
+b3e57000-b3e58000 r--p 00009000 08:05 1321857    /lib/i386-linux-gnu/libnss_nis-2.19.so
+b3e58000-b3e59000 rw-p 0000a000 08:05 1321857    /lib/i386-linux-gnu/libnss_nis-2.19.so
+b3e59000-b3e6e000 r-xp 00000000 08:05 1319684    /lib/i386-linux-gnu/libnsl-2.19.so
+b3e6e000-b3e6f000 r--p 00015000 08:05 1319684    /lib/i386-linux-gnu/libnsl-2.19.so
+b3e6f000-b3e70000 rw-p 00016000 08:05 1319684    /lib/i386-linux-gnu/libnsl-2.19.so
+b3e70000-b3e72000 rw-p 00000000 00:00 0 
+b3e72000-b3e73000 r--s 0000b000 08:05 1478178    /home/edimar/.m2/repository/org/apache/uima/uimaj-adapter-vinci/2.4.2/uimaj-adapter-vinci-2.4.2.jar
+b3e73000-b3e76000 r--s 00026000 08:05 1478169    /home/edimar/.m2/repository/org/antlr/antlr-runtime/3.5/antlr-runtime-3.5.jar
+b3e76000-b3e78000 r--s 0000e000 08:05 1478158    /home/edimar/.m2/repository/ch/epfl/bbp/nlp/blue_commons/1.0.1/blue_commons-1.0.1.jar
+b3e78000-b3e7a000 r--s 0000a000 08:05 1478153    /home/edimar/.m2/repository/com/googlecode/combinatoricslib/combinatoricslib/2.0/combinatoricslib-2.0.jar
+b3e7a000-b3e7c000 r--s 00005000 08:05 1478152    /home/edimar/.m2/repository/stax/stax-api/1.0.1/stax-api-1.0.1.jar
+b3e7c000-b3e81000 r--s 0006e000 08:05 1478224    /home/edimar/.m2/repository/ch/epfl/bbp/nlp/bluima_abbreviations/1.0.1/bluima_abbreviations-1.0.1.jar
+b3e81000-b3e86000 r--s 00041000 08:05 1478188    /home/edimar/.m2/repository/commons-lang/commons-lang/2.6/commons-lang-2.6.jar
+b3e86000-b3e88000 r--s 00008000 08:05 1445117    /home/edimar/.m2/repository/org/apache/commons/commons-csv/1.2/commons-csv-1.2.jar
+b3e88000-b3e90000 rw-s 00000000 08:05 2123090    /tmp/hsperfdata_edimar/15967
+b3e90000-b3eb4000 r-xp 00000000 08:05 1628864    /home/edimar/jdk1.8.0_91/jre/lib/i386/libjava.so
+b3eb4000-b3eb5000 rw-p 00023000 08:05 1628864    /home/edimar/jdk1.8.0_91/jre/lib/i386/libjava.so
+b3eb5000-b3ebc000 r-xp 00000000 08:05 1322218    /lib/i386-linux-gnu/librt-2.19.so
+b3ebc000-b3ebd000 r--p 00006000 08:05 1322218    /lib/i386-linux-gnu/librt-2.19.so
+b3ebd000-b3ebe000 rw-p 00007000 08:05 1322218    /lib/i386-linux-gnu/librt-2.19.so
+b3ebe000-b3ec1000 ---p 00000000 00:00 0 
+b3ec1000-b66bf000 rw-p 00000000 00:00 0          [stack:15971]
+b66bf000-b6703000 r-xp 00000000 08:05 1308773    /lib/i386-linux-gnu/libm-2.19.so
+b6703000-b6704000 r--p 00043000 08:05 1308773    /lib/i386-linux-gnu/libm-2.19.so
+b6704000-b6705000 rw-p 00044000 08:05 1308773    /lib/i386-linux-gnu/libm-2.19.so
+b6705000-b7088000 r-xp 00000000 08:05 1628741    /home/edimar/jdk1.8.0_91/jre/lib/i386/server/libjvm.so
+b7088000-b70f5000 rw-p 00983000 08:05 1628741    /home/edimar/jdk1.8.0_91/jre/lib/i386/server/libjvm.so
+b70f5000-b751e000 rw-p 00000000 00:00 0 
+b751e000-b76c6000 r-xp 00000000 08:05 1324269    /lib/i386-linux-gnu/libc-2.19.so
+b76c6000-b76c7000 ---p 001a8000 08:05 1324269    /lib/i386-linux-gnu/libc-2.19.so
+b76c7000-b76c9000 r--p 001a8000 08:05 1324269    /lib/i386-linux-gnu/libc-2.19.so
+b76c9000-b76ca000 rw-p 001aa000 08:05 1324269    /lib/i386-linux-gnu/libc-2.19.so
+b76ca000-b76cd000 rw-p 00000000 00:00 0 
+b76cd000-b76d0000 r-xp 00000000 08:05 1314498    /lib/i386-linux-gnu/libdl-2.19.so
+b76d0000-b76d1000 r--p 00002000 08:05 1314498    /lib/i386-linux-gnu/libdl-2.19.so
+b76d1000-b76d2000 rw-p 00003000 08:05 1314498    /lib/i386-linux-gnu/libdl-2.19.so
+b76d2000-b76e6000 r-xp 00000000 08:05 1628890    /home/edimar/jdk1.8.0_91/lib/i386/jli/libjli.so
+b76e6000-b76e7000 rw-p 00014000 08:05 1628890    /home/edimar/jdk1.8.0_91/lib/i386/jli/libjli.so
+b76e7000-b76e8000 rw-p 00000000 00:00 0 
+b76e8000-b7700000 r-xp 00000000 08:05 1321777    /lib/i386-linux-gnu/libpthread-2.19.so
+b7700000-b7701000 r--p 00018000 08:05 1321777    /lib/i386-linux-gnu/libpthread-2.19.so
+b7701000-b7702000 rw-p 00019000 08:05 1321777    /lib/i386-linux-gnu/libpthread-2.19.so
+b7702000-b7704000 rw-p 00000000 00:00 0 
+b7704000-b770b000 r--s 0094c000 08:05 1485183    /home/edimar/.m2/repository/com/trinity/trinity/1.0/trinity-1.0.jar
+b770b000-b7712000 r-xp 00000000 08:05 1319678    /lib/i386-linux-gnu/libnss_compat-2.19.so
+b7712000-b7713000 r--p 00006000 08:05 1319678    /lib/i386-linux-gnu/libnss_compat-2.19.so
+b7713000-b7714000 rw-p 00007000 08:05 1319678    /lib/i386-linux-gnu/libnss_compat-2.19.so
+b7714000-b7715000 rw-p 00000000 00:00 0 
+b7715000-b7716000 ---p 00000000 00:00 0 
+b7716000-b7721000 r-xp 00000000 08:05 1628822    /home/edimar/jdk1.8.0_91/jre/lib/i386/libverify.so
+b7721000-b7722000 rw-p 0000b000 08:05 1628822    /home/edimar/jdk1.8.0_91/jre/lib/i386/libverify.so
+b7722000-b7724000 rw-p 00000000 00:00 0 
+b7724000-b7725000 r-xp 00000000 00:00 0          [vdso]
+b7725000-b7745000 r-xp 00000000 08:05 1321842    /lib/i386-linux-gnu/ld-2.19.so
+b7745000-b7746000 r--p 0001f000 08:05 1321842    /lib/i386-linux-gnu/ld-2.19.so
+b7746000-b7747000 rw-p 00020000 08:05 1321842    /lib/i386-linux-gnu/ld-2.19.so
+bf7c2000-bf7c3000 rwxp 00000000 00:00 0 
+bf9a4000-bf9c6000 rw-p 00000000 00:00 0          [stack]
+
+VM Arguments:
+jvm_args: -Xmx2G -Xss40m 
+java_command: br.edimarmanica.trinity.extract.ExtractGnuRegex
+java_class_path (initial): /media/Dados/dropbox/linux/Dropbox/doutorado04/implementacao/Trinity/target/classes:/home/edimar/.m2/repository/com/trinity/trinity/1.0/trinity-1.0.jar:/home/edimar/.m2/repository/org/apache/commons/commons-csv/1.2/commons-csv-1.2.jar:/home/edimar/Área de Trabalho/Link para Dropbox/doutorado04/implementacao/Dataset/target/classes:/media/Dados/dropbox/linux/Dropbox/doutorado04/implementacao/Configuration/target/classes:/home/edimar/Área de Trabalho/Link para Dropbox/doutorado04/implementacao/Metrics/target/classes:/home/edimar/.m2/repository/commons-lang/commons-lang/2.6/commons-lang-2.6.jar:/home/edimar/.m2/repository/ch/epfl/bbp/nlp/bluima_abbreviations/1.0.1/bluima_abbreviations-1.0.1.jar:/home/edimar/.m2/repository/ch/epfl/bbp/nlp/bluima_utils/1.0.1/bluima_utils-1.0.1.jar:/home/edimar/.m2/repository/org/apache/xmlbeans/xmlbeans/2.5.0/xmlbeans-2.5.0.jar:/home/edimar/.m2/repository/stax/stax-api/1.0.1/stax-api-1.0.1.jar:/home/edimar/.m2/repository/com/googlecode/combinatoricslib/combinatoricslib/2.0/combinatoricslib-2.0.jar:/home/edimar/.m2/repository/ch/epfl/bbp/nlp/bluima_typesystem/1.0.1/bluima_typesystem-1.0.1.jar:/home/edimar/.m2/repository/ch/epfl/bbp/nlp/blue_commons/1.0.1/blue_commons-1.0.1.jar:/home/edimar/.m2/repository/com/google/guava/guava/18.0/guava-18.0.jar:/home/edimar/.m2/repository/org/apache/commons/commons-math3/3.0/commons-math3-3.0.jar:/home/edimar/.m2/repository/org/apache/uima/ruta-core/2.1.0/ruta-core-2.1.0.jar:/home/edimar/.m2/repository/org/apache/uima/uimaj-core/2.4.2/uimaj-core-2.4.2.jar:/home/edimar/.m2/repository/org/antlr/antlr-runtime/3.5/antlr-runtime-3.5.jar:/home/edimar/.m2/repository/org/antlr/stringtemplate/3.2.1/stringtemplate-3.2.1.jar:/home/edimar/.m2/repository/antlr/antlr/2.7.7/antlr-2.7.7.jar:/home/edimar/.m2/repository/org/htmlparser/htmlparser/1.6/htmlparser-1.6.jar:/home/edimar/.m2/repository/commons-collections/commons-collections/3.2.1/commons-collections-3.2.1.jar:/home/edimar/.m2/repo
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+JAVA_HOME=/home/edimar/jdk1.8.0_91
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
+LD_LIBRARY_PATH=/home/edimar/jdk1.8.0_91/jre/lib/amd64:/home/edimar/jdk1.8.0_91/jre/lib/i386:
+SHELL=/bin/bash
+DISPLAY=:0
+
+Signal Handlers:
+SIGSEGV: [libjvm.so+0x8d0a60], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGBUS: [libjvm.so+0x8d0a60], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGFPE: [libjvm.so+0x7503b0], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGPIPE: [libjvm.so+0x7503b0], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGXFSZ: [libjvm.so+0x7503b0], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGILL: [libjvm.so+0x7503b0], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGUSR1: SIG_DFL, sa_mask[0]=00000000000000000000000000000000, sa_flags=none
+SIGUSR2: [libjvm.so+0x751a30], sa_mask[0]=00100000000000000000000000000000, sa_flags=SA_RESTART|SA_SIGINFO
+SIGHUP: [libjvm.so+0x752ee0], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGINT: SIG_IGN, sa_mask[0]=00000000000000000000000000000000, sa_flags=none
+SIGTERM: [libjvm.so+0x752ee0], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGQUIT: [libjvm.so+0x752ee0], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+
+
+---------------  S Y S T E M  ---------------
+
+OS:DISTRIB_ID=Ubuntu
+DISTRIB_RELEASE=14.04
+DISTRIB_CODENAME=trusty
+DISTRIB_DESCRIPTION="Ubuntu 14.04.4 LTS"
+
+uname:Linux 3.13.0-87-generic #133-Ubuntu SMP Tue May 24 18:33:01 UTC 2016 i686
+libc:glibc 2.19 NPTL 2.19 
+rlimit: STACK 8192k, CORE 0k, NPROC 30760, NOFILE 4096, AS infinity
+load average:6,12 2,30 1,61
+
+/proc/meminfo:
+MemTotal:        3964156 kB
+MemFree:          238444 kB
+Buffers:             500 kB
+Cached:           495888 kB
+SwapCached:        81572 kB
+Active:          2835464 kB
+Inactive:         789136 kB
+Active(anon):    2821480 kB
+Inactive(anon):   747252 kB
+Active(file):      13984 kB
+Inactive(file):    41884 kB
+Unevictable:         148 kB
+Mlocked:             148 kB
+HighTotal:       3110916 kB
+HighFree:          52928 kB
+LowTotal:         853240 kB
+LowFree:          185516 kB
+SwapTotal:       1724412 kB
+SwapFree:            860 kB
+Dirty:               144 kB
+Writeback:             0 kB
+AnonPages:       3048344 kB
+Mapped:            61328 kB
+Shmem:            440208 kB
+Slab:              51760 kB
+SReclaimable:      23112 kB
+SUnreclaim:        28648 kB
+KernelStack:        5288 kB
+PageTables:        26896 kB
+NFS_Unstable:          0 kB
+Bounce:                0 kB
+WritebackTmp:          0 kB
+CommitLimit:     3706488 kB
+Committed_AS:   13028608 kB
+VmallocTotal:     122880 kB
+VmallocUsed:       18144 kB
+VmallocChunk:     100396 kB
+HardwareCorrupted:     0 kB
+AnonHugePages:    942080 kB
+HugePages_Total:       0
+HugePages_Free:        0
+HugePages_Rsvd:        0
+HugePages_Surp:        0
+Hugepagesize:       2048 kB
+DirectMap4k:       28664 kB
+DirectMap2M:      884736 kB
+
+
+CPU:total 2 (2 cores per cpu, 1 threads per core) family 6 model 23 stepping 10, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, tsc
+
+/proc/cpuinfo:
+processor	: 0
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 23
+model name	: Intel(R) Core(TM)2 Duo CPU     E8600  @ 3.33GHz
+stepping	: 10
+microcode	: 0xa07
+cpu MHz		: 3333.000
+cache size	: 6144 KB
+physical id	: 0
+siblings	: 2
+core id		: 0
+cpu cores	: 2
+apicid		: 0
+initial apicid	: 0
+fdiv_bug	: no
+f00f_bug	: no
+coma_bug	: no
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe nx lm constant_tsc arch_perfmon pebs bts aperfmperf pni dtes64 monitor ds_cpl vmx smx est tm2 ssse3 cx16 xtpr pdcm sse4_1 xsave lahf_lm dtherm tpr_shadow vnmi flexpriority
+bogomips	: 6649.95
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 36 bits physical, 48 bits virtual
+power management:
+
+processor	: 1
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 23
+model name	: Intel(R) Core(TM)2 Duo CPU     E8600  @ 3.33GHz
+stepping	: 10
+microcode	: 0xa07
+cpu MHz		: 3333.000
+cache size	: 6144 KB
+physical id	: 0
+siblings	: 2
+core id		: 1
+cpu cores	: 2
+apicid		: 1
+initial apicid	: 1
+fdiv_bug	: no
+f00f_bug	: no
+coma_bug	: no
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe nx lm constant_tsc arch_perfmon pebs bts aperfmperf pni dtes64 monitor ds_cpl vmx smx est tm2 ssse3 cx16 xtpr pdcm sse4_1 xsave lahf_lm dtherm tpr_shadow vnmi flexpriority
+bogomips	: 6649.95
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 36 bits physical, 48 bits virtual
+power management:
+
+
+
+Memory: 4k page, physical 3964156k(238444k free), swap 1724412k(860k free)
+
+vm_info: Java HotSpot(TM) Server VM (25.91-b14) for linux-x86 JRE (1.8.0_91-b14), built on Apr  1 2016 01:01:13 by "java_re" with gcc 4.3.0 20080428 (Red Hat 4.3.0-8)
+
+time: Tue Jun  7 13:49:30 2016
+elapsed time: 151 seconds (0d 0h 2m 31s)
+
