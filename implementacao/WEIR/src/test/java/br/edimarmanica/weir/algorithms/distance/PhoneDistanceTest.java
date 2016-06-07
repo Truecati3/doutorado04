@@ -26,7 +26,7 @@ public class PhoneDistanceTest extends TestCase {
     /**
      * Test of distanceSpecific method, of class PhoneDistance.
      */
-    public void testDistanceSpecific() {
+    public void testDistanceSpecific() throws InsufficientOverlapException {
         System.out.println("distanceSpecific");
         Rule r1S1 = new Rule(1, s1);
         r1S1.addValue(new Value("3381-1988", "1", "e1")); // 1 pq tem valor nulo em r1S2

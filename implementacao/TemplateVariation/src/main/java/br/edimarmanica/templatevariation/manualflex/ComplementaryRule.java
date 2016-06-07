@@ -4,6 +4,7 @@
  */
 package br.edimarmanica.templatevariation.manualflex;
 
+import br.edimarmanica.configuration.Paths;
 import br.edimarmanica.dataset.Attribute;
 import br.edimarmanica.dataset.Site;
 import br.edimarmanica.metrics.GroundTruth;
@@ -141,8 +142,8 @@ public class ComplementaryRule {
         
         Site site = br.edimarmanica.dataset.swde.camera.Site.BUY;
         Attribute attribute = br.edimarmanica.dataset.swde.camera.Attribute.PRICE;
-        Results results = Results.getInstance(site);
-        Map<String, Map<String, String>> allRules = results.loadAllRules();
+        Results results = new Results(site);
+        Map<String, Map<String, String>> allRules = results.loadAllRules(Paths.PATH_INTRASITE);
 
         List<String> masterRuleIDs = new ArrayList<>();
         masterRuleIDs.add("rule_11122.csv");

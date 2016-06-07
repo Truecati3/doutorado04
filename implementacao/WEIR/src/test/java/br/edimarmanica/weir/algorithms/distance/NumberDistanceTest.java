@@ -27,7 +27,7 @@ public class NumberDistanceTest extends TestCase {
     /**
      * Test of distance method, of class NumberDistance.
      */
-    public void testDistance() {
+    public void testDistance() throws InsufficientOverlapException {
         System.out.println("distance");
         Rule r1S1 = new Rule(1, s1);
         r1S1.addValue(new Value("11.157,15", "1", "e1")); //1 pq tem valor nulo em r1S2

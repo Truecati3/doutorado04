@@ -28,7 +28,7 @@ public class StringDistanceTest extends TestCase{
      * Test of distance method, of class StringDistance.
      */
    
-    public void testDistance() {
+    public void testDistance() throws InsufficientOverlapException {
         System.out.println("distance");
 
         Rule r1S1 = new Rule(1, s1);

@@ -28,7 +28,7 @@ public class WeightDistanceTest extends TestCase{
     /**
      * Test of normalize method, of class WeightDistance.
      */
-    public void testNormalize() {
+    public void testNormalize() throws NoiseException {
         System.out.println("normalize");
         String numericValue = "15 g";
         WeightDistance instance = new WeightDistance();
@@ -43,7 +43,7 @@ public class WeightDistanceTest extends TestCase{
         assertEquals(expResult, result);
     }
     
-    public void testDistanceSpecific() {
+    public void testDistanceSpecific() throws InsufficientOverlapException {
         System.out.println("distanceSpecific");
         Rule r1S1 = new Rule(1, s1);
         r1S1.addValue(new Value("3 kg", "1", "e1")); // 1 pq tem valor nulo em r1S2

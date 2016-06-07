@@ -162,7 +162,7 @@ public class Evaluate {
     }
 
     public static void main(String[] args) {
-        Evaluate eval = new Evaluate(br.edimarmanica.dataset.weir.Domain.FINANCE);
+        Evaluate eval = new Evaluate(br.edimarmanica.dataset.weir.Domain.BOOK);
         eval.execute();
     }
 }

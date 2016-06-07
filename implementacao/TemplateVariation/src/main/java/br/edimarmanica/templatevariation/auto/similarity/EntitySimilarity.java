@@ -39,10 +39,18 @@ public class EntitySimilarity extends RuleSimilarity {
 
         double maxSim = 0;
         for (Rule masterRuleInOtherSite : masterRulesInOtherSites) {
-            //System.out.println("Master: " + masterRuleInOtherSite.getRuleID() + " - Comp: " + candidateComplementaryRule.getRuleID());
+           // System.out.println("Master: " + masterRuleInOtherSite.getRuleID() + " - Comp: " + candidateComplementaryRule.getRuleID());
             try {
-                //  System.out.println("Master: "+masterRuleInOtherSite.getEntityValues());
-                //  System.out.println("Complementar: "+candidateComplementaryRule.getEntityValues());
+                //System.out.println("Master: "+masterRuleInOtherSite.getEntityValues());
+                //System.out.println("Complementar: "+candidateComplementaryRule.getEntityValues());
+                /*if (masterRuleInOtherSite.getRuleID() == 528) {
+                    for (String key : candidateComplementaryRule.getEntityValues().keySet()) {
+                        if (candidateComplementaryRule.getEntityValues().get(key).equals(masterRuleInOtherSite.getEntityValues().get(key))) {
+                            System.out.println(candidateComplementaryRule.getEntityValues().get(key) + "X" + masterRuleInOtherSite.getEntityValues().get(key));
+                        }
+
+                    }
+                }*/
                 double sim = TypeAwareSimilarity.typeSimilarity(masterRuleInOtherSite.getEntityValues(), candidateComplementaryRule.getEntityValues());
                // System.out.println("sim: " + sim);
                 if (sim > maxSim) {
@@ -56,21 +64,18 @@ public class EntitySimilarity extends RuleSimilarity {
     }
 
     public static void main(String[] args) {
-        Site site = Site.MSN;
+        General.DEBUG = true;
+
+        Site site = Site.BOXOFFICEMOJO;
         Attribute attribute = br.edimarmanica.dataset.swde.movie.Attribute.DIRECTOR;
 
-        int masterRuleID = 195;
-        LoadRule lrMaster = new LoadRule(site, masterRuleID);
-        Rule masterRule = lrMaster.loadRule();
-
-        int compRuleID = 189;
+        int compRuleID = 2626;
         LoadRule lrComp = new LoadRule(site, compRuleID);
         Rule compRule = lrComp.loadRule();
 
-        General.DEBUG=true;
         Set<Rule> masterRulesInOtherSites = UnionRules.getMasterRulesInOtherSitesManual(site, attribute);
 
-        EntitySimilarity sim = new EntitySimilarity(masterRulesInOtherSites, masterRule, compRule);
+        EntitySimilarity sim = new EntitySimilarity(masterRulesInOtherSites, null, compRule);
 
         System.out.println("Score: " + sim.score());
     }

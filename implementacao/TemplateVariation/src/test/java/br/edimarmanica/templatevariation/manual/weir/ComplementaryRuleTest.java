@@ -4,17 +4,16 @@
  */
 package br.edimarmanica.templatevariation.manual.weir;
 
+import br.edimarmanica.configuration.Paths;
 import br.edimarmanica.dataset.Attribute;
 import br.edimarmanica.dataset.Site;
+import br.edimarmanica.metrics.Results;
 import br.edimarmanica.metrics.SiteWithoutThisAttribute;
-import br.edimarmanica.metrics.weir.ResultsWeir;
 import br.edimarmanica.templatevariation.manual.ComplementaryRule;
 import br.edimarmanica.templatevariation.manual.UnionRules;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static junit.framework.Assert.assertEquals;
@@ -40,8 +39,8 @@ public class ComplementaryRuleTest extends TestCase {
 
         Site site = br.edimarmanica.dataset.weir.book.Site.BLACKWELL;
         Attribute attribute = br.edimarmanica.dataset.weir.book.Attribute.TITLE;
-        ResultsWeir results = new ResultsWeir(site);
-        Map<String, Map<String, String>> allRules = results.loadAllRules();
+        Results results = new Results(site);
+        Map<String, Map<String, String>> allRules = results.loadAllRules(Paths.PATH_INTRASITE);
 
         List<String> masterRuleIDs = new ArrayList<>();
         masterRuleIDs.add("rule_263.csv");

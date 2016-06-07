@@ -19,8 +19,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -81,8 +79,8 @@ public class Evaluate {
         labels = new Labels(site);
         labels.load();
 
-        Results results = Results.getInstance(site);
-        myResults = results.loadAllRules();
+        Results results = new Results(site);
+        myResults = results.loadAllRules(Paths.PATH_INTRASITE);
 
         printer = new Printer(site, Paths.PATH_INTRASITE);
 
@@ -102,7 +100,7 @@ public class Evaluate {
             for (Domain domain : dataset.getDomains()) {
                 System.out.println("\tDomain: " + domain);
                 for (Site site : domain.getSites()) {
-                    if (site != br.edimarmanica.dataset.weir.soccer.Site.CNN) {
+                    if (site != br.edimarmanica.dataset.weir.book.Site.AMAZON) {
                         continue;
                     }
 

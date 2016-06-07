@@ -21,7 +21,7 @@ public class StringDistance extends TypeAwareDistance {
     private UnsmoothedJS distance;
 
     @Override
-    public double distance(Rule r1, Rule s1) {
+    public double distance(Rule r1, Rule s1) throws InsufficientOverlapException {
         train(r1, s1);
 
         return super.distance(r1, s1);

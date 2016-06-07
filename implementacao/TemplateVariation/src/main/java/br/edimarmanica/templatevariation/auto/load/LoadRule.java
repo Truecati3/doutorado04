@@ -7,8 +7,6 @@ package br.edimarmanica.templatevariation.auto.load;
 import br.edimarmanica.configuration.Paths;
 import br.edimarmanica.dataset.Dataset;
 import br.edimarmanica.dataset.Site;
-import br.edimarmanica.metrics.Results;
-import br.edimarmanica.metrics.weir.ResultsWeir;
 import br.edimarmanica.templatevariation.auto.bean.Rule;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,9 +14,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.csv.CSVFormat;
@@ -84,9 +80,9 @@ public class LoadRule {
                 }
             }
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(ResultsWeir.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LoadRule.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(ResultsWeir.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LoadRule.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return values;

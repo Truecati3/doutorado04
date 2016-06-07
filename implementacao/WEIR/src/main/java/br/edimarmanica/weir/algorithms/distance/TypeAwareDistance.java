@@ -10,6 +10,8 @@ import br.edimarmanica.weir.bean.Rule;
 import br.edimarmanica.weir.bean.Value;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -54,7 +56,12 @@ public abstract class TypeAwareDistance {
                 distance = null;
         }
 
-        double distanceValue = distance.distance(r1, s1);
+        double distanceValue;
+        try {
+            distanceValue = distance.distance(r1, s1);
+        } catch (InsufficientOverlapException ex) {
+            distanceValue = 1;
+        }
         if (General.DEBUG) {
             System.out.println("\tScore: " + distanceValue);
         }
@@ -62,7 +69,7 @@ public abstract class TypeAwareDistance {
         return distanceValue;
     }
 
-    public double distance(Rule r1, Rule s1) {
+    public double distance(Rule r1, Rule s1) throws InsufficientOverlapException {
 
         Set<String> sharedEntityIds = new HashSet<>();
         double distance = 0;
@@ -98,7 +105,7 @@ public abstract class TypeAwareDistance {
         if (sharedEntityIds.size() < InterSite.MIN_SHARED_ENTITIES) {
            // System.out.println("Número insuficiente de instâncias compartilhadas.");
           //  System.out.println("SIZE: " + sharedEntityIds.size() + "-" + r1.getValues().size() + " - " + s1.getValues().size());
-            return -1;
+            throw new InsufficientOverlapException(sharedEntityIds.size());
         }
 
         return distance / sharedEntityIds.size(); //tem que dividir pelo nr de instâncias compartilhadas entre os sites

@@ -27,7 +27,7 @@ public class DateDistanceTest extends TestCase {
     /**
      * Test of distanceSpecific method, of class DateDistance.
      */
-    public void testDistanceSpecific() {
+    public void testDistanceSpecific() throws InsufficientOverlapException {
         System.out.println("distanceSpecific");
         Rule r1S1 = new Rule(1, s1);
         r1S1.addValue(new Value("11/01/1988", "1", "e1")); //1 pq tem valor nulo em r1S2
@@ -51,7 +51,7 @@ public class DateDistanceTest extends TestCase {
 
     }
 
-    public void testDifferentFormats() {
+    public void testDifferentFormats() throws InsufficientOverlapException {
 
         Rule r1S1 = new Rule(1, s1);
         r1S1.addValue(new Value("03/01/1988", "1", "e1"));

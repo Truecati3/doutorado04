@@ -36,6 +36,11 @@ public class CurrencySimilarity extends NumberSimilarity {
         } else if (aux.contains("$")) { //evitar que mm entre aqui
             multiplication = 1;
             local = new Locale("en", "US");
+            
+            if (aux.trim().startsWith("$ ")){
+                aux = aux.replaceAll("\\$\\s+", "\\$");
+            }
+            
         } else if (aux.contains("€")) {
             multiplication = 1; //não tem como converter para mesma moeda pq cambio muda todo dia
             local = new Locale("fr", "FR");

@@ -6,11 +6,8 @@ package br.edimarmanica.templatevariation.manual.weir;
 
 import br.edimarmanica.dataset.Attribute;
 import br.edimarmanica.dataset.Site;
-import br.edimarmanica.metrics.Results;
 import br.edimarmanica.metrics.SiteWithoutThisAttribute;
-import br.edimarmanica.metrics.weir.ResultsWeir;
 import br.edimarmanica.templatevariation.manual.MasterRule;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static junit.framework.Assert.assertEquals;

@@ -4,12 +4,12 @@
  */
 package br.edimarmanica.templatevariation.manual.swde;
 
+import br.edimarmanica.configuration.Paths;
 import br.edimarmanica.templatevariation.manual.ComplementaryRule;
 import br.edimarmanica.dataset.Attribute;
 import br.edimarmanica.dataset.Site;
 import br.edimarmanica.metrics.Results;
 import br.edimarmanica.metrics.SiteWithoutThisAttribute;
-import br.edimarmanica.metrics.swde.ResultsSWDE;
 import br.edimarmanica.templatevariation.manual.UnionRules;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +39,8 @@ public class ComplementaryRuleTest extends TestCase {
 
         Site site = br.edimarmanica.dataset.swde.camera.Site.AMAZON;
         Attribute attribute = br.edimarmanica.dataset.swde.camera.Attribute.MANUFECTURER;
-        ResultsSWDE results = new ResultsSWDE(site);
-        Map<String, Map<String, String>> allRules = results.loadAllRules();
+        Results results = new Results(site);
+        Map<String, Map<String, String>> allRules = results.loadAllRules(Paths.PATH_INTRASITE);
 
         List<String> masterRuleIDs = new ArrayList<>();
         masterRuleIDs.add("rule_1100.csv");
@@ -60,8 +60,8 @@ public class ComplementaryRuleTest extends TestCase {
 
         Site site = br.edimarmanica.dataset.swde.book.Site.AMAZON;
         Attribute attribute = br.edimarmanica.dataset.swde.book.Attribute.AUTHOR;
-        Results results = Results.getInstance(site);
-        Map<String, Map<String, String>> allRules = results.loadAllRules();
+        Results results = new Results(site);
+        Map<String, Map<String, String>> allRules = results.loadAllRules(Paths.PATH_INTRASITE);
 
         List<String> masterRuleIDs = new ArrayList<>();
         masterRuleIDs.add("rule_10636.csv");

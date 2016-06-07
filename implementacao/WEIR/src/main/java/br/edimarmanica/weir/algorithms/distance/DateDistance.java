@@ -37,7 +37,7 @@ public class DateDistance extends TypeAwareDistance {
                     }
                 }
             }
-        } catch (UnsupportedOperationException ex) {
+        } catch (NoiseException ex) {
             return 1;//regra pegou lixo. Por ex: Audio Cassete
         }
 
@@ -50,7 +50,7 @@ public class DateDistance extends TypeAwareDistance {
      * @param date
      * @return all formats possible to this date
      */
-    private static List<String> getAllFormats(String date) {
+    private static List<String> getAllFormats(String date) throws NoiseException {
         // 01/01/2012 or 1/1/2012
         if (date.matches("\\d{1,2}/\\d{1,2}/\\d{4}")) {
             return getAllFormats01(date);
@@ -90,8 +90,8 @@ public class DateDistance extends TypeAwareDistance {
         if (date.matches("[a-zA-Z]+ \\d{4}")) {
             return getAllFormats06(date);
         }
-        
-        throw new UnsupportedOperationException("Format not supported: " + date);
+
+        throw new NoiseException(date, DataType.DATE);
     }
 
     /**
@@ -168,7 +168,7 @@ public class DateDistance extends TypeAwareDistance {
      * @param date
      * @return
      */
-    private static List<String> getAllFormats04(String date) {
+    private static List<String> getAllFormats04(String date) throws NoiseException {
         List<String> allFormats = new ArrayList<>();
 
         String[] partes = date.trim().split(" ");
@@ -177,14 +177,14 @@ public class DateDistance extends TypeAwareDistance {
                 return getAllFormats01(Integer.valueOf(partes[2]) + "-" + (i + 1) + "-" + partes[0]);
             }
         }
-        
+
         for (int i = 0; i < months.length; i++) {
             if (partes[1].equals(months[i])) {
                 return getAllFormats01(Integer.valueOf(partes[2]) + "-" + (i + 1) + "-" + partes[0]);
             }
         }
 
-        throw new UnsupportedOperationException("Format04 not supported: " + date);
+        throw new NoiseException(date, DataType.DATE);
     }
 
     /**
@@ -193,7 +193,7 @@ public class DateDistance extends TypeAwareDistance {
      * @param date
      * @return
      */
-    private static List<String> getAllFormats05(String date) {
+    private static List<String> getAllFormats05(String date) throws NoiseException {
         List<String> allFormats = new ArrayList<>();
 
         String[] partes = date.trim().replaceAll(",", "").split(" ");
@@ -203,7 +203,7 @@ public class DateDistance extends TypeAwareDistance {
             }
         }
 
-        throw new UnsupportedOperationException("Format05 not supported: " + date);
+        throw new NoiseException(date, DataType.DATE);
     }
 
     /**
@@ -212,7 +212,7 @@ public class DateDistance extends TypeAwareDistance {
      * @param date
      * @return
      */
-    private static List<String> getAllFormats06(String date) {
+    private static List<String> getAllFormats06(String date) throws NoiseException {
         List<String> allFormats = new ArrayList<>();
 
         String[] partes = date.split(" ");
@@ -222,6 +222,6 @@ public class DateDistance extends TypeAwareDistance {
             }
         }
 
-        throw new UnsupportedOperationException("Format06 not supported: " + date);
+        throw new NoiseException(date, DataType.DATE);
     }
 }

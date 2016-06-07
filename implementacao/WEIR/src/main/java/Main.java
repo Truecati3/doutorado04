@@ -29,10 +29,12 @@ import java.util.Set;
 public class Main {
     public static void main(String[] args) {
         General.DEBUG = true;
-        Domain domain = br.edimarmanica.dataset.weir.Domain.FINANCE;
+        Domain domain = br.edimarmanica.dataset.swde.Domain.BOOK;
         List<Rule> rules = new ArrayList<>();
         
         for (Site site : domain.getSites()) {
+            System.out.println("Site: "+site);
+            
             LoadRules lr = new LoadRules(site);
             /** adicionando filtros **/
             RulesFilter filter01 = new NullValuesFilter(site);
@@ -42,13 +44,14 @@ public class Main {
         }
         
         //aqui tem que ter um passo que calcula o score e armazena pq hj ela calcula duas vezes: uma para o WeakRemoval e outra para o Weir
+        System.out.println("ScoredPairs");
         ScoredPairs scores = new ScoredPairs(domain, rules);
         scores.compute();
         scores.persists();
         
         //rules = weakRemoval(domain, rules); -- não estou usando
         
-        General.DEBUG = true;
+        System.out.println("Integration");
         Weir weir = new Weir(domain, rules);
         weir.execute();
     }

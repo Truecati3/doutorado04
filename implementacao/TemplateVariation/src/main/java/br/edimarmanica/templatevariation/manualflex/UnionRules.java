@@ -38,8 +38,8 @@ public class UnionRules {
     public UnionRules(Site site) {
         this.site = site;
 
-        Results results = Results.getInstance(site);
-        allRules = results.loadAllRules();
+        Results results = new Results(site);
+        allRules = results.loadAllRules(Paths.PATH_INTRASITE);
     }
 
     public void execute() {

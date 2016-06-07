@@ -15,7 +15,6 @@ import java.util.logging.Logger;
  */
 public class WeightDistance extends NumberDistance {
 
-
     /**
      * standard unit = grams
      *
@@ -23,7 +22,7 @@ public class WeightDistance extends NumberDistance {
      * @return
      */
     @Override
-    public Double normalize(String numericValue) {
+    public Double normalize(String numericValue) throws NoiseException {
         numericValue = numericValue.toLowerCase();
 
         double multipication = 1;
@@ -33,7 +32,7 @@ public class WeightDistance extends NumberDistance {
         } else if (numericValue.matches("([^(a-zA-Z)])+g([^(a-zA-Z)])*")) { //evitar que mm entre aqui
             multipication = 1;
         } else {
-            throw new UnsupportedOperationException("Unit " + numericValue + "not supported yet!");
+            throw new NoiseException(numericValue, DataType.WEIGHT);
         }
 
         NumberFormat form01 = NumberFormat.getNumberInstance();

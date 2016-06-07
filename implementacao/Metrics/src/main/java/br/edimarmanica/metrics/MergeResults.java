@@ -85,7 +85,7 @@ public class MergeResults {
     
     public static void main(String[] args) {
         MergeResults merge = new MergeResults(Paths.PATH_TRINITY );
-        merge.merge(br.edimarmanica.dataset.weir.Domain.BOOK);
+        merge.merge(br.edimarmanica.dataset.swde.Domain.UNIVERSITY);
     }
 }
 

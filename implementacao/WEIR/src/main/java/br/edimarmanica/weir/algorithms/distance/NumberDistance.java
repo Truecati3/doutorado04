@@ -33,14 +33,14 @@ public class NumberDistance extends TypeAwareDistance {
         double numericValueR1;
         try {
             numericValueR1 = normalize(vR1);
-        } catch (ParseException ex) {
+        } catch (NoiseException ex) {
             //System.out.println(ex.getMessage());
             return 1; //é um lixo que a regra pegou. Por ex: London
         }
         double numericValueS1;
         try {
             numericValueS1 = normalize(vS1);
-        } catch (ParseException ex) {
+        } catch (NoiseException ex) {
             //System.out.println(ex.getMessage());
             return 1; //é um lixo que a regra pegou. Por ex: London
         }
@@ -53,7 +53,7 @@ public class NumberDistance extends TypeAwareDistance {
     }
 
     @Override
-    public double distance(Rule r1, Rule s1) {
+    public double distance(Rule r1, Rule s1) throws InsufficientOverlapException {
         train(r1, s1);
 
         return super.distance(r1, s1);
@@ -80,7 +80,7 @@ public class NumberDistance extends TypeAwareDistance {
             if (v.getValue() != null && !v.getValue().trim().isEmpty()) {
                 try {
                     numericValuesR1.add(normalize(v.getValue())); //lembrando que each value de uma rule é de uma entidade diferente, pois é de uma página diferente e cada página representa uma entidade diferente
-                } catch (ParseException ex) {
+                } catch (NoiseException ex) {
                     //Não faz nada -- possívelmente é algum lixo que a regra está pegando
                     //Logger.getLogger(NumberDistance.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -94,7 +94,7 @@ public class NumberDistance extends TypeAwareDistance {
             if (v.getValue() != null && !v.getValue().trim().isEmpty()) {
                 try {
                     numericValuesS1.add(normalize(v.getValue())); //lembrando que each value de uma rule é de uma entidade diferente, pois é de uma página diferente e cada página representa uma entidade diferente
-                } catch (ParseException ex) {
+                } catch (NoiseException ex) {
                     //Não faz nada -- possívelmente é algum lixo que a regra está pegando
                    // Logger.getLogger(NumberDistance.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -107,12 +107,16 @@ public class NumberDistance extends TypeAwareDistance {
 
     }
 
-    public Double normalize(String numericValue1) throws ParseException {
-        String aux = numericValue1;
+    public Double normalize(String numericValue) throws NoiseException  {
+        String aux = numericValue;
         aux = aux.replaceAll("R\\$", "").replaceAll("\\$", "").replaceAll("€", ""); //retirando o simbolo de moeda pq currencyXnumber=numberXnumber, ou seja, se uma das regras e number, compara tudo com number
         aux = aux.replaceAll("[a-zA-Z]", ""); //retirando cm, m, etc. mesmo motivo acima
 
         NumberFormat form01 = NumberFormat.getNumberInstance(new Locale("en", "US"));
-        return form01.parse(aux.trim()).doubleValue();
+        try {
+            return form01.parse(aux.trim()).doubleValue();
+        } catch (ParseException ex) {
+            throw new NoiseException(numericValue, DataType.NUMBER);
+        }
     }
 }

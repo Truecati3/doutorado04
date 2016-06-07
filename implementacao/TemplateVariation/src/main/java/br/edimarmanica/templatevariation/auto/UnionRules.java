@@ -138,7 +138,7 @@ public class UnionRules {
         labels.load();
 
         Map<String, String> pairUrlValue = new HashMap<>();
-        Results results = Results.getInstance(site);
+        Results results = new Results(site);
             
         String masterRuleIDSst = "";
         String labelsSt = "";

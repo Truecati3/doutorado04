@@ -23,7 +23,7 @@ public class LenghtDistance extends NumberDistance {
      * @return
      */
     @Override
-    public Double normalize(String numericValue) {
+    public Double normalize(String numericValue) throws NoiseException {
 
         numericValue = numericValue.toLowerCase();
 
@@ -36,7 +36,7 @@ public class LenghtDistance extends NumberDistance {
         } else if (numericValue.matches("([^(a-zA-Z)])+m([^(a-zA-Z)])*")) { //evitar que mm entre aqui
             multipication = 1;
         } else {
-            throw new UnsupportedOperationException("Unit " + numericValue + "not supported yet!");
+            throw new NoiseException(numericValue, DataType.LENGHT);
         }
 
         NumberFormat form01 = NumberFormat.getNumberInstance();

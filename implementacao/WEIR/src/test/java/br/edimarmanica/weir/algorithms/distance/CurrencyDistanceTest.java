@@ -24,7 +24,7 @@ public class CurrencyDistanceTest extends TestCase{
     /**
      * Test of normalize method, of class CurrencyDistance.
      */
-    public void testNormalize() {
+    public void testNormalize() throws NoiseException {
         System.out.println("normalize");
         String numericValue = "R$ 15.325,23";//tem que ter o espaço depois do cifrão
         CurrencyDistance instance = new CurrencyDistance();
@@ -33,7 +33,7 @@ public class CurrencyDistanceTest extends TestCase{
         assertEquals(expResult, result);
         
         
-        numericValue = "$43,217.45";
+        numericValue = "$ 43,217.45";
         expResult = new Double(43217.45);
         result = instance.normalize(numericValue);
         assertEquals(expResult, result);

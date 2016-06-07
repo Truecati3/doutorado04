@@ -4,6 +4,7 @@
  */
 package br.edimarmanica.templatevariation.manual;
 
+import br.edimarmanica.configuration.Paths;
 import br.edimarmanica.dataset.Attribute;
 import br.edimarmanica.dataset.Site;
 import br.edimarmanica.metrics.GroundTruth;
@@ -120,8 +121,8 @@ public class ComplementaryRule {
          */
         Site site = br.edimarmanica.dataset.weir.book.Site.BLACKWELL;
         Attribute attribute = br.edimarmanica.dataset.weir.book.Attribute.TITLE;
-        Results results = Results.getInstance(site);
-        Map<String, Map<String, String>> allRules = results.loadAllRules();
+        Results results = new Results(site);
+        Map<String, Map<String, String>> allRules = results.loadAllRules(Paths.PATH_INTRASITE);
 
         List<String> masterRuleIDs = new ArrayList<>();
         masterRuleIDs.add("rule_263.csv");

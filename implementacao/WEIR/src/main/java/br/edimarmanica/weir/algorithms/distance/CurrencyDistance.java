@@ -24,7 +24,7 @@ public class CurrencyDistance extends NumberDistance {
      * @return
      */
     @Override
-    public Double normalize(String numericValue) {
+    public Double normalize(String numericValue) throws NoiseException {
         String aux = numericValue;
         Locale local;
         aux = aux.toUpperCase(); //tem que estar em maiúsculo o R do R$
@@ -36,6 +36,11 @@ public class CurrencyDistance extends NumberDistance {
         } else if (aux.contains("$")) { //evitar que mm entre aqui
             multiplication = 1;
             local = new Locale("en", "US");
+            
+            if (aux.trim().startsWith("$ ")){
+                aux = aux.replaceAll("\\$\\s+", "\\$");
+            }
+            
         } else if (aux.contains("€")) {
             multiplication = 1; //não tem como converter para mesma moeda pq cambio muda todo dia
             local = new Locale("fr", "FR");
@@ -46,7 +51,7 @@ public class CurrencyDistance extends NumberDistance {
                 aux = aux.replaceAll(",", "").replaceAll("\\.", ",");
             }
         } else {
-            throw new UnsupportedOperationException("Unit " + aux + "not supported yet!");
+            throw new NoiseException(aux, DataType.CURRENCY);
         }
 
         NumberFormat form01 = NumberFormat.getCurrencyInstance(local);

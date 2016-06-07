@@ -49,7 +49,11 @@ public class Results {
         try (Reader in = new FileReader(rule.getAbsolutePath())) {
             try (CSVParser parser = new CSVParser(in, CSVFormat.EXCEL.withHeader())) {
                 for (CSVRecord record : parser) {
-                    values.put(Formatter.formatURL(record.get("URL")), Formatter.formatValue(record.get("EXTRACTED VALUE")));
+                    String url = Formatter.formatURL(record.get("URL"));
+                    String value = Formatter.formatValue(record.get("EXTRACTED VALUE"));
+                    if (!value.isEmpty()) {
+                        values.put(url, value);
+                    }
                 }
             }
         } catch (FileNotFoundException ex) {

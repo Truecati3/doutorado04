@@ -31,7 +31,7 @@ public class CurrencySimilarityTest extends TestCase {
         assertEquals(expResult, result);
         
         
-        numericValue = "$43,217.45";
+        numericValue = "$ 43,217.45";
         expResult = new Double(43217.45);
         result = instance.normalize(numericValue);
         assertEquals(expResult, result);

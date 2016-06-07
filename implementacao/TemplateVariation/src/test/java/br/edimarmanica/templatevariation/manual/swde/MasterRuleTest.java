@@ -8,8 +8,6 @@ import br.edimarmanica.templatevariation.manual.MasterRule;
 import br.edimarmanica.dataset.Attribute;
 import br.edimarmanica.dataset.Site;
 import br.edimarmanica.metrics.SiteWithoutThisAttribute;
-import br.edimarmanica.metrics.swde.ResultsSWDE;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static junit.framework.Assert.assertEquals;
